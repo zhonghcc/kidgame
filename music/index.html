@@ -264,9 +264,9 @@ function killAll(){live.forEach(n=>{try{n.stop(0);}catch(e){}});live.clear();}
  * 页面打开就开始下载；创建音频环境后解码。某个采样还没就绪时，这个音临时用下面的合成音代替，保证第一题也有声音。 */
 const PIANO_DIR='samples/piano/';
 const PIANO_PTS=[];[2,3,4,5].forEach(o=>[['C',0],['Ds',3],['Fs',6],['A',9]].forEach(([n,s])=>PIANO_PTS.push({midi:12*(o+1)+s,file:n+o+'.mp3'})));
-// 采样比原来的合成音轻得多（实测中央 C 的有效值约为合成音的 1/4.4，A5 约 1/9.5），
-// 按音区补偿：中央 C 放大 5 倍，每高一个八度再多 1.26 倍，听感和原来的音量层次接近
-const pianoGain=midi=>5*Math.pow(2,(midi-60)/36);
+// 各采样原始响度不一（同为 vel 0.36，升 F3 附近的音只有中央 C 的一半），解码时把每个采样
+// 起音后 0.5 秒的有效值统一到 SAMPLE_RMS，再乘 PIANO_GAIN，让 vel 参数和原来合成音的音量大致对应
+const SAMPLE_RMS=0.05,PIANO_GAIN=7.2;
 const SAMPLE_KEEP=6;             // 每个采样只保留前 6 秒并混成单声道，16 个采样解码后约 18MB，平板也吃得消
 const pianoRaw=new Map(),pianoBuf=new Map();
 function prefetchPiano(){
@@ -285,6 +285,8 @@ function trimSample(c,b){
   const o=c.createBuffer(1,n,sr),d=o.getChannelData(0);
   for(let k=0;k<chs;k++){const s=b.getChannelData(k);for(let i=0;i<n;i++)d[i]+=s[i]/chs;}
   const fade=Math.floor(sr*0.2);for(let i=0;i<fade&&i<n;i++)d[n-1-i]*=i/fade;   // 截断处淡出，避免爆音
+  const m=Math.min(n,Math.floor(sr*0.5));let ss=0;for(let i=0;i<m;i++)ss+=d[i]*d[i];
+  const k=ss>0?SAMPLE_RMS/Math.sqrt(ss/m):1;for(let i=0;i<n;i++)d[i]*=k;
   return o;
 }
 function nearestSample(midi){
@@ -299,7 +301,7 @@ function piano(midi,t,dur=0.8,vel=0.32){
   const sm=nearestSample(midi);
   if(sm!==null){
     const s=c.createBufferSource();s.buffer=pianoBuf.get(sm);s.playbackRate.value=Math.pow(2,(midi-sm)/12);
-    const g=c.createGain(),a=vel*pianoGain(midi),off=t+Math.max(dur,0.25);
+    const g=c.createGain(),a=vel*PIANO_GAIN,off=t+Math.max(dur,0.25);
     // 按键期间保持采样自身的衰减，松键后制音器在约 0.3 秒内把声音收掉
     g.gain.setValueAtTime(a,t);g.gain.setValueAtTime(a,off);g.gain.setTargetAtTime(0.0001,off,0.09);
     s.connect(g);g.connect(master);s.start(t);s.stop(off+0.6);track(s);
@@ -335,10 +337,12 @@ function wood(t){
   g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.5,t+0.002);g.gain.exponentialRampToValueAtTime(0.0001,t+0.12);
   o.connect(g);g.connect(master);o.start(t);o.stop(t+0.14);
 }
+// 答对、答错的提示音只是反馈，要明显比题目里的乐音轻（实测约低 8 到 9 分贝），不能盖过随后播放的音符。
+// 答对的三个音在高音区，耳朵对这一段更敏感，所以再压低一点
 function sfx(kind){
   const c=ac(),t=c.currentTime+0.02;
-  if(kind==='good'){[72,76,79].forEach((m,i)=>piano(m,t+i*0.07,0.25,0.18));}
-  else {piano(55,t,0.25,0.18);piano(54,t+0.14,0.35,0.16);}
+  if(kind==='good'){[72,76,79].forEach((m,i)=>piano(m,t+i*0.07,0.25,0.075));}
+  else {piano(55,t,0.25,0.12);piano(54,t+0.14,0.35,0.1);}
 }
 
 /* ================= 乐谱绘制 ================= */
