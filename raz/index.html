@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>RAZ Level C Games</title>
+<style>
+:root{--bg1:#fff6ea;--bg2:#ffe9d2;--ink:#2b2622;--sub:#857a70;--line:#f1e3d3;--or:#ff8a3d;--or2:#ffb36b;--bl:#3b7be8;--gr:#1f9d63;--rd:#e5484d;--card:#fff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{font-family:"Avenir Next",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2)) fixed;min-height:100vh}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.wrap{max-width:760px;margin:0 auto;padding:22px 16px 40px}
+.en{font-family:"Avenir Next","Segoe UI","Helvetica Neue",Arial,sans-serif}
+.hidden{display:none!important}
+
+/* Home */
+/* Back to the kidgame index page */
+.kg-back{display:inline-flex;align-items:center;margin:0 0 12px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid var(--line);color:var(--sub);font-size:13.5px;font-weight:600;text-decoration:none}
+.kg-back:hover{color:var(--or);border-color:var(--or)}
+.hero{background:#fff;border-radius:26px;padding:20px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 8px 24px rgba(214,150,90,.13);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-30px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,#ffd9b3 0%,rgba(255,217,179,0) 70%)}
+.logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(145deg,#ffad5e,#ff7b2e);display:grid;place-items:center;font-size:34px;box-shadow:0 8px 18px rgba(255,123,46,.35);flex:none}
+.hero h1{margin:0;font-size:24px;letter-spacing:.5px}
+.hero p{margin:4px 0 0;color:var(--sub);font-size:14px}
+.chip-star{margin-left:auto;position:relative;z-index:1;background:#fff8e1;border:1px solid #f6dc8f;border-radius:999px;padding:8px 16px;font-weight:700;color:#a86b00;display:flex;gap:6px;align-items:center;font-size:17px}
+.ask-home{margin:22px 4px 10px;color:var(--sub);font-weight:600;font-size:14px}
+.mode{width:100%;text-align:left;background:#fff;border-radius:22px;padding:20px 20px;margin-bottom:16px;display:flex;align-items:center;gap:16px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(214,150,90,.08);transition:transform .15s}
+.mode:active{transform:scale(.985)}
+.mode .ic{width:62px;height:62px;border-radius:18px;display:grid;place-items:center;font-size:32px;flex:none}
+.mode h3{margin:0 0 5px;font-size:19px}
+.mode .d{color:var(--sub);font-size:13.5px}
+.mode .tag{display:inline-block;margin-top:9px;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px}
+.mode .arr{margin-left:auto;color:#d9c7b6;font-size:26px}
+.m1 .ic{background:#fff0e3}.m1 .tag{background:#ffece0;color:#e5662a}
+.m2 .ic{background:#eaf1fe}.m2 .tag{background:#e6effd;color:#2f6bd4}
+.m3 .ic{background:#e6f7ee}.m3 .tag{background:#e2f5ea;color:#16875a}
+.best{font-size:12px;color:#b59c84;margin-left:8px;font-weight:600}
+details.notes{margin-top:22px;border:1.5px dashed #ecd3bb;border-radius:20px;background:rgba(255,255,255,.55);padding:14px 18px}
+details.notes summary{cursor:pointer;color:#8c6d52;font-weight:700;font-size:14px;list-style:none}
+details.notes summary::-webkit-details-marker{display:none}
+.notes h4{margin:16px 0 6px;font-size:14px;color:#6d5440}
+.notes p,.notes li{font-size:13.5px;line-height:1.75;color:#5f5148}
+.notes ul{padding-left:18px;margin:4px 0}
+.notes li{margin-bottom:8px}
+.notes .zh{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:#8a7a6c;font-size:13px;line-height:1.75;margin-top:2px}
+.notes p.zh{margin-top:-6px;padding-left:10px;border-left:3px solid #f1dcc6}
+.notes li .zh{margin-top:3px}
+.notes .zh-h{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-weight:600;color:#b08f74;margin-left:8px;font-size:13px}
+.wl{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.wl span{background:#fff;border:1px solid var(--line);border-radius:8px;padding:3px 8px;font-size:13px;cursor:pointer}
+
+/* Game */
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.back{background:#fff;border-radius:14px;padding:9px 14px;font-weight:600;box-shadow:0 3px 10px rgba(214,150,90,.12)}
+.bar .tt{font-weight:700;font-size:17px}
+.bar .r{margin-left:auto;display:flex;gap:8px;align-items:center}
+.tog{background:#fff;border-radius:999px;padding:8px 13px;font-size:13px;font-weight:600;border:1.5px solid transparent;box-shadow:0 3px 10px rgba(214,150,90,.1)}
+.tog.on{border-color:var(--or);color:#d7621f;background:#fff4ea}
+.prog{display:flex;align-items:center;gap:10px;margin:0 2px 14px}
+.prog .track{flex:1;height:10px;border-radius:99px;background:#f6e2cf;overflow:hidden}
+.prog .fill{height:100%;background:linear-gradient(90deg,var(--or2),var(--or));border-radius:99px;transition:width .35s}
+.prog .n{font-weight:700;color:#a3785a;font-size:14px;min-width:46px;text-align:right}
+.panel{background:#fff;border-radius:26px;padding:22px 20px 24px;box-shadow:0 10px 28px rgba(214,150,90,.13);min-height:420px}
+.hint{color:var(--sub);font-size:14px;font-weight:600;text-align:center;margin-bottom:14px}
+.hint b{color:#d7621f}
+
+.pic{position:relative;margin:0 auto 20px;width:210px;height:190px;border-radius:26px;background:linear-gradient(160deg,#fffaf3,#fff0de);border:2px solid #fbe4cc;display:grid;place-items:center}
+.pic .em{font-size:118px;line-height:1}
+.hear{position:absolute;right:-12px;bottom:-12px;background:var(--bl);color:#fff;border-radius:999px;padding:9px 14px;font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(59,123,232,.35)}
+.hear:active{transform:scale(.95)}
+.bigspk{display:grid;place-items:center;margin:8px auto 22px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#6ea2ff,#2f6bd4);color:#fff;font-size:62px;box-shadow:0 12px 28px rgba(47,107,212,.35)}
+.bigspk.play{animation:pulse .8s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.word-show{text-align:center;margin:10px 0 24px}
+.word-show .w{font-size:56px;font-weight:700;letter-spacing:1px}
+.word-show .mini{margin-left:10px;vertical-align:middle;background:#eaf1fe;color:var(--bl);border-radius:999px;width:46px;height:46px;font-size:22px}
+
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{min-width:0;overflow-wrap:anywhere;background:#fffaf4;border:2.5px solid #f3e0cc;border-radius:18px;padding:16px 10px;font-size:26px;font-weight:700;text-align:center;transition:transform .12s,background .2s,border-color .2s}
+.opt:active{transform:scale(.97)}
+.opt.emo{font-size:72px;padding:14px 6px;line-height:1.1}
+.opts.three{grid-template-columns:1fr 1fr 1fr}
+.opts.three .opt{font-size:22px;padding:16px 4px}
+.opt.ok{background:#e4f7ec;border-color:var(--gr);color:#13784a}
+.opt.bad{background:#fdecec;border-color:var(--rd);color:#b3262b;animation:shake .35s}
+.opt.dim{opacity:.45}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+.foot{margin-top:20px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;min-height:56px}
+.btn{border-radius:16px;padding:14px 22px;font-size:17px;font-weight:700;box-shadow:0 6px 14px rgba(0,0,0,.08)}
+.btn.pri{background:linear-gradient(135deg,#ffa255,#ff7b2e);color:#fff}
+.btn.blue{background:linear-gradient(135deg,#5b95f7,#2f6bd4);color:#fff}
+.btn.green{background:linear-gradient(135deg,#34c07e,#1f9d63);color:#fff}
+.btn.ghost{background:#fff;border:2px solid #f0dcc7;color:#7a5f49}
+.btn.rec{background:#fff;border:2px solid #f6c3c4;color:#c93a3f}
+.btn.rec.ing{background:#e5484d;color:#fff;border-color:#e5484d;animation:pulse 1s infinite}
+.btn:disabled{opacity:.4}
+.fb{text-align:center;font-weight:700;font-size:18px;min-height:26px;margin-top:14px}
+.fb.ok{color:var(--gr)}.fb.bad{color:var(--rd)}
+
+/* Scenes */
+.scene{border-radius:24px;height:200px;display:flex;align-items:flex-end;justify-content:center;gap:14px;padding:0 14px 22px;position:relative;overflow:hidden;margin-bottom:20px}
+.scene span{font-size:76px;line-height:1;filter:drop-shadow(0 4px 4px rgba(0,0,0,.12))}
+.scene span:first-child{font-size:96px}
+.bg-sky{background:linear-gradient(#bfe3ff 0%,#e6f5ff 62%,#bfe8a6 62%,#a6dc8a 100%)}
+.bg-grass{background:linear-gradient(#d6f0ff 0%,#eef9ff 55%,#b4e39a 55%,#8fd06f 100%)}
+.bg-night{background:linear-gradient(#1d2b5a 0%,#3a4f8f 100%)}
+.bg-water{background:linear-gradient(#cdeaff 0%,#e9f7ff 50%,#7cc6f0 50%,#4aa8de 100%)}
+.bg-snow{background:linear-gradient(#dfeaf5 0%,#f4f8fc 60%,#ffffff 60%,#eef3f8 100%)}
+.bg-home{background:linear-gradient(#fff3df 0%,#fff3df 68%,#e8c9a3 68%,#dcb68a 100%)}
+.bg-beach{background:linear-gradient(#bfe6ff 0%,#e6f6ff 45%,#58b6e6 45%,#58b6e6 60%,#f5dca6 60%,#efcf8c 100%)}
+.bg-rain{background:linear-gradient(#a9b7c8 0%,#d7e0ea 62%,#a8cf8f 62%,#94c27a 100%)}
+
+.sent{overflow-wrap:break-word;font-size:30px;line-height:1.75;text-align:center;font-weight:600;margin:4px 4px 6px}
+.sent .tk{display:inline-block;padding:0 4px;border-radius:8px;cursor:pointer;transition:background .15s,color .15s}
+.sent .tk:hover{background:#fff1e4}
+.sent .tk.on{background:#ffd8b0;color:#8a3a00}
+.sent .blank{display:inline-block;min-width:130px;border-bottom:4px solid #f0a868;margin:0 6px;color:#13784a;text-align:center}
+.sent .blank.filled{border-color:var(--gr);background:#e4f7ec;border-radius:8px 8px 0 0}
+.tip{text-align:center;color:#b4a596;font-size:12.5px;margin-top:2px}
+
+/* Result */
+.res{text-align:center;padding-top:10px}
+.res .big{font-size:72px}
+.res h2{margin:8px 0 4px;font-size:26px}
+.res .stars{font-size:34px;letter-spacing:4px;margin:10px 0}
+.miss{margin:18px auto 0;max-width:520px;text-align:left}
+.miss h4{margin:0 0 8px;font-size:14px;color:#8c6d52}
+.mi{display:flex;align-items:center;gap:12px;background:#fffaf4;border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:8px;cursor:pointer}
+.mi .e{font-size:34px;width:44px;text-align:center}
+.mi .t{font-size:18px;font-weight:700;flex:1}
+.mi .s{font-size:14px;font-weight:500;color:#5f5148;line-height:1.5}
+.toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);background:rgba(40,32,26,.88);color:#fff;padding:10px 18px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:9}
+.toast.show{opacity:1}
+
+@media (max-width:560px){
+  .hero h1{font-size:20px}.logo{width:54px;height:54px;font-size:28px}
+  .pic{width:180px;height:165px}.pic .em{font-size:100px}
+  .opt{font-size:22px;padding:14px 6px}.opt.emo{font-size:58px}
+  .opts.three{grid-template-columns:1fr}
+  .sent{font-size:23px}
+  .word-show .w{font-size:44px}
+  .scene{height:170px}.scene span{font-size:60px}.scene span:first-child{font-size:78px}
+  .bar .tt{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- Home -->
+<section id="home">
+  <a class="kg-back" href="/kidgame/">‹ All Games</a>
+  <div class="hero">
+    <div class="logo">🔤</div>
+    <div><h1>RAZ Level C Games</h1><p>Words · Sentences · Fill-in</p></div>
+    <div class="chip-star">⭐ <span id="starTotal">0</span></div>
+  </div>
+  <div class="ask-home">What do you want to play today?</div>
+
+  <button class="mode m1" data-go="word">
+    <div class="ic">🧠</div>
+    <div><h3>Word Challenge<span class="best" id="best-word"></span></h3>
+      <div class="d">Look and choose, listen and choose, read and match</div>
+      <span class="tag">10 questions · 3 types</span></div>
+    <div class="arr">›</div>
+  </button>
+  <button class="mode m2" data-go="read">
+    <div class="ic">🎧</div>
+    <div><h3>Listen and Read<span class="best" id="best-read"></span></h3>
+      <div class="d">Look, listen, read along, and record your voice</div>
+      <span class="tag">10 sentences · slow mode</span></div>
+    <div class="arr">›</div>
+  </button>
+  <button class="mode m3" data-go="fill">
+    <div class="ic">✏️</div>
+    <div><h3>Picture Fill-in<span class="best" id="best-fill"></span></h3>
+      <div class="d">Look at the picture and pick the missing word</div>
+      <span class="tag">10 questions · tap 🔊 to hear</span></div>
+    <div class="arr">›</div>
+  </button>
+
+  <details class="notes">
+    <summary>💡 For Parents · 给家长 (word list, level, how to play)</summary>
+    <h4>Reading level<span class="zh-h">难度说明</span></h4>
+    <p>Words are common nouns and feeling words from RAZ Level C books, plus high-frequency words that are easy to mix up (there / their / where, thought / through). Sentences target Lexile 200L–450L: 9 to 13 words each, joined with because, when, so, but, and after, using past tense and prepositional phrases. They are a step harder than the simple sentences in Level C books.</p>
+    <p class="zh">单词取自 RAZ C 级别书里常见的具体名词和情绪词，另加一组容易混淆的高频词（there / their / where、thought / through 这类）。句子按蓝思 200L–450L 设计，每句 9 到 13 个词，用 because、when、so、but、after 连成复合句，带过去式和介词短语，比 C 级别书里的单句难一档。</p>
+    <h4>English only<span class="zh-h">为什么全英文</span></h4>
+    <p>There is no translation anywhere. Pictures and sounds take its place, so children link English words directly to what they see and hear. If a picture is unclear, tap the blue “🔊 Listen” button to hear the word.</p>
+    <p class="zh">游戏里不给中文释义，用图和发音代替翻译，让孩子直接把英文和画面、声音对应起来。图看不明白时，点蓝色的「🔊 Listen」就能听到单词读音。</p>
+    <h4>How to play<span class="zh-h">怎么玩</span></h4>
+    <ul>
+      <li>Word Challenge: 10 questions per round, three question types mixed together. A wrong answer shows the right one and reads it aloud. Missed words are listed at the end; tap one to hear it again.
+        <div class="zh">认词挑战：每轮 10 题，看图选词、听音选词、看词选图三种题型混着出。答错会标出正确答案并读一遍，结束后列出错词，点一下可以再听。</div></li>
+      <li>Listen and Read: each sentence plays once automatically, and each word lights up as it is read. Tap any word to hear it alone. Use “Slow” at the top right to slow down. “Record Me” lets your child record and play back their reading. Tap “I’m Done” after reading.
+        <div class="zh">听音读句：进题自动播放一遍，读到哪个词哪个词就高亮。点任意单词可以单独听，右上角「Slow」放慢语速。「Record Me」可以录下孩子的朗读再回放对比，读完点「I’m Done」。</div></li>
+      <li>Picture Fill-in: all three choices fit the grammar, so the picture is the only way to pick the right one. After answering, the whole sentence is read aloud.
+        <div class="zh">看图填词：三个选项放进句子语法上都通，必须看图才能选对。选完后会把整句读一遍。</div></li>
+      <li>Each right answer or finished sentence earns a star. Stars are saved on this device.
+        <div class="zh">每答对一题或读完一句得一颗星，星星累计保存在这台设备上。</div></li>
+    </ul>
+    <h4>Audio<span class="zh-h">发音</span></h4>
+    <p>All 66 sentences have American English recordings in the audio folder next to this page, so they play offline. Keep the folder with the page if you move it. Single words use online American pronunciation and fall back to the device voice when offline. Recording needs microphone permission in the browser.</p>
+    <p class="zh">66 个句子都预先录好了美式朗读，放在页面旁边的 audio 文件夹里，不联网也能播放，挪动页面时要连文件夹一起带走。单词联网时用美式真人发音，断网时自动换成设备自带的朗读。录音功能需要允许浏览器使用麦克风。</p>
+    <h4>Word list (tap to hear)<span class="zh-h">词表（点单词可听）</span></h4>
+    <div class="wl" id="wordList"></div>
+  </details>
+</section>
+
+<!-- Game -->
+<section id="game" class="hidden">
+  <div class="bar">
+    <button class="back" id="backBtn">‹ Back</button>
+    <span class="tt" id="gTitle"></span>
+    <div class="r">
+      <button class="tog" id="slowBtn">🐢 Slow</button>
+      <div class="chip-star" style="padding:6px 12px;font-size:15px">⭐ <span id="starTotal2">0</span></div>
+    </div>
+  </div>
+  <div class="prog" id="progBox"><div class="track"><div class="fill" id="progFill"></div></div><div class="n" id="progN"></div></div>
+  <div class="panel" id="stage"></div>
+</section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ Question bank ============ */
+// Picture words: [word, emoji, category]
+const PW = [
+ ['apple','🍎','food'],['banana','🍌','food'],['grapes','🍇','food'],['carrot','🥕','food'],['bread','🍞','food'],
+ ['egg','🥚','food'],['cake','🍰','food'],['pizza','🍕','food'],['cheese','🧀','food'],['honey','🍯','food'],['corn','🌽','food'],
+ ['cat','🐱','animal'],['dog','🐶','animal'],['rabbit','🐰','animal'],['horse','🐴','animal'],['cow','🐮','animal'],
+ ['pig','🐷','animal'],['sheep','🐑','animal'],['duck','🦆','animal'],['frog','🐸','animal'],['owl','🦉','animal'],
+ ['bee','🐝','animal'],['spider','🕷️','animal'],['snail','🐌','animal'],['turtle','🐢','animal'],['snake','🐍','animal'],
+ ['lion','🦁','animal'],['tiger','🐯','animal'],['bear','🐻','animal'],['monkey','🐵','animal'],['elephant','🐘','animal'],
+ ['giraffe','🦒','animal'],['zebra','🦓','animal'],['penguin','🐧','animal'],['whale','🐳','animal'],['octopus','🐙','animal'],
+ ['crab','🦀','animal'],['mouse','🐭','animal'],['butterfly','🦋','animal'],
+ ['sun','☀️','nature'],['moon','🌙','nature'],['star','⭐','nature'],['cloud','☁️','nature'],['rainbow','🌈','nature'],
+ ['tree','🌳','nature'],['flower','🌷','nature'],['leaf','🍁','nature'],['snowman','⛄','nature'],['mountain','⛰️','nature'],
+ ['bus','🚌','go'],['car','🚗','go'],['train','🚂','go'],['plane','✈️','go'],['boat','⛵','go'],['bike','🚲','go'],
+ ['rocket','🚀','go'],['truck','🚚','go'],['ship','🚢','go'],
+ ['book','📕','thing'],['pencil','✏️','thing'],['chair','🪑','thing'],['bed','🛏️','thing'],['clock','⏰','thing'],
+ ['key','🔑','thing'],['kite','🪁','thing'],['balloon','🎈','thing'],['umbrella','☂️','thing'],['gift','🎁','thing'],
+ ['hat','👒','thing'],['shoe','👟','thing'],['socks','🧦','thing'],['gloves','🧤','thing'],['broom','🧹','thing'],
+ ['house','🏠','thing'],['castle','🏰','thing'],['drum','🥁','thing'],
+ ['teeth','🦷','body'],['hand','✋','body'],['foot','🦶','body'],['eye','👁️','body'],['ear','👂','body'],['nose','👃','body'],
+ ['doctor','🧑‍⚕️','people'],['farmer','🧑‍🌾','people'],['cook','🧑‍🍳','people'],['firefighter','🧑‍🚒','people'],
+ ['teacher','🧑‍🏫','people'],['king','🤴','people'],['queen','👸','people'],['baby','👶','people'],
+ ['happy','😄','feel'],['sad','😢','feel'],['angry','😠','feel'],['scared','😱','feel'],['sleepy','😴','feel'],
+ ['cold','🥶','feel'],['hot','🥵','feel'],['surprised','😮','feel']
+];
+
+// Listening groups: 4 look-alike or sound-alike words (no homophones in a group)
+const LW = [
+ ['there','their','three','where'],['because','before','behind','between'],['would','could','should','world'],
+ ['thought','through','throw','those'],['people','purple','paper','pickle'],['friend','fried','front','find'],
+ ['always','away','already','also'],['every','very','ever','even'],['know','now','new','snow'],
+ ['light','night','right','fight'],['walked','worked','watched','wanted'],['around','round','ground','sound'],
+ ['began','begin','became','because'],['after','other','under','older'],['water','winter','wonder','weather'],
+ ['morning','mountain','monkey','moving'],['brother','butter','bottle','better'],['small','smell','smile','snail'],
+ ['quiet','quite','quick','quilt'],['climb','clean','clown','cloud'],['house','horse','mouse','hours'],
+ ['think','thing','thank','thick'],['these','those','this','then'],['carry','cherry','hurry','carrot'],
+ ['forest','first','fast','frost'],['laugh','leaf','left','lift']
+];
+
+// Reading: s sentence, e scene emoji (first is largest), bg background
+const READ = [
+ {s:'The little bird built a nest in the tall tree.',e:['🐦','🌳','🌿'],bg:'sky'},
+ {s:'When it started to rain, we ran under a big umbrella.',e:['☂️','🏃','🌧️'],bg:'rain'},
+ {s:'My brother kicked the ball over the fence by mistake.',e:['⚽','👦','🏡'],bg:'grass'},
+ {s:'The hungry bear found some honey inside an old log.',e:['🐻','🍯','🌲'],bg:'grass'},
+ {s:'She wore a warm coat because it was snowing outside.',e:['🧥','👧','❄️'],bg:'snow'},
+ {s:'We planted seeds in the garden, and soon the flowers grew.',e:['🌻','🌱','🌷'],bg:'grass'},
+ {s:'The rocket flew high into the sky and landed on the moon.',e:['🚀','🌙','✨'],bg:'night'},
+ {s:'Dad cooked eggs for breakfast before we went to school.',e:['🍳','👨','🏫'],bg:'home'},
+ {s:'The frog jumped off the rock and splashed into the pond.',e:['🐸','💦','🌿'],bg:'water'},
+ {s:'A tiny mouse hid behind the box when the cat came in.',e:['🐭','📦','🐱'],bg:'home'},
+ {s:'The firefighter climbed the tree to save the scared kitten.',e:['🧑‍🚒','🌳','🐱'],bg:'sky'},
+ {s:'After lunch, the children played soccer on the green field.',e:['⚽','🧒','🥅'],bg:'grass'},
+ {s:'The bus was late, so we waited at the stop for ten minutes.',e:['🚌','🚏','⏰'],bg:'sky'},
+ {s:'Grandma read me a story about a brave little dragon.',e:['📖','👵','🐉'],bg:'home'},
+ {s:'The snowman melted slowly when the warm sun came out.',e:['⛄','☀️','💧'],bg:'snow'},
+ {s:'We could see many bright stars because the night was clear.',e:['⭐','🌙','✨'],bg:'night'},
+ {s:'The farmer fed the cows and the pigs early in the morning.',e:['🧑‍🌾','🐄','🐖'],bg:'grass'},
+ {s:'My sister painted a rainbow with seven different colors.',e:['🌈','👧','🎨'],bg:'home'},
+ {s:'The turtle walked very slowly, but it never stopped.',e:['🐢','🏁'],bg:'grass'},
+ {s:'I brushed my teeth and put on my pajamas before bed.',e:['🦷','🛏️','🌙'],bg:'home'},
+ {s:'The big ship sailed across the ocean for many days.',e:['🚢','🌊','☀️'],bg:'water'},
+ {s:'A busy bee flew from flower to flower all afternoon.',e:['🐝','🌼','🌸'],bg:'grass'},
+ {s:'The baby giggled when the puppy licked her hand.',e:['👶','🐶','😆'],bg:'home'},
+ {s:'Mom bought apples, bread, and milk at the store.',e:['🛒','🍎','🍞','🥛'],bg:'home'},
+ {s:'The strong wind blew my kite high above the trees.',e:['🪁','🌬️','🌳'],bg:'sky'},
+ {s:'The train blew its whistle as it came into the station.',e:['🚂','🚉'],bg:'sky'},
+ {s:'Our teacher showed us a picture of a huge whale.',e:['🐋','🧑‍🏫','🖼️'],bg:'home'},
+ {s:'The monkey swung from branch to branch in the jungle.',e:['🐒','🌴','🌿'],bg:'grass'},
+ {s:'We built a sandcastle, but the waves washed it away.',e:['🏰','🌊','🏖️'],bg:'beach'},
+ {s:'The owl stays awake at night and sleeps during the day.',e:['🦉','🌙','⭐'],bg:'night'}
+];
+
+// Fill-in: s sentence with ___, a answer, o distractors, e picture
+const FILL = [
+ {s:'The ___ used its long trunk to drink water.',a:'elephant',o:['giraffe','zebra'],e:'🐘'},
+ {s:'It was raining, so I opened my ___.',a:'umbrella',o:['basket','window'],e:'☂️'},
+ {s:'The ___ has a very long neck to reach the leaves.',a:'giraffe',o:['lion','rabbit'],e:'🦒'},
+ {s:'The boy ___ across the pool to get his ball.',a:'swam',o:['flew','drove'],e:'🏊'},
+ {s:'She rides her ___ to the park every Saturday.',a:'bike',o:['horse','boat'],e:'🚲'},
+ {s:'After the rain, a ___ appeared in the sky.',a:'rainbow',o:['rocket','kite'],e:'🌈'},
+ {s:'Dad lost his ___, so he could not open the door.',a:'keys',o:['shoes','socks'],e:'🔑'},
+ {s:'The ___ hid its head inside its hard shell.',a:'turtle',o:['snake','duck'],e:'🐢'},
+ {s:'We put seven candles on the ___ for my birthday.',a:'cake',o:['pizza','bread'],e:'🎂'},
+ {s:'At night, the ___ was big, round, and bright.',a:'moon',o:['cloud','lamp'],e:'🌕'},
+ {s:'I was so tired that I fell ___ on the sofa.',a:'asleep',o:['awake','down'],e:'😴'},
+ {s:'The snow was so ___ that my fingers turned red.',a:'cold',o:['hot','soft'],e:'🥶'},
+ {s:'A ___ buzzed around the yellow flowers.',a:'bee',o:['fish','frog'],e:'🐝'},
+ {s:'I brush my ___ every morning and every night.',a:'teeth',o:['hair','shoes'],e:'🦷'},
+ {s:'She borrowed three ___ from the library.',a:'books',o:['cups','hats'],e:'📚'},
+ {s:'The ___ sprayed water on the burning house.',a:'firefighter',o:['doctor','farmer'],e:'🧑‍🚒'},
+ {s:'The ___ sat in the tree and hooted all night.',a:'owl',o:['pig','cow'],e:'🦉'},
+ {s:'My red ___ floated away into the sky.',a:'balloon',o:['ball','box'],e:'🎈'},
+ {s:'The ___ moved very slowly across the wet leaf.',a:'snail',o:['horse','rabbit'],e:'🐌'},
+ {s:'The bear dipped its paw into a jar of ___.',a:'honey',o:['milk','juice'],e:'🍯'},
+ {s:'Put on your ___ so your hands stay warm.',a:'gloves',o:['boots','glasses'],e:'🧤'},
+ {s:'We flew to see Grandma on a big ___.',a:'plane',o:['train','bus'],e:'✈️'},
+ {s:'The ___ spun a web in the corner of the room.',a:'spider',o:['bird','mouse'],e:'🕷️'},
+ {s:'The rabbit pulled a ___ out of the ground and ate it.',a:'carrot',o:['apple','banana'],e:'🥕'},
+ {s:'The ___ has eight long arms and lives in the sea.',a:'octopus',o:['shark','whale'],e:'🐙'},
+ {s:'The king and queen lived in a huge stone ___.',a:'castle',o:['tent','boat'],e:'🏰'},
+ {s:'The ___ roared so loudly that all the animals ran away.',a:'lion',o:['mouse','sheep'],e:'🦁'},
+ {s:'Mom ___ some eggs in a pan for breakfast.',a:'cooked',o:['washed','painted'],e:'🍳'},
+ {s:'He felt ___ when his ice cream fell on the floor.',a:'sad',o:['happy','proud'],e:'😢'},
+ {s:'The ___ blasted off and flew toward the stars.',a:'rocket',o:['ship','truck'],e:'🚀'},
+ {s:'Grandpa gave me a ___ wrapped in shiny paper.',a:'gift',o:['sandwich','letter'],e:'🎁'},
+ {s:'A ___ cannot fly, but it can swim very fast.',a:'penguin',o:['parrot','eagle'],e:'🐧'},
+ {s:'The wind lifted my ___ high above the trees.',a:'kite',o:['hat','bag'],e:'🪁'},
+ {s:'She took a ___ and swept the dirty floor.',a:'broom',o:['spoon','brush'],e:'🧹'},
+ {s:'The ___ jumped out of the water and made a big splash.',a:'whale',o:['camel','tiger'],e:'🐳'},
+ {s:'The farmer milked the ___ early in the morning.',a:'cow',o:['hen','duck'],e:'🐄'}
+];
+
+/* ============ Utils ============ */
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.random()*a.length|0];
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let toastT;function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),1800)}
+const LS={get:(k,d)=>{try{const v=localStorage.getItem('razc-'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem('razc-'+k,JSON.stringify(v))}catch(e){}}};
+
+/* ============ Speech ============ */
+let slow=LS.get('slow',false),ttsOnly=false,fails=0,raf=0;
+const hashOf=s=>{let x=5381;for(const c of s)x=((x*33)^c.charCodeAt(0))>>>0;return x.toString(16)};
+const player=new Audio();player.preload='auto';
+function clearHL(){document.querySelectorAll('.tk.on').forEach(x=>x.classList.remove('on'))}
+function stopAll(){try{player.pause()}catch(e){}cancelAnimationFrame(raf);if('speechSynthesis' in window)speechSynthesis.cancel();clearHL();document.querySelectorAll('.bigspk.play').forEach(x=>x.classList.remove('play'))}
+function tts(t,o){
+  if(!('speechSynthesis' in window)){o.onEnd&&o.onEnd();return}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=slow?.68:.9;
+  const v=speechSynthesis.getVoices().find(v=>/^en[-_]US/i.test(v.lang));if(v)u.voice=v;
+  if(o.onBoundary)u.onboundary=e=>o.onBoundary(e.charIndex);
+  u.onend=()=>o.onEnd&&o.onEnd();
+  speechSynthesis.speak(u);
+}
+function speak(text,o={}){
+  stopAll();
+  const isSent=/\s/.test(text.trim());
+  if(ttsOnly&&!isSent){tts(text,o);return}
+  let fell=false;const fb=()=>{if(fell)return;fell=true;if(!isSent&&++fails>=2)ttsOnly=true;tts(text,o)};
+  const r=slow?.75:1;
+  player.onerror=fb;
+  player.onloadedmetadata=()=>{player.playbackRate=r};
+  player.onended=()=>{cancelAnimationFrame(raf);o.onEnd&&o.onEnd()};
+  player.onplaying=()=>{
+    if(!o.onProgress)return;
+    const loop=()=>{if(player.paused||player.ended)return;if(player.duration)o.onProgress(player.currentTime/player.duration);raf=requestAnimationFrame(loop)};
+    loop();
+  };
+  // Sentences use local audio (audio/<hash>.mp3); single words use Youdao US voice
+  player.src=isSent?'audio/'+hashOf(text.trim())+'.mp3':'https://dict.youdao.com/dictvoice?type=2&audio='+encodeURIComponent(text);
+  player.defaultPlaybackRate=r;player.playbackRate=r;
+  const p=player.play();
+  if(p&&p.catch)p.catch(e=>{if(e&&(e.name==='NotAllowedError'||e.name==='AbortError'))return;fb()});
+}
+// Read a sentence and highlight word by word
+function readSentence(text,spans,onEnd){
+  const words=text.split(' ');
+  const w=words.map(x=>x.replace(/[^A-Za-z']/g,'').length+1.5+(/[,.!?]$/.test(x)?2.5:0));
+  const tot=w.reduce((a,b)=>a+b,0);let c=0;const cum=w.map(v=>(c+=v)/tot);
+  const starts=[];let pos=0;words.forEach(x=>{starts.push(pos);pos+=x.length+1});
+  const hl=i=>spans&&spans.forEach((s,k)=>s.classList.toggle('on',k===i));
+  speak(text,{
+    onProgress:f=>{const g=(f-.06)/.88;let i=cum.findIndex(v=>g<v);hl(g<0?-1:(i<0?words.length-1:i))},
+    onBoundary:ci=>{let i=0;for(let k=0;k<starts.length;k++)if(starts[k]<=ci)i=k;hl(i)},
+    onEnd:()=>{hl(-1);onEnd&&onEnd()}
+  });
+}
+
+/* ============ Sound effects ============ */
+let ac;
+function ding(ok){
+  try{
+    ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+    const t=ac.currentTime,notes=ok?[660,880,1320]:[330,247];
+    notes.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.type=ok?'triangle':'sine';o.frequency.value=f;
+      const s=t+i*.09;g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(.16,s+.02);g.gain.exponentialRampToValueAtTime(.0001,s+.26);
+      o.connect(g).connect(ac.destination);o.start(s);o.stop(s+.3)});
+  }catch(e){}
+}
+
+/* ============ State ============ */
+let stars=LS.get('stars',0);
+function addStar(){stars++;LS.set('stars',stars);paintStars()}
+function paintStars(){$('starTotal').textContent=stars;$('starTotal2').textContent=stars}
+const TITLES={word:'Word Challenge',read:'Listen and Read',fill:'Picture Fill-in'};
+const G={mode:'',list:[],i:0,right:0,miss:[],done:false};
+
+function paintBest(){['word','read','fill'].forEach(m=>{const b=LS.get('best-'+m,null);$('best-'+m).textContent=b==null?'':(m==='read'?b+(b===1?' round':' rounds'):'Best '+b+'/10')})}
+function show(id){$('home').classList.toggle('hidden',id!=='home');$('game').classList.toggle('hidden',id!=='game');window.scrollTo(0,0)}
+
+/* ============ Build rounds ============ */
+function picOpts(item,n){
+  const same=shuffle(PW.filter(p=>p[2]===item[2]&&p[0]!==item[0]));
+  const other=shuffle(PW.filter(p=>p[2]!==item[2]));
+  return shuffle([item,...same.concat(other).slice(0,n-1)]);
+}
+function buildWord(){
+  const pics=shuffle(PW).slice(0,7);
+  const types=shuffle(['pw','pw','pw','pw','wp','wp','wp']);
+  const a=pics.map((p,i)=>({t:types[i],item:p,opts:picOpts(p,4)}));
+  shuffle(LW).slice(0,3).forEach(g=>a.push({t:'lw',ans:pick(g),opts:shuffle(g)}));
+  return shuffle(a);
+}
+function buildRead(){return shuffle(READ).slice(0,10)}
+function buildFill(){return shuffle(FILL).slice(0,10).map(f=>({...f,opts:shuffle([f.a,...f.o])}))}
+
+function start(mode){
+  G.mode=mode;G.i=0;G.right=0;G.miss=[];
+  G.list=mode==='word'?buildWord():mode==='read'?buildRead():buildFill();
+  $('gTitle').textContent=TITLES[mode];
+  $('progBox').classList.remove('hidden');
+  show('game');render();
+}
+function prog(){$('progFill').style.width=(G.i/G.list.length*100)+'%';$('progN').textContent=(G.i+1)+' / '+G.list.length}
+function next(){stopAll();G.i++;if(G.i>=G.list.length)finish();else render()}
+function render(){stopAll();G.done=false;prog();({word:rWord,read:rRead,fill:rFill})[G.mode](G.list[G.i])}
+
+/* ---- Word challenge ---- */
+function rWord(q){
+  const st=$('stage');let h='';
+  if(q.t==='pw'){
+    h=`<div class="hint">Look at the picture. Choose the word.</div>
+      <div class="pic"><div class="em">${q.item[1]}</div><button class="hear" id="hearBtn">🔊 Listen</button></div>
+      <div class="opts">${q.opts.map(o=>`<button class="opt en" data-v="${o[0]}">${o[0]}</button>`).join('')}</div>`;
+  }else if(q.t==='lw'){
+    h=`<div class="hint">Listen. Choose the word you hear.</div>
+      <button class="bigspk" id="spk">🔊</button>
+      <div class="opts">${q.opts.map(o=>`<button class="opt en" data-v="${o}">${o}</button>`).join('')}</div>`;
+  }else{
+    h=`<div class="hint">Read the word. Choose the picture.</div>
+      <div class="word-show"><span class="w en">${q.item[0]}</span><button class="mini" id="hearBtn">🔊</button></div>
+      <div class="opts">${q.opts.map(o=>`<button class="opt emo" data-v="${o[0]}">${o[1]}</button>`).join('')}</div>`;
+  }
+  h+=`<div class="fb" id="fb"></div><div class="foot"><button class="btn pri hidden" id="nextBtn">Next →</button></div>`;
+  st.innerHTML=h;
+  const ans=q.t==='lw'?q.ans:q.item[0];
+  if($('hearBtn'))$('hearBtn').onclick=()=>speak(ans);
+  if($('spk')){const s=$('spk');const play=()=>{s.classList.add('play');speak(ans,{onEnd:()=>s.classList.remove('play')})};s.onclick=play;setTimeout(play,250)}
+  st.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    if(G.done)return;G.done=true;
+    const ok=b.dataset.v===ans;
+    st.querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===ans)x.classList.add('ok');else if(x!==b)x.classList.add('dim')});
+    if(ok){G.right++;addStar();$('fb').className='fb ok';$('fb').textContent='Great job! ⭐'}
+    else{b.classList.add('bad');$('fb').className='fb bad';$('fb').textContent='The answer is '+ans;
+      const it=q.t==='lw'?null:q.item;G.miss.push({w:ans,e:it?it[1]:'🔊'})}
+    ding(ok);setTimeout(()=>speak(ans),380);
+    $('nextBtn').classList.remove('hidden');$('nextBtn').onclick=next;
+  });
+}
+
+/* ---- Listen and read ---- */
+let rec=null,recStream=null,recChunks=[],myUrl=null,myAudio=null,heard=false;
+const canRec=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
+function tokens(s){return s.split(' ').map((w,i)=>`<span class="tk" data-i="${i}">${esc(w)}</span>`).join(' ')}
+function rRead(q){
+  heard=false;if(myUrl){URL.revokeObjectURL(myUrl);myUrl=null}
+  $('stage').innerHTML=`
+    <div class="scene bg-${q.bg}">${q.e.map(x=>`<span>${x}</span>`).join('')}</div>
+    <div class="sent en" id="sent">${tokens(q.s)}</div>
+    <div class="tip">Tap any word to hear it</div>
+    <div class="foot">
+      <button class="btn blue" id="playBtn">🔊 Listen</button>
+      ${canRec?`<button class="btn rec" id="recBtn">🎙 Record Me</button><button class="btn ghost hidden" id="myBtn">▶ Play Me</button>`:''}
+      <button class="btn green" id="doneBtn">✓ I’m Done</button>
+    </div>`;
+  const spans=[...document.querySelectorAll('#sent .tk')];
+  const play=()=>{heard=true;readSentence(q.s,spans)};
+  $('playBtn').onclick=play;
+  spans.forEach(s=>s.onclick=()=>{const w=s.textContent.replace(/[^A-Za-z']/g,'');if(!w)return;stopAll();s.classList.add('on');speak(w,{onEnd:()=>s.classList.remove('on')})});
+  if(canRec){$('recBtn').onclick=recToggle;$('myBtn').onclick=()=>{stopAll();if(myAudio)myAudio.pause();myAudio=new Audio(myUrl);myAudio.play()}}
+  $('doneBtn').onclick=()=>{if(rec&&rec.state==='recording')rec.stop();G.right++;addStar();ding(true);
+    $('doneBtn').disabled=true;setTimeout(next,600)};
+  setTimeout(play,300);
+}
+async function recToggle(){
+  const b=$('recBtn');
+  if(rec&&rec.state==='recording'){rec.stop();return}
+  stopAll();
+  try{recStream=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){toast('Microphone is not allowed');return}
+  recChunks=[];rec=new MediaRecorder(recStream);
+  rec.ondataavailable=e=>{if(e.data&&e.data.size)recChunks.push(e.data)};
+  rec.onstop=()=>{
+    recStream.getTracks().forEach(t=>t.stop());
+    if(myUrl)URL.revokeObjectURL(myUrl);
+    myUrl=URL.createObjectURL(new Blob(recChunks,{type:rec.mimeType||'audio/webm'}));
+    if($('recBtn')){$('recBtn').classList.remove('ing');$('recBtn').textContent='🎙 Record Again';$('myBtn').classList.remove('hidden')}
+  };
+  rec.start();b.classList.add('ing');b.textContent='⏹ Stop';
+}
+
+/* ---- Fill-in ---- */
+function rFill(q){
+  const [a,b]=q.s.split('___');
+  $('stage').innerHTML=`
+    <div class="hint">Look at the picture. Choose the missing word.</div>
+    <div class="pic"><div class="em">${q.e}</div><button class="hear" id="hearBtn">🔊 Listen</button></div>
+    <div class="sent en" id="sent">${esc(a.trim())} <span class="blank" id="blank">&nbsp;</span>${/^[.,!?]/.test(b.trim())?'':' '}${esc(b.trim())}</div>
+    <div class="opts three" style="margin-top:18px">${q.opts.map(o=>`<button class="opt en" data-v="${o}">${o}</button>`).join('')}</div>
+    <div class="fb" id="fb"></div>
+    <div class="foot"><button class="btn ghost hidden" id="againBtn">🔊 Hear Sentence</button><button class="btn pri hidden" id="nextBtn">Next →</button></div>`;
+  const full=q.s.replace('___',q.a).replace(/\s+([.,!?])/g,'$1');
+  $('hearBtn').onclick=()=>speak(q.a);
+  const st=$('stage');
+  st.querySelectorAll('.opt').forEach(btn=>btn.onclick=()=>{
+    if(G.done)return;G.done=true;
+    const ok=btn.dataset.v===q.a;
+    st.querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===q.a)x.classList.add('ok');else if(x!==btn)x.classList.add('dim')});
+    const bl=$('blank');bl.textContent=q.a;bl.classList.add('filled');
+    if(ok){G.right++;addStar();$('fb').className='fb ok';$('fb').textContent='Well done! ⭐'}
+    else{btn.classList.add('bad');$('fb').className='fb bad';$('fb').textContent='The answer is '+q.a;G.miss.push({w:q.a,e:q.e,s:full})}
+    ding(ok);setTimeout(()=>speak(full),420);
+    $('againBtn').classList.remove('hidden');$('againBtn').onclick=()=>speak(full);
+    $('nextBtn').classList.remove('hidden');$('nextBtn').onclick=next;
+  });
+}
+
+/* ---- Result ---- */
+function finish(){
+  $('progFill').style.width='100%';$('progBox').classList.add('hidden');
+  const n=G.list.length,r=G.right;
+  if(G.mode==='read'){LS.set('best-read',LS.get('best-read',0)+1)}
+  else{const b=LS.get('best-'+G.mode,null);if(b==null||r>b)LS.set('best-'+G.mode,r)}
+  const lv=G.mode==='read'?3:(r>=9?3:r>=6?2:r>=3?1:0);
+  const big=lv===3?'🏆':lv===2?'🎉':lv===1?'💪':'🌱';
+  const title=G.mode==='read'?'You read 10 sentences!':(r>=9?'Excellent!':r>=6?'Good job!':'Keep going!');
+  let h=`<div class="res"><div class="big">${big}</div><h2 class="en">${title}</h2>
+    <div style="color:var(--sub);font-weight:600">${G.mode==='read'?'You earned 10 stars':r+' out of '+n+' correct'}</div>
+    <div class="stars">${'⭐'.repeat(lv)}${'☆'.repeat(3-lv)}</div>`;
+  if(G.miss.length){
+    h+=`<div class="miss"><h4>Tap to hear these again</h4>${G.miss.map((m,i)=>`<div class="mi" data-i="${i}"><div class="e">${m.e}</div><div class="t en">${esc(m.w)}${m.s?`<div class="s">${esc(m.s)}</div>`:''}</div><div>🔊</div></div>`).join('')}</div>`;
+  }
+  h+=`<div class="foot" style="margin-top:26px"><button class="btn pri" id="againRound">Play Again</button><button class="btn ghost" id="homeBtn">Home</button></div></div>`;
+  $('stage').innerHTML=h;
+  document.querySelectorAll('.mi').forEach(el=>el.onclick=()=>{const m=G.miss[+el.dataset.i];speak(m.s||m.w)});
+  $('againRound').onclick=()=>start(G.mode);
+  $('homeBtn').onclick=goHome;
+  ding(true);
+}
+function goHome(){stopAll();if(rec&&rec.state==='recording')rec.stop();paintBest();show('home')}
+
+/* ============ Init ============ */
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>start(b.dataset.go));
+$('backBtn').onclick=goHome;
+const sb=$('slowBtn');sb.classList.toggle('on',slow);
+sb.onclick=()=>{slow=!slow;LS.set('slow',slow);sb.classList.toggle('on',slow);toast(slow?'Slow speed on':'Normal speed')};
+// Word list
+const all=[...new Set([...PW.map(p=>p[0]),...LW.flat(),...FILL.map(f=>f.a)])].sort();
+$('wordList').innerHTML=all.map(w=>`<span class="en">${w}</span>`).join('');
+$('wordList').querySelectorAll('span').forEach(s=>s.onclick=()=>speak(s.textContent));
+document.querySelector('.notes summary').innerHTML='💡 For Parents · 给家长 ('+all.length+' words, level, how to play)';
+if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{}}
+paintStars();paintBest();
+</script>
+</body>
+</html>

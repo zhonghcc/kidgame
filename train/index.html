@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>小火车英语</title>
+<style>
+:root{--bg:#FBF8F2;--card:#FFFFFF;--ink:#2C2C2A;--muted:#6B6A64;--line:#E8E2D6;--blue:#185FA5;--blue-l:#E6F1FB;--red:#E24B4A;--green:#3B6D11;--green-l:#EAF3DE;--yellow:#EF9F27}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",sans-serif}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.wrap{max-width:980px;margin:0 auto;padding:18px 16px 48px}
+/* 返回童趣学园导航页 */
+.kg-back{display:inline-flex;align-items:center;margin:0 0 12px;padding:5px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--muted);font-size:13px;text-decoration:none}
+.kg-back:hover{color:var(--blue);border-color:var(--blue)}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+h1{font-size:28px;margin:0;letter-spacing:1px}
+h1 span{color:var(--red)}
+.sub{color:var(--muted);font-size:14px;margin-top:4px}
+.speed{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+.switch{width:46px;height:26px;border-radius:13px;background:#D3D1C7;position:relative;transition:.2s}
+.switch::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+.switch.on{background:var(--green)}
+.switch.on::after{left:23px}
+.lane{position:relative;height:70px;margin:14px 0 6px;overflow:hidden;border-radius:14px;background:#EAF3DE}
+.lane .sky{position:absolute;inset:0 0 18px 0;background:#E6F1FB}
+.lane .hill{position:absolute;bottom:18px;width:160px;height:40px;border-radius:80px 80px 0 0;background:#C0DD97}
+.lane .rail{position:absolute;left:0;right:0;bottom:12px;height:4px;background:#888780}
+.lane .ties{position:absolute;left:0;right:0;bottom:8px;height:4px;background:repeating-linear-gradient(90deg,#854F0B 0 6px,transparent 6px 18px)}
+.runner{position:absolute;bottom:13px;left:-200px;animation:run 11s linear infinite}
+@keyframes run{to{left:100%}}
+.puff{animation:puff 1.2s ease-out infinite;transform-origin:center}
+@keyframes puff{0%{opacity:.9;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(-14px,-16px) scale(1.3)}}
+.progress{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);margin-bottom:14px}
+.bar{flex:1;height:8px;border-radius:4px;background:#E8E2D6;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--yellow);border-radius:4px;transition:width .4s}
+.tabs{display:flex;background:#EFEAE0;border-radius:14px;padding:4px;margin-bottom:14px}
+.tabs button{flex:1;padding:11px 0;border-radius:11px;font-size:16px;font-weight:600;color:var(--muted)}
+.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:7px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:14px;color:var(--muted)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.bigbtn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--blue-l);color:var(--blue);font-size:14px;font-weight:600;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 10px 12px;text-align:center;user-select:none;transition:transform .15s}
+.card:active{transform:scale(.96)}
+.card.bounce{animation:bounce .5s}
+@keyframes bounce{30%{transform:scale(1.06) rotate(-2deg)}60%{transform:scale(.98) rotate(1deg)}}
+.pic{border-radius:14px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:10%}
+.pic svg{width:100%;height:100%}
+.word{font-size:19px;font-weight:700;margin-top:8px;letter-spacing:.3px}
+.zh{font-size:13px;color:var(--muted);margin-top:2px}
+.heard{position:absolute;top:8px;left:8px;width:22px;height:22px;opacity:0;transition:.3s}
+.card.done .heard{opacity:1}
+.zoom{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center}
+.zoom svg{width:16px;height:16px}
+.mask{position:fixed;inset:0;background:rgba(44,44,42,.45);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.mask.show{display:flex}
+.panel{background:#fff;border-radius:24px;width:100%;max-width:440px;padding:18px 18px 20px;position:relative;text-align:center}
+.panel .pic{width:min(240px,62vw);margin:6px auto 0;padding:8%}
+.close{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:#F1EFE8;font-size:20px;line-height:36px}
+.dword{font-size:36px;font-weight:800;margin-top:12px}
+.ipa{font-family:"Lucida Sans Unicode","Arial Unicode MS",sans-serif;color:var(--muted);font-size:16px;margin-top:2px}
+.dzh{font-size:18px;color:var(--blue);margin-top:4px;font-weight:600}
+.row{display:flex;justify-content:center;gap:10px;margin-top:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;font-size:15px;font-weight:600}
+.pill svg{width:18px;height:18px}
+.pill.main{background:var(--ink);color:#fff}
+.pill.soft{background:#F1EFE8}
+.sent{margin-top:16px;background:#FBF8F2;border-radius:14px;padding:12px 14px;text-align:left;display:flex;gap:12px;align-items:center}
+.sent .t{flex:1}
+.sent .en{font-size:16px;font-weight:600}
+.sent .cn{font-size:13px;color:var(--muted);margin-top:2px}
+.sent button{width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center}
+.sent button svg{width:18px;height:18px}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:var(--muted);font-size:13px}
+.nav button{width:44px;height:44px;border-radius:50%;background:#F1EFE8;font-size:22px}
+.quiz{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px}
+.qlane{position:relative;height:96px;border-radius:14px;background:#E6F1FB;overflow:hidden}
+.qlane .ground{position:absolute;left:0;right:0;bottom:0;height:22px;background:#C0DD97}
+.qlane .rail{position:absolute;left:0;right:0;bottom:16px;height:4px;background:#888780}
+.qtrain{position:absolute;left:8px;right:10px;bottom:20px;display:flex;flex-direction:row-reverse;align-items:flex-end;gap:3px;transition:transform 2.8s cubic-bezier(.55,0,.85,.35)}
+.qtrain.go{transform:translateX(120vw)}
+.qengine{flex:none;width:72px;height:56px;transform:scaleX(-1)}
+.qengine svg{width:100%;height:100%}
+.car{flex:0 1 40px;min-width:20px;height:34px;border-radius:6px;position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:4px;animation:hook .45s ease-out}
+.car::before,.car::after{content:"";position:absolute;bottom:-6px;width:9px;height:9px;border-radius:50%;background:#2C2C2A}
+.car::before{left:4px}.car::after{right:4px}
+.car .ic{width:72%;max-width:26px;aspect-ratio:1/1;background:#fff;border-radius:5px;padding:2px}
+.car .ic svg{width:100%;height:100%}
+@keyframes hook{from{transform:translateX(-30px);opacity:0}to{transform:none;opacity:1}}
+.qhead{display:flex;justify-content:space-between;align-items:center;margin:14px 0 10px;gap:10px}
+.qcount{font-size:14px;color:var(--muted)}
+.qcount b{color:var(--ink);font-size:18px}
+.listen{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;background:var(--red);color:#fff;font-size:17px;font-weight:700}
+.listen svg{width:22px;height:22px}
+.listen.pulse{animation:pulse 1s ease-out}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(226,75,74,.5)}100%{box-shadow:0 0 0 18px rgba(226,75,74,0)}}
+.opts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:620px){.opts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.opt{border:3px solid transparent;border-radius:18px;padding:6px;background:#FBF8F2;transition:transform .15s}
+.opt:active{transform:scale(.96)}
+.opt .pic{padding:12%}
+.opt .lab{height:22px;font-size:16px;font-weight:700;margin-top:4px;opacity:0}
+.opt.right{border-color:#639922;background:#EAF3DE}
+.opt.wrong{border-color:#E24B4A;animation:shake .4s}
+.opts.revealed .lab{opacity:1}
+@keyframes shake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+.qstart,.qend{text-align:center;padding:18px 8px 8px}
+.qstart p,.qend p{color:var(--muted);font-size:15px;line-height:1.7;margin:8px 0 14px}
+.qend h2{font-size:24px;margin:6px 0 0}
+.stars{display:flex;justify-content:center;gap:6px;margin-top:6px}
+.stars svg{width:44px;height:44px}
+.go-btn{padding:13px 30px;border-radius:999px;background:var(--ink);color:#fff;font-size:17px;font-weight:700}
+.scope{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:16px}
+@media (max-width:520px){
+.wrap{padding:14px 12px 40px}
+h1{font-size:24px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.word{font-size:17px}
+.opts{gap:10px}
+.qhead{flex-wrap:wrap}
+.car{flex-basis:34px;height:30px}
+.qengine{width:62px;height:48px}
+}
+.foot{margin-top:28px;font-size:12px;color:#9A988F;text-align:center;line-height:1.7}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="kg-back" href="/kidgame/">‹ 全部游戏</a>
+  <div class="top">
+    <div>
+      <h1>小火车<span>英语</span></h1>
+      <div class="sub">火车迷最常用的 <span id="total">40</span> 个词，点一点就能听</div>
+    </div>
+    <div class="speed">慢速朗读 <button class="switch" id="slowSw" aria-label="慢速朗读"></button></div>
+  </div>
+
+  <div class="lane" aria-hidden="true">
+    <div class="sky"></div>
+    <div class="hill" style="left:8%"></div><div class="hill" style="left:46%;width:220px;height:52px"></div><div class="hill" style="left:80%"></div>
+    <div class="ties"></div><div class="rail"></div>
+    <div class="runner" id="runner"></div>
+  </div>
+
+  <div class="progress"><span id="progTxt">已听过 0</span><div class="bar"><i id="progBar"></i></div></div>
+
+  <div class="tabs">
+    <button class="on" data-tab="learn">认识单词</button>
+    <button data-tab="quiz">听音选图</button>
+  </div>
+
+  <section id="learn">
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="quiz" class="hide">
+    <div class="quiz">
+      <div class="qlane"><div class="ground"></div><div class="rail"></div><div class="qtrain" id="qtrain"><div class="qengine" id="qengine"></div></div></div>
+      <div id="qstart" class="qstart">
+        <p>听到单词后，点出对的图片。<br>每答对一题，小火车就多挂一节车厢。</p>
+        <div class="scope" id="scope"></div>
+        <button class="go-btn" id="startBtn">开始 10 道题</button>
+      </div>
+      <div id="qplay" class="hide">
+        <div class="qhead">
+          <div class="qcount">第 <b id="qi">1</b> / 10 题 · 已挂 <b id="qc">0</b> 节</div>
+          <button class="listen" id="listenBtn"></button>
+        </div>
+        <div class="opts" id="opts"></div>
+      </div>
+      <div id="qend" class="qend hide">
+        <div class="stars" id="stars"></div>
+        <h2 id="endTitle"></h2>
+        <p id="endTxt"></p>
+        <button class="go-btn" id="againBtn">再玩一次</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">单词发音为美式读音，来自有道词典；网络不通时改用浏览器自带朗读。<br>听过的单词会打上小星星，记录保存在本机浏览器里。</div>
+</div>
+
+<div class="mask" id="mask">
+  <div class="panel" id="panel">
+    <button class="close" id="closeBtn" aria-label="关闭">×</button>
+    <div class="pic" id="dpic"></div>
+    <div class="dword" id="dword"></div>
+    <div class="ipa" id="dipa"></div>
+    <div class="dzh" id="dzh"></div>
+    <div class="row">
+      <button class="pill main" id="dplay"></button>
+      <button class="pill soft" id="dslow"></button>
+    </div>
+    <div class="sent">
+      <div class="t"><div class="en" id="sen"></div><div class="cn" id="scn"></div></div>
+      <button id="splay" aria-label="听句子"></button>
+    </div>
+    <div class="nav"><button id="prevBtn" aria-label="上一个">‹</button><span id="dpos"></span><button id="nextBtn" aria-label="下一个">›</button></div>
+  </div>
+</div>
+
+<script>
+const K='#2C2C2A',D='#444441',GR='#888780',GL='#D3D1C7',R='#E24B4A',RD='#A32D2D',RL='#FCEBEB',B='#378ADD',BD='#185FA5',BL='#E6F1FB',BM='#B5D4F4',Y='#EF9F27',YD='#BA7517',YL='#FAEEDA',YM='#FAC775',G='#639922',GD='#3B6D11',GLL='#EAF3DE',GM='#97C459',SK='#F5C4B3',BR='#854F0B';
+const wh=(x,y,r=7)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${K}"/><circle cx="${x}" cy="${y}" r="${(r*.4).toFixed(1)}" fill="${GL}"/>`;
+const rail=(y=86)=>`<rect x="4" y="${y}" width="92" height="3" rx="1.5" fill="${GR}"/>`;
+const radial=(n,r1,r2,stroke,w,cap='round')=>{let s='';for(let i=0;i<n;i++){const a=i*2*Math.PI/n;s+=`<line x1="${(50+r1*Math.cos(a)).toFixed(1)}" y1="${(50+r1*Math.sin(a)).toFixed(1)}" x2="${(50+r2*Math.cos(a)).toFixed(1)}" y2="${(50+r2*Math.sin(a)).toFixed(1)}" stroke="${stroke}" stroke-width="${w}" stroke-linecap="${cap}"/>`}return s};
+const ties=()=>{let s='';for(let k=0;k<7;k++){const y=30+k*10,h=11+(y-30)*.378+6;s+=`<rect x="${(50-h).toFixed(1)}" y="${y}" width="${(2*h).toFixed(1)}" height="${(3+k*.6).toFixed(1)}" rx="1" fill="${BR}"/>`}return s};
+const colorTrain=(c,cd,cl)=>`<rect x="10" y="36" width="52" height="36" rx="6" fill="${c}"/><rect x="20" y="22" width="10" height="16" fill="${cd}"/><rect x="17" y="19" width="16" height="5" rx="2" fill="${cd}"/><rect x="56" y="24" width="34" height="48" rx="5" fill="${c}"/><rect x="52" y="20" width="42" height="6" rx="3" fill="${cd}"/><rect x="63" y="31" width="20" height="14" rx="3" fill="${cl}"/><rect x="6" y="70" width="88" height="5" rx="2" fill="${K}"/>${wh(22,80,8)}${wh(46,80,8)}${wh(74,80,8)}`;
+
+const SVG={
+train:`<rect x="6" y="38" width="42" height="36" rx="6" fill="${B}"/><rect x="12" y="44" width="16" height="14" rx="3" fill="${BL}"/><rect x="32" y="44" width="10" height="14" rx="2" fill="${BL}"/><rect x="6" y="64" width="42" height="4" fill="${BD}"/><rect x="47" y="63" width="8" height="3" fill="${K}"/><rect x="54" y="42" width="40" height="32" rx="5" fill="${Y}"/><rect x="59" y="48" width="12" height="11" rx="2" fill="${YL}"/><rect x="76" y="48" width="12" height="11" rx="2" fill="${YL}"/>${wh(17,78)}${wh(37,78)}${wh(64,78)}${wh(84,78)}${rail()}`,
+engine:`<rect x="58" y="28" width="30" height="44" rx="4" fill="${R}"/><rect x="54" y="24" width="38" height="6" rx="2" fill="${K}"/><rect x="64" y="34" width="18" height="14" rx="2" fill="${RL}"/><rect x="12" y="44" width="48" height="26" rx="10" fill="${R}"/><rect x="20" y="30" width="9" height="16" fill="${K}"/><rect x="17" y="27" width="15" height="5" rx="2" fill="${K}"/><rect x="38" y="37" width="10" height="9" rx="4.5" fill="${Y}"/><circle cx="12" cy="56" r="5" fill="${YM}"/><rect x="6" y="66" width="86" height="6" rx="2" fill="${K}"/>${wh(24,78,8)}${wh(46,78,8)}${wh(74,78,8)}${rail()}`,
+car:`<rect x="8" y="34" width="84" height="40" rx="7" fill="${G}"/><rect x="8" y="34" width="84" height="7" rx="3" fill="${GD}"/><rect x="15" y="46" width="14" height="14" rx="2" fill="${GLL}"/><rect x="35" y="46" width="14" height="14" rx="2" fill="${GLL}"/><rect x="55" y="46" width="14" height="14" rx="2" fill="${GLL}"/><rect x="74" y="46" width="12" height="24" rx="2" fill="${GD}"/><rect x="76" y="49" width="8" height="8" rx="1" fill="${GLL}"/>${wh(22,78)}${wh(36,78)}${wh(64,78)}${wh(78,78)}${rail()}`,
+steamtrain:`<circle cx="22" cy="23" r="7" fill="${GL}" class="puff"/><circle cx="33" cy="14" r="9" fill="${GL}"/><circle cx="47" cy="10" r="7" fill="${GL}"/><rect x="18" y="28" width="8" height="15" fill="${K}"/><rect x="8" y="42" width="34" height="22" rx="8" fill="${D}"/><rect x="38" y="32" width="20" height="34" rx="3" fill="${D}"/><rect x="42" y="37" width="12" height="10" rx="2" fill="${YM}"/><rect x="6" y="62" width="54" height="5" fill="${R}"/><rect x="62" y="40" width="32" height="26" rx="4" fill="${R}"/><rect x="66" y="45" width="10" height="9" rx="1.5" fill="${RL}"/><rect x="80" y="45" width="10" height="9" rx="1.5" fill="${RL}"/>${wh(17,74,7)}${wh(33,74,7)}${wh(50,74,6)}${wh(70,74,6)}${wh(86,74,6)}${rail(82)}`,
+bullet:`<path d="M6 70 Q8 46 40 40 L94 40 L94 70 Z" fill="#fff" stroke="#B4B2A9" stroke-width="1.5"/><path d="M17 51 Q25 44 40 43 L40 52 L16 55 Z" fill="${BD}"/><rect x="46" y="46" width="10" height="8" rx="2" fill="${BM}"/><rect x="60" y="46" width="10" height="8" rx="2" fill="${BM}"/><rect x="74" y="46" width="10" height="8" rx="2" fill="${BM}"/><path d="M7 63 L94 59 L94 64 L7 67 Z" fill="${B}"/><rect x="10" y="70" width="84" height="5" fill="#B4B2A9"/>${rail(80)}`,
+subway:`<path d="M4 94 L4 42 Q50 -2 96 42 L96 94 Z" fill="${GL}"/><rect x="22" y="22" width="56" height="62" rx="10" fill="${B}"/><rect x="40" y="26" width="20" height="6" rx="1.5" fill="${Y}"/><rect x="28" y="36" width="44" height="22" rx="4" fill="${BL}"/><rect x="48" y="36" width="4" height="22" fill="${B}"/><circle cx="32" cy="70" r="4" fill="${YM}"/><circle cx="68" cy="70" r="4" fill="${YM}"/><rect x="22" y="78" width="56" height="6" fill="${BD}"/><path d="M36 84 L28 96 M64 84 L72 96" stroke="${K}" stroke-width="3"/>`,
+tram:`<line x1="4" y1="10" x2="96" y2="10" stroke="${K}" stroke-width="1.5"/><path d="M50 27 L62 11" stroke="${K}" stroke-width="2.5"/><rect x="20" y="24" width="60" height="7" rx="3" fill="${YD}"/><rect x="10" y="30" width="80" height="44" rx="8" fill="${Y}"/><rect x="16" y="38" width="14" height="15" rx="2" fill="${YL}"/><rect x="34" y="38" width="14" height="15" rx="2" fill="${YL}"/><rect x="52" y="38" width="14" height="15" rx="2" fill="${YL}"/><rect x="70" y="38" width="14" height="15" rx="2" fill="${YL}"/><rect x="10" y="60" width="80" height="4" fill="${R}"/>${wh(28,78,6)}${wh(72,78,6)}<rect x="4" y="84" width="92" height="3" fill="${GR}"/>`,
+freight:`<rect x="6" y="44" width="26" height="22" fill="${R}"/><rect x="37" y="44" width="26" height="22" fill="${B}"/><rect x="68" y="44" width="26" height="22" fill="${G}"/><path d="M19 47 V63 M50 47 V63 M81 47 V63" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/><rect x="4" y="66" width="30" height="5" fill="${D}"/><rect x="35" y="66" width="30" height="5" fill="${D}"/><rect x="66" y="66" width="30" height="5" fill="${D}"/>${wh(11,75,5)}${wh(27,75,5)}${wh(42,75,5)}${wh(58,75,5)}${wh(73,75,5)}${wh(89,75,5)}${rail(82)}`,
+wheel:`<circle cx="50" cy="50" r="38" fill="${K}"/><circle cx="50" cy="50" r="31" fill="${R}"/>${radial(8,0,30,K,4)}<circle cx="50" cy="50" r="10" fill="${K}"/><circle cx="50" cy="50" r="4" fill="${YM}"/>`,
+window:`<rect x="14" y="16" width="72" height="60" rx="10" fill="${B}"/><rect x="22" y="24" width="56" height="44" rx="6" fill="${BL}"/><circle cx="64" cy="38" r="7" fill="${Y}"/><path d="M22 68 L22 57 Q36 43 50 56 Q62 46 78 58 L78 68 Z" fill="${G}"/><rect x="10" y="76" width="80" height="6" rx="3" fill="${BD}"/>`,
+door:`<rect x="18" y="10" width="64" height="82" rx="6" fill="${GR}"/><rect x="24" y="16" width="25" height="72" rx="3" fill="${G}"/><rect x="51" y="16" width="25" height="72" rx="3" fill="${G}"/><rect x="29" y="24" width="15" height="22" rx="2" fill="${GLL}"/><rect x="56" y="24" width="15" height="22" rx="2" fill="${GLL}"/><rect x="43" y="52" width="3" height="13" rx="1.5" fill="${K}"/><rect x="54" y="52" width="3" height="13" rx="1.5" fill="${K}"/><rect x="12" y="90" width="76" height="4" rx="2" fill="${K}"/>`,
+light:`${radial(12,30,42,Y,4)}<circle cx="50" cy="50" r="24" fill="${K}"/><circle cx="50" cy="50" r="18" fill="${YM}"/><circle cx="44" cy="44" r="6" fill="#fff" fill-opacity=".85"/>`,
+whistle:`<path d="M26 42 Q10 22 30 12" stroke="${R}" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="26" cy="44" r="5" stroke="${GR}" stroke-width="3" fill="none"/><rect x="40" y="34" width="48" height="17" rx="4" fill="${Y}"/><circle cx="42" cy="58" r="23" fill="${Y}"/><circle cx="42" cy="58" r="10" fill="${YD}"/><rect x="48" y="32" width="12" height="6" rx="1" fill="${YD}"/><path d="M50 26 L47 16 M58 26 L62 16" stroke="${B}" stroke-width="3" stroke-linecap="round"/>`,
+smoke:`<circle cx="42" cy="44" r="10" fill="#B4B2A9"/><circle cx="54" cy="31" r="13" fill="${GL}"/><circle cx="70" cy="22" r="13" fill="#B4B2A9"/><circle cx="85" cy="14" r="9" fill="${GL}"/><rect x="30" y="58" width="16" height="26" fill="${K}"/><rect x="26" y="54" width="24" height="7" rx="2" fill="${K}"/><rect x="8" y="82" width="84" height="12" rx="4" fill="${R}"/>`,
+seat:`<g transform="rotate(-8 35 42)"><rect x="26" y="16" width="18" height="54" rx="6" fill="${B}"/><rect x="24" y="10" width="22" height="12" rx="5" fill="${BM}"/></g><rect x="30" y="58" width="48" height="14" rx="6" fill="${B}"/><rect x="46" y="46" width="28" height="6" rx="3" fill="${BD}"/><rect x="36" y="72" width="5" height="18" fill="${GR}"/><rect x="66" y="72" width="5" height="18" fill="${GR}"/><rect x="10" y="90" width="80" height="3" fill="${GR}"/>`,
+bell:`<rect x="46" y="8" width="8" height="10" rx="2" fill="${YD}"/><path d="M50 16 C32 16 30 34 28 56 C27 64 20 68 18 72 L82 72 C80 68 73 64 72 56 C70 34 68 16 50 16 Z" fill="${Y}"/><path d="M39 30 C37 40 36 50 35 60" stroke="${YL}" stroke-width="4" stroke-linecap="round" fill="none"/><rect x="16" y="70" width="68" height="7" rx="3.5" fill="${YD}"/><circle cx="50" cy="84" r="7" fill="${YD}"/>`,
+track:`<path d="M0 96 L40 22 L60 22 L100 96 Z" fill="${GL}"/>${ties()}<path d="M42 22 L14 96 M58 22 L86 96" stroke="${GR}" stroke-width="4"/>`,
+bridge:`<rect x="0" y="78" width="100" height="18" fill="${BM}"/><path d="M10 88 q5 -3 10 0 t10 0 M60 90 q5 -3 10 0 t10 0" stroke="#fff" stroke-width="2" fill="none"/><path d="M4 45 H96 V82 H86 Q86 60 72 60 Q58 60 58 82 H42 Q42 60 28 60 Q14 60 14 82 H4 Z" fill="#D85A30"/><rect x="4" y="38" width="92" height="7" fill="${RD}"/><rect x="20" y="24" width="26" height="13" rx="3" fill="${B}"/><rect x="49" y="26" width="24" height="11" rx="2" fill="${Y}"/><circle cx="26" cy="37" r="3" fill="${K}"/><circle cx="40" cy="37" r="3" fill="${K}"/><circle cx="55" cy="37" r="3" fill="${K}"/><circle cx="67" cy="37" r="3" fill="${K}"/>`,
+tunnel:`<path d="M0 90 L30 24 Q40 12 50 18 Q60 10 72 26 L100 90 Z" fill="${G}"/><path d="M38 30 Q44 22 50 26 Q56 20 62 30" stroke="${GM}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M30 90 V62 Q30 42 50 42 Q70 42 70 62 V90 Z" fill="${GL}"/><path d="M36 90 V63 Q36 48 50 48 Q64 48 64 63 V90 Z" fill="${K}"/><rect x="0" y="88" width="100" height="8" fill="${GM}"/><path d="M44 88 L36 98 M56 88 L64 98" stroke="${GR}" stroke-width="3"/>`,
+signal:`<rect x="46" y="60" width="8" height="30" fill="${GR}"/><rect x="34" y="88" width="32" height="6" rx="2" fill="${D}"/><rect x="34" y="6" width="32" height="58" rx="10" fill="${K}"/><circle cx="50" cy="20" r="7.5" fill="${R}"/><circle cx="50" cy="36" r="7.5" fill="${Y}"/><circle cx="50" cy="52" r="7.5" fill="${GM}"/>`,
+station:`<path d="M6 40 L50 12 L94 40 Z" fill="${R}"/><rect x="14" y="40" width="72" height="46" fill="${YL}"/><circle cx="50" cy="29" r="7" fill="#fff" stroke="${K}" stroke-width="1.5"/><path d="M50 25 V29 H53" stroke="${K}" stroke-width="1.5" fill="none"/><rect x="42" y="60" width="16" height="26" rx="2" fill="${BD}"/><rect x="22" y="52" width="14" height="14" rx="1" fill="${BM}"/><rect x="64" y="52" width="14" height="14" rx="1" fill="${BM}"/><rect x="4" y="86" width="92" height="4" fill="${GR}"/>`,
+platform:`<rect x="6" y="12" width="88" height="7" rx="2" fill="${G}"/><rect x="16" y="19" width="4" height="44" fill="${GR}"/><rect x="80" y="19" width="4" height="44" fill="${GR}"/><rect x="34" y="25" width="32" height="16" rx="3" fill="${B}"/><text x="50" y="38" font-size="13" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial">1</text><rect x="4" y="62" width="92" height="16" fill="${GL}"/><rect x="4" y="73" width="92" height="3" fill="${Y}"/><rect x="4" y="78" width="92" height="6" fill="#B4B2A9"/><rect x="4" y="90" width="92" height="3" fill="${GR}"/>`,
+ticket:`<g transform="rotate(-8 50 50)"><rect x="10" y="28" width="80" height="44" rx="6" fill="${Y}"/><line x1="64" y1="32" x2="64" y2="68" stroke="#fff" stroke-width="2" stroke-dasharray="3 3"/><rect x="18" y="37" width="36" height="5" rx="2" fill="#fff"/><rect x="18" y="47" width="26" height="5" rx="2" fill="#fff" fill-opacity=".8"/><rect x="18" y="57" width="32" height="5" rx="2" fill="#fff" fill-opacity=".6"/><rect x="69" y="42" width="15" height="11" rx="2" fill="${R}"/><circle cx="72" cy="55" r="2" fill="${K}"/><circle cx="81" cy="55" r="2" fill="${K}"/></g>`,
+clock:`<rect x="46" y="4" width="8" height="10" fill="${BD}"/><circle cx="50" cy="52" r="38" fill="${B}"/><circle cx="50" cy="52" r="31" fill="#fff"/><g transform="translate(0 2)">${radial(12,25,29,K,3,'butt')}</g><path d="M50 52 V31" stroke="${K}" stroke-width="4" stroke-linecap="round"/><path d="M50 52 L64 59" stroke="${K}" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="52" r="3" fill="${R}"/>`,
+driver:`<path d="M24 94 Q24 66 50 66 Q76 66 76 94 Z" fill="${BD}"/><path d="M40 66 L50 77 L60 66 Z" fill="${R}"/><circle cx="50" cy="45" r="18" fill="${SK}"/><path d="M30 39 Q32 19 50 19 Q68 19 70 39 Z" fill="#0C447C"/><rect x="38" y="25" width="24" height="4" rx="2" fill="#fff" fill-opacity=".6"/><rect x="27" y="36" width="46" height="5" rx="2.5" fill="${K}"/><circle cx="43" cy="47" r="2.2" fill="${K}"/><circle cx="57" cy="47" r="2.2" fill="${K}"/><path d="M44 54 Q50 59 56 54" stroke="${K}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+passenger:`<path d="M16 94 Q16 66 40 66 Q64 66 64 94 Z" fill="${G}"/><circle cx="40" cy="45" r="17" fill="${SK}"/><path d="M23 44 Q23 25 40 25 Q57 25 57 44 Q51 33 40 33 Q29 33 23 44 Z" fill="${D}"/><circle cx="34" cy="47" r="2.2" fill="${K}"/><circle cx="46" cy="47" r="2.2" fill="${K}"/><path d="M35 54 Q40 58 45 54" stroke="${K}" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M72 62 V55 H86 V62" stroke="${BR}" stroke-width="3" fill="none"/><rect x="66" y="61" width="28" height="31" rx="4" fill="${Y}"/><rect x="66" y="73" width="28" height="3" fill="${YD}"/>`,
+diesel:`<circle cx="30" cy="24" r="4" fill="${GR}" class="puff"/><circle cx="37" cy="16" r="5.5" fill="#B4B2A9"/><rect x="24" y="33" width="9" height="8" rx="1" fill="${K}"/><rect x="8" y="40" width="58" height="30" rx="4" fill="#D85A30"/><path d="M16 46 V58 M22 46 V58 M28 46 V58 M34 46 V58 M40 46 V58 M46 46 V58" stroke="#993C1D" stroke-width="2.5" stroke-linecap="round"/><rect x="60" y="26" width="32" height="44" rx="4" fill="#D85A30"/><rect x="57" y="23" width="38" height="5" rx="2" fill="#993C1D"/><rect x="65" y="32" width="22" height="13" rx="2" fill="${YL}"/><circle cx="88" cy="58" r="3.5" fill="${YM}"/><rect x="8" y="62" width="84" height="4" fill="${Y}"/><rect x="6" y="70" width="88" height="5" rx="2" fill="${K}"/>${wh(17,79,6)}${wh(31,79,6)}${wh(69,79,6)}${wh(83,79,6)}${rail(87)}`,
+electric:`<line x1="0" y1="9" x2="100" y2="9" stroke="${K}" stroke-width="1.5"/><path d="M44 31 L58 20 L46 12" stroke="${D}" stroke-width="2.5" fill="none" stroke-linejoin="round"/><rect x="36" y="10" width="20" height="3" rx="1.5" fill="${D}"/><rect x="40" y="29" width="12" height="4" rx="1" fill="${GR}"/><path d="M8 70 L8 42 Q8 33 17 33 L83 33 Q92 33 92 42 L92 70 Z" fill="#1D9E75"/><rect x="12" y="39" width="13" height="11" rx="2" fill="#E1F5EE"/><rect x="75" y="39" width="13" height="11" rx="2" fill="#E1F5EE"/><rect x="30" y="40" width="9" height="8" rx="1.5" fill="#9FE1CB"/><rect x="61" y="40" width="9" height="8" rx="1.5" fill="#9FE1CB"/><polygon points="52,38 43,54 50,54 46,66 58,49 51,49 55,38" fill="${YM}"/><rect x="8" y="60" width="84" height="4" fill="#085041"/><rect x="6" y="70" width="88" height="5" rx="2" fill="${K}"/>${wh(17,79,6)}${wh(31,79,6)}${wh(69,79,6)}${wh(83,79,6)}${rail(87)}`,
+pantograph:`<line x1="0" y1="14" x2="100" y2="14" stroke="${K}" stroke-width="2"/><path d="M36 10 L41 4 L44 9 L49 3" stroke="${Y}" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="28" y="15" width="38" height="6" rx="3" fill="${D}"/><path d="M34 70 L68 44 L46 21" stroke="${R}" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 70 L66 50" stroke="${RD}" stroke-width="2" stroke-linecap="round"/><circle cx="68" cy="44" r="4" fill="${K}"/><rect x="22" y="68" width="56" height="6" rx="2" fill="${D}"/><rect x="26" y="74" width="8" height="10" fill="${GL}"/><rect x="66" y="74" width="8" height="10" fill="${GL}"/><path d="M26 77 H34 M26 81 H34 M66 77 H74 M66 81 H74" stroke="${GR}" stroke-width="1.5"/><rect x="4" y="84" width="92" height="12" rx="3" fill="#1D9E75"/>`,
+crossing:`<rect x="4" y="78" width="92" height="3" fill="${GR}"/><rect x="4" y="88" width="92" height="3" fill="${GR}"/><path d="M12 76 V93 M28 76 V93 M44 76 V93 M60 76 V93 M76 76 V93 M92 76 V93" stroke="${BR}" stroke-width="4"/><rect x="21" y="18" width="6" height="74" fill="${GR}"/><g transform="rotate(35 24 20)"><rect x="4" y="16" width="40" height="8" rx="2" fill="#fff" stroke="${R}" stroke-width="2"/></g><g transform="rotate(-35 24 20)"><rect x="4" y="16" width="40" height="8" rx="2" fill="#fff" stroke="${R}" stroke-width="2"/></g><rect x="8" y="38" width="32" height="5" rx="2" fill="${K}"/><circle cx="12" cy="48" r="7" fill="${K}"/><circle cx="12" cy="48" r="4.5" fill="${R}"/><circle cx="36" cy="48" r="7" fill="${K}"/><circle cx="36" cy="48" r="4.5" fill="${R}"/><rect x="18" y="58" width="12" height="10" rx="2" fill="${D}"/><rect x="30" y="60" width="66" height="6" fill="#fff" stroke="${R}" stroke-width="1"/><path d="M38 60 h8 v6 h-8 Z M54 60 h8 v6 h-8 Z M70 60 h8 v6 h-8 Z M86 60 h8 v6 h-8 Z" fill="${R}"/>`,
+depot:`<polygon points="4,42 50,16 96,42" fill="#5F5E5A"/><circle cx="50" cy="32" r="5" fill="${YL}"/><rect x="10" y="42" width="80" height="46" fill="#F0997B"/><path d="M10 52 H90 M10 64 H90 M10 76 H90" stroke="#D85A30" stroke-width="1"/><path d="M17 88 V62 Q17 51 30 51 Q43 51 43 62 V88 Z" fill="${K}"/><path d="M57 88 V62 Q57 51 70 51 Q83 51 83 62 V88 Z" fill="${K}"/><rect x="21" y="64" width="18" height="24" rx="4" fill="${B}"/><rect x="24" y="68" width="12" height="8" rx="1.5" fill="${BL}"/><circle cx="25" cy="82" r="2" fill="${YM}"/><circle cx="35" cy="82" r="2" fill="${YM}"/><rect x="61" y="64" width="18" height="24" rx="4" fill="${Y}"/><rect x="64" y="68" width="12" height="8" rx="1.5" fill="${YL}"/><circle cx="65" cy="82" r="2" fill="#fff"/><circle cx="75" cy="82" r="2" fill="#fff"/><rect x="2" y="88" width="96" height="4" fill="${GR}"/><path d="M24 92 L18 99 M36 92 L40 99 M64 92 L60 99 M76 92 L82 99" stroke="${GR}" stroke-width="2.5"/>`,
+cab:`<rect x="4" y="6" width="92" height="88" rx="8" fill="${D}"/><rect x="12" y="14" width="76" height="40" rx="5" fill="${BL}"/><circle cx="74" cy="25" r="5" fill="${Y}"/><rect x="12" y="40" width="76" height="14" fill="#C0DD97"/><path d="M47 40 L32 54 M53 40 L68 54" stroke="${GR}" stroke-width="2.5"/><rect x="8" y="58" width="84" height="32" rx="5" fill="#5F5E5A"/><circle cx="24" cy="70" r="8" fill="#fff" stroke="${K}" stroke-width="1.5"/><path d="M24 70 L28 65" stroke="${R}" stroke-width="2" stroke-linecap="round"/><circle cx="45" cy="70" r="8" fill="#fff" stroke="${K}" stroke-width="1.5"/><path d="M45 70 L41 65" stroke="${R}" stroke-width="2" stroke-linecap="round"/><circle cx="21" cy="84" r="3" fill="${R}"/><circle cx="30" cy="84" r="3" fill="${GM}"/><circle cx="39" cy="84" r="3" fill="${YM}"/><rect x="64" y="64" width="22" height="20" rx="3" fill="${K}"/><path d="M75 80 L69 63" stroke="${GL}" stroke-width="4" stroke-linecap="round"/><circle cx="69" cy="62" r="5" fill="${R}"/>`,
+switch:`${[14,24,34,44,54,64,74,84].map(y=>`<rect x="26" y="${y}" width="32" height="4" rx="1" fill="${BR}"/>`).join('')}<rect x="-16" y="-2" width="32" height="4" rx="1" fill="${BR}" transform="translate(55 43) rotate(30)"/><rect x="-16" y="-2" width="32" height="4" rx="1" fill="${BR}" transform="translate(68.6 25.6) rotate(40)"/><path d="M34 4 V96 M50 4 V96" stroke="${GR}" stroke-width="3.5"/><path d="M34 72 Q41 43 72 10 M50 72 Q57 45 88 18" stroke="${GR}" stroke-width="3.5" fill="none"/><path d="M34 74 L40 56" stroke="${Y}" stroke-width="3.5" stroke-linecap="round"/><rect x="66" y="80" width="20" height="8" rx="2" fill="${D}"/><path d="M76 80 L84 67" stroke="${R}" stroke-width="4" stroke-linecap="round"/><circle cx="84" cy="66" r="3.5" fill="${R}"/>`,
+choo:`<path d="M14 16 H86 Q92 16 92 22 V62 Q92 68 86 68 H42 L26 84 L29 68 H14 Q8 68 8 62 V22 Q8 16 14 16 Z" fill="${BL}" stroke="${B}" stroke-width="2"/><circle cx="29" cy="25" r="3.5" fill="${GL}"/><circle cx="36" cy="22" r="4" fill="${GL}"/><rect x="26" y="29" width="5" height="9" fill="${K}"/><rect x="20" y="37" width="24" height="17" rx="3" fill="${R}"/><rect x="40" y="31" width="14" height="23" rx="2" fill="${R}"/><rect x="43" y="34" width="8" height="7" rx="1" fill="${RL}"/><rect x="58" y="39" width="26" height="15" rx="3" fill="${Y}"/><circle cx="27" cy="57" r="3.5" fill="${K}"/><circle cx="42" cy="57" r="3.5" fill="${K}"/><circle cx="64" cy="57" r="3.5" fill="${K}"/><circle cx="78" cy="57" r="3.5" fill="${K}"/>`,
+toot:`<path d="M12 42 H28 L64 22 V78 L28 58 H12 Z" fill="${Y}"/><rect x="62" y="20" width="7" height="60" rx="3.5" fill="${YD}"/><rect x="12" y="42" width="6" height="16" fill="${YD}"/><path d="M77 38 Q83 50 77 62 M86 30 Q96 50 86 70" stroke="${B}" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+aboard:`<rect x="6" y="26" width="72" height="50" rx="6" fill="${R}"/><rect x="6" y="26" width="72" height="6" rx="3" fill="${RD}"/><rect x="12" y="38" width="14" height="14" rx="2" fill="${RL}"/><rect x="30" y="38" width="14" height="14" rx="2" fill="${RL}"/><rect x="52" y="36" width="20" height="40" fill="${YL}"/><path d="M98 49 H84 V41 L66 56 L84 71 V63 H98 Z" fill="${G}"/><rect x="50" y="76" width="24" height="4" fill="${K}"/>${wh(18,82,6)}${wh(36,82,6)}`,
+};
+
+const CATS=[
+ {k:'type',n:'火车家族',bg:'#E6F1FB'},
+ {k:'part',n:'火车身上',bg:'#FAEEDA'},
+ {k:'rail',n:'铁路沿线',bg:'#EAF3DE'},
+ {k:'act',n:'铁路上的人',bg:'#FBEAF0'},
+ {k:'fun',n:'声音和口令',bg:'#EEEDFE'}
+];
+const W=[
+['train','/treɪn/','火车','I like trains!','我喜欢火车！','type','train'],
+['engine','/ˈendʒɪn/','火车头','The engine pulls the cars.','火车头拉着车厢。','type','engine'],
+['car','/kɑːr/','车厢','This train has five cars.','这列火车有五节车厢。','type','car'],
+['steam train','/ˈstiːm treɪn/','蒸汽火车','The steam train goes puff, puff.','蒸汽火车噗噗地冒气。','type','steamtrain'],
+['diesel train','/ˈdiːzəl treɪn/','内燃机车','The diesel train goes rumble, rumble.','内燃机车轰隆隆地响。','type','diesel'],
+['electric train','/ɪˈlektrɪk treɪn/','电力机车','The electric train gets power from the wire.','电力机车从电线上取电。','type','electric'],
+['bullet train','/ˈbʊlɪt treɪn/','子弹头列车','The bullet train is very fast.','子弹头列车非常快。','type','bullet'],
+['subway','/ˈsʌbweɪ/','地铁','We take the subway.','我们坐地铁。','type','subway'],
+['tram','/træm/','有轨电车','The tram runs on the street.','有轨电车在马路上跑。','type','tram'],
+['freight train','/ˈfreɪt treɪn/','货运列车','The freight train carries boxes.','货运列车拉着箱子。','type','freight'],
+['wheel','/wiːl/','车轮','The wheels go round and round.','车轮转呀转。','part','wheel'],
+['window','/ˈwɪndoʊ/','车窗','Look out of the window!','看看窗外！','part','window'],
+['door','/dɔːr/','车门','The door opens.','车门开了。','part','door'],
+['light','/laɪt/','车灯','The light is on.','车灯亮了。','part','light'],
+['whistle','/ˈwɪsəl/','哨子','Blow the whistle!','吹响哨子！','part','whistle'],
+['smoke','/smoʊk/','烟','Smoke comes out.','冒烟啦。','part','smoke'],
+['seat','/siːt/','座位','Sit in your seat.','坐到你的座位上。','part','seat'],
+['cab','/kæb/','驾驶室','The driver sits in the cab.','司机坐在驾驶室里。','part','cab'],
+['bell','/bel/','铃铛','Ring the bell!','摇响铃铛！','part','bell'],
+['pantograph','/ˈpæntəɡræf/','受电弓','The pantograph touches the wire.','受电弓贴着上面的电线。','part','pantograph'],
+['switch','/swɪtʃ/','道岔','The switch sends the train to another track.','道岔把火车送到另一条轨道上。','rail','switch'],
+['track','/træk/','轨道','The train runs on the track.','火车在轨道上跑。','rail','track'],
+['bridge','/brɪdʒ/','桥','The train goes over the bridge.','火车开过大桥。','rail','bridge'],
+['tunnel','/ˈtʌnəl/','隧道','Into the tunnel we go!','我们钻进隧道啦！','rail','tunnel'],
+['signal','/ˈsɪɡnəl/','信号灯','The signal is green.','信号灯是绿色的。','rail','signal'],
+['level crossing','/ˌlevəl ˈkrɔːsɪŋ/','道口','Stop and wait at the level crossing.','在道口停下来等一等。','rail','crossing'],
+['station','/ˈsteɪʃən/','车站','We are at the station.','我们到车站了。','rail','station'],
+['platform','/ˈplætfɔːrm/','站台','Wait on the platform.','在站台上等车。','rail','platform'],
+['ticket','/ˈtɪkɪt/','车票','Here is my ticket.','这是我的车票。','rail','ticket'],
+['clock','/klɑːk/','时钟','Look at the clock.','看看时钟。','rail','clock'],
+['depot','/ˈdiːpoʊ/','机务段','The trains rest in the depot at night.','晚上火车回机务段休息。','rail','depot'],
+['driver','/ˈdraɪvər/','司机','The driver waves to me.','司机向我挥手。','act','driver'],
+['passenger','/ˈpæsɪndʒər/','乘客','I am a passenger.','我是一名乘客。','act','passenger'],
+['choo-choo','/ˈtʃuː tʃuː/','呜呜（火车声）','Choo-choo! Here it comes.','呜呜！火车来啦。','fun','choo'],
+['toot toot','/tuːt tuːt/','嘟嘟（喇叭声）','Toot toot! Hello!','嘟嘟！你好！','fun','toot'],
+['all aboard','/ˌɔːl əˈbɔːrd/','请上车','All aboard! Let\'s go!','请上车！出发啦！','fun','aboard']
+].map((a,i)=>({i,w:a[0],ipa:a[1],zh:a[2],s:a[3],sz:a[4],cat:a[5],svg:SVG[a[6]]}));
+const catBg=k=>CATS.find(c=>c.k===k).bg;
+const svgOf=(w)=>`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${w.svg}</svg>`;
+const ICON={
+play:`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>`,
+snail:`<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="14" cy="12" r="6"/><path d="M2 19h18v2H4a2 2 0 0 1-2-2zM4 13l-1-4 1.5-.3L5.5 12H8v7H4z"/></svg>`,
+zoom:`<svg viewBox="0 0 24 24" fill="none" stroke="#5F5E5A" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg>`,
+star:(on)=>`<svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z" fill="${on?'#EF9F27':'#E8E2D6'}"/></svg>`
+};
+
+/* 发音 */
+let slow=localStorage.getItem('tr-slow')==='1',ttsOnly=false,fails=0;
+const player=new Audio();player.preload='auto';
+function tts(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=slow?.7:.95;const v=speechSynthesis.getVoices().find(v=>/^en[-_]US/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}
+function speak(text){
+  const t=text.replace(/-/g,' ');
+  if(ttsOnly){tts(t);return}
+  let fell=false;const fb=()=>{if(fell)return;fell=true;if(++fails>=2)ttsOnly=true;tts(t)};
+  const r=slow?.72:1;
+  player.onerror=fb;
+  player.onloadedmetadata=()=>{player.playbackRate=r};
+  player.src='https://dict.youdao.com/dictvoice?type=2&audio='+encodeURIComponent(t);
+  player.defaultPlaybackRate=r;player.playbackRate=r;
+  const p=player.play();if(p&&p.catch)p.catch(e=>{if(e&&e.name==='NotAllowedError')return;fb()});
+}
+let ac;
+function tone(ok){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();const n=ac.currentTime;(ok?[[660,0],[990,.12]]:[[240,0],[190,.16]]).forEach(([f,d])=>{const o=ac.createOscillator(),g=ac.createGain();o.type=ok?'sine':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,n+d);g.gain.exponentialRampToValueAtTime(ok?.3:.2,n+d+.02);g.gain.exponentialRampToValueAtTime(.0001,n+d+.28);o.connect(g);g.connect(ac.destination);o.start(n+d);o.stop(n+d+.32)})}catch(e){}}
+
+/* 听过记录 */
+let heard=new Set(JSON.parse(localStorage.getItem('tr-heard')||'[]').filter(x=>W.some(w=>w.w===x)));
+function markHeard(w){if(heard.has(w.w))return;heard.add(w.w);localStorage.setItem('tr-heard',JSON.stringify([...heard]));const c=document.querySelector(`.card[data-i="${w.i}"]`);if(c)c.classList.add('done');renderProg()}
+function renderProg(){document.getElementById('progTxt').textContent=`已听过 ${heard.size} / ${W.length}`;document.getElementById('progBar').style.width=(heard.size/W.length*100)+'%'}
+
+/* 顶部小火车 */
+document.getElementById('runner').innerHTML=`<svg width="190" height="50" viewBox="0 0 190 50"><g transform="translate(190 0) scale(-1 1)"><circle cx="20" cy="6" r="5" fill="#fff" class="puff"/><rect x="16" y="9" width="7" height="11" fill="${K}"/><rect x="6" y="18" width="34" height="18" rx="6" fill="${B}"/><rect x="34" y="8" width="20" height="28" rx="3" fill="${B}"/><rect x="31" y="5" width="26" height="5" rx="2" fill="${BD}"/><rect x="38" y="13" width="12" height="9" rx="2" fill="${BL}"/><rect x="58" y="14" width="40" height="22" rx="4" fill="${R}"/><rect x="62" y="18" width="10" height="8" rx="1.5" fill="${RL}"/><rect x="76" y="18" width="10" height="8" rx="1.5" fill="${RL}"/><rect x="102" y="14" width="40" height="22" rx="4" fill="${Y}"/><rect x="106" y="18" width="10" height="8" rx="1.5" fill="${YL}"/><rect x="120" y="18" width="10" height="8" rx="1.5" fill="${YL}"/><rect x="146" y="14" width="40" height="22" rx="4" fill="${G}"/><rect x="150" y="18" width="10" height="8" rx="1.5" fill="${GLL}"/><rect x="164" y="18" width="10" height="8" rx="1.5" fill="${GLL}"/>${[14,30,46,66,90,110,134,154,178].map(x=>`<circle cx="${x}" cy="40" r="5" fill="${K}"/>`).join('')}</g></svg>`;
+
+/* 认识单词 */
+let cat='all';
+const chips=document.getElementById('chips'),grid=document.getElementById('grid');
+function list(){return cat==='all'?W:W.filter(w=>w.cat===cat)}
+function renderChips(){
+  chips.innerHTML=`<button class="bigbtn" id="bigMode">${ICON.zoom.replace('#5F5E5A','#185FA5')}大卡片</button>`+[{k:'all',n:'全部 '+W.length}].concat(CATS.map(c=>({k:c.k,n:c.n}))).map(c=>`<button class="chip ${c.k===cat?'on':''}" data-k="${c.k}">${c.n}</button>`).join('');
+  chips.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{cat=b.dataset.k;renderChips();renderGrid()});
+  document.getElementById('bigMode').onclick=()=>openDetail(0);
+  document.querySelector('#bigMode svg').setAttribute('style','width:16px;height:16px');
+}
+function renderGrid(){
+  grid.innerHTML=list().map(w=>`<div class="card ${heard.has(w.w)?'done':''}" data-i="${w.i}"><span class="heard">${ICON.star(true)}</span><button class="zoom" aria-label="放大">${ICON.zoom}</button><div class="pic" style="background:${catBg(w.cat)}">${svgOf(w)}</div><div class="word">${w.w}</div><div class="zh">${w.zh}</div></div>`).join('');
+  grid.querySelectorAll('.card').forEach(c=>{
+    const w=W[+c.dataset.i];
+    c.onclick=e=>{
+      if(e.target.closest('.zoom')){openDetail(list().indexOf(w));return}
+      speak(w.w);markHeard(w);c.classList.remove('bounce');void c.offsetWidth;c.classList.add('bounce');
+    };
+  });
+}
+
+/* 大卡片 */
+const mask=document.getElementById('mask');let di=0;
+function openDetail(i){di=i;showDetail();mask.classList.add('show')}
+function showDetail(){
+  const L=list(),w=L[di];
+  const pic=document.getElementById('dpic');pic.style.background=catBg(w.cat);pic.innerHTML=svgOf(w);
+  document.getElementById('dword').textContent=w.w;
+  document.getElementById('dipa').textContent=w.ipa;
+  document.getElementById('dzh').textContent=w.zh;
+  document.getElementById('sen').textContent=w.s;
+  document.getElementById('scn').textContent=w.sz;
+  document.getElementById('dpos').textContent=`${di+1} / ${L.length}`;
+  speak(w.w);markHeard(w);
+}
+function step(d){const L=list();di=(di+d+L.length)%L.length;showDetail()}
+document.getElementById('dplay').innerHTML=ICON.play+'再听一次';
+document.getElementById('dslow').innerHTML=ICON.snail+'慢慢读';
+document.getElementById('splay').innerHTML=ICON.play;
+document.getElementById('dplay').onclick=()=>speak(list()[di].w);
+document.getElementById('dslow').onclick=()=>{const o=slow;slow=true;speak(list()[di].w);slow=o};
+document.getElementById('splay').onclick=()=>speak(list()[di].s);
+document.getElementById('dpic').onclick=()=>speak(list()[di].w);
+document.getElementById('prevBtn').onclick=()=>step(-1);
+document.getElementById('nextBtn').onclick=()=>step(1);
+document.getElementById('closeBtn').onclick=()=>mask.classList.remove('show');
+mask.onclick=e=>{if(e.target===mask)mask.classList.remove('show')};
+document.addEventListener('keydown',e=>{if(!mask.classList.contains('show'))return;if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1);if(e.key==='Escape')mask.classList.remove('show')});
+let tx=null;const panel=document.getElementById('panel');
+panel.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+panel.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)step(dx<0?1:-1);tx=null});
+
+/* 慢速开关 */
+const sw=document.getElementById('slowSw');
+function renderSw(){sw.classList.toggle('on',slow)}
+sw.onclick=()=>{slow=!slow;localStorage.setItem('tr-slow',slow?'1':'0');renderSw()};
+
+/* 标签切换 */
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  document.getElementById('learn').classList.toggle('hide',b.dataset.tab!=='learn');
+  document.getElementById('quiz').classList.toggle('hide',b.dataset.tab!=='quiz');
+});
+
+/* 听音选图 */
+const Q={scope:'all',items:[],i:0,ok:0,lock:false};
+const CAR_COLORS=[R,Y,G,'#7F77DD',B,'#D4537E'];
+const qtrain=document.getElementById('qtrain');
+document.getElementById('qengine').innerHTML=`<svg viewBox="0 0 100 100">${colorTrain(B,BD,BL)}</svg>`;
+document.getElementById('listenBtn').innerHTML=ICON.play+'听一听';
+function renderScope(){
+  const s=document.getElementById('scope');
+  s.innerHTML=[{k:'all',n:'全部 '+W.length+' 词'}].concat(CATS.map(c=>({k:c.k,n:c.n}))).map(c=>`<button class="chip ${c.k===Q.scope?'on':''}" data-k="${c.k}">${c.n}</button>`).join('');
+  s.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{Q.scope=b.dataset.k;renderScope()});
+}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function startQuiz(){
+  const pool=Q.scope==='all'?W:W.filter(w=>w.cat===Q.scope);
+  let items=shuffle(pool);while(items.length<10)items=items.concat(shuffle(pool));
+  Q.items=items.slice(0,10);Q.i=0;Q.ok=0;
+  qtrain.classList.remove('go');qtrain.style.transition='none';qtrain.querySelectorAll('.car').forEach(c=>c.remove());void qtrain.offsetWidth;qtrain.style.transition='';
+  show('qplay');round();
+}
+function show(id){['qstart','qplay','qend'].forEach(x=>document.getElementById(x).classList.toggle('hide',x!==id))}
+function round(){
+  Q.lock=false;const ans=Q.items[Q.i];
+  const others=shuffle(W.filter(w=>w!==ans)).slice(0,3);
+  const opts=shuffle([ans,...others]);
+  document.getElementById('qi').textContent=Q.i+1;
+  document.getElementById('qc').textContent=Q.ok;
+  const box=document.getElementById('opts');box.classList.remove('revealed');
+  box.innerHTML=opts.map(w=>`<button class="opt" data-i="${w.i}"><div class="pic" style="background:${catBg(w.cat)}">${svgOf(w)}</div><div class="lab">${w.w}</div></button>`).join('');
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b,ans));
+  setTimeout(()=>sayQ(),250);
+}
+function sayQ(){const b=document.getElementById('listenBtn');b.classList.remove('pulse');void b.offsetWidth;b.classList.add('pulse');speak(Q.items[Q.i].w)}
+document.getElementById('listenBtn').onclick=sayQ;
+function pick(btn,ans){
+  if(Q.lock)return;Q.lock=true;
+  const box=document.getElementById('opts');
+  const right=+btn.dataset.i===ans.i;
+  box.querySelector(`.opt[data-i="${ans.i}"]`).classList.add('right');
+  box.classList.add('revealed');markHeard(ans);
+  if(right){tone(true);Q.ok++;addCar(ans);document.getElementById('qc').textContent=Q.ok}
+  else{tone(false);btn.classList.add('wrong');setTimeout(()=>speak(ans.w),450)}
+  setTimeout(next,right?1100:2200);
+}
+function addCar(w){
+  const c=document.createElement('div');c.className='car';c.style.background=CAR_COLORS[(Q.ok-1)%CAR_COLORS.length];
+  c.innerHTML=`<div class="ic">${svgOf(w)}</div>`;qtrain.appendChild(c);
+}
+function next(){Q.i++;if(Q.i<10)round();else finish()}
+function finish(){
+  const n=Q.ok,stars=n>=9?3:n>=6?2:n>=1?1:0;
+  document.getElementById('stars').innerHTML=[0,1,2].map(i=>ICON.star(i<stars)).join('');
+  document.getElementById('endTitle').textContent=n>=9?'Great job!':n>=6?'Well done!':'Good try!';
+  document.getElementById('endTxt').innerHTML=n>0?`小火车挂上了 <b>${n}</b> 节车厢，出发啦！`:'这次一节也没挂上，先去「认识单词」里多听几遍吧。';
+  show('qend');
+  if(n>0){setTimeout(()=>{speak('All aboard!');qtrain.classList.add('go')},400)}
+}
+document.getElementById('startBtn').onclick=startQuiz;
+document.getElementById('againBtn').onclick=()=>{qtrain.style.transition='none';qtrain.classList.remove('go');qtrain.querySelectorAll('.car').forEach(c=>c.remove());void qtrain.offsetWidth;qtrain.style.transition='';show('qstart')};
+
+if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{}}
+document.getElementById('total').textContent=W.length;renderSw();renderChips();renderGrid();renderScope();renderProg();
+</script>
+</body>
+</html>
