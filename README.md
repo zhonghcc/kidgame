@@ -18,12 +18,26 @@
 index.html        入口页（导航），右上角回到 zhonghcc.com 主页
 favicon.svg
 train/index.html  小火车英语
-music/index.html  小音符乐理闯关，声音由 Web Audio 实时合成
+music/index.html  小音符乐理闯关
+music/samples/piano/  钢琴采样，C2 到 A5 每隔小三度一个，共 16 个 mp3（约 1.2MB）
 raz/index.html    RAZ Level C Games
 raz/audio/        句子朗读音频（mp3）
 ```
 
 仓库根目录就是站点根目录。入口页用相对路径链接各游戏，各游戏顶部的返回链接指向站点根 `/`。
+
+## 乐理页的声音
+
+钢琴音用采样播放，节拍器、拍手、木鱼仍由 Web Audio 实时合成。所有发声都按同一个音频时钟预先排好时间，示范演奏和拍击判分共用这个时钟。
+
+- 页面打开即下载采样，第一次点按创建音频环境后解码；解码时每个采样只保留前 6 秒并混成单声道，控制内存占用
+- 其他音取最近的采样点按播放速率移调，最多偏 1.5 个半音
+- 某个采样还没就绪或下载失败时，这个音自动改用合成音，直接双击打开文件时全程是合成音
+- 苹果设备的静音模式解锁处理与采样无关，照常保留
+
+## 素材与许可
+
+- 钢琴采样：[Salamander Grand Piano](https://archive.org/details/SalamanderGrandPianoV3)，Alexander Holm 录制，[CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/)。本仓库使用的是 [Tone.js](https://github.com/Tonejs/Tone.js) 示例转好的 mp3 版本，页面的家长说明里已注明出处
 
 ## 本地预览
 

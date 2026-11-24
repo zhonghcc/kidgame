@@ -251,14 +251,64 @@ function ac(){
     const comp=AC.createDynamicsCompressor();master.connect(comp);comp.connect(AC.destination);
     const len=Math.floor(AC.sampleRate*0.25);noiseBuf=AC.createBuffer(1,len,AC.sampleRate);
     const d=noiseBuf.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
+    decodePiano(AC);
   }
   if(AC.state!=='running'&&AC.resume){const pr=AC.resume();if(pr&&pr.catch)pr.catch(()=>{});}
   return AC;
 }
 function track(n){live.add(n);n.onended=()=>live.delete(n);return n;}
 function killAll(){live.forEach(n=>{try{n.stop(0);}catch(e){}});live.clear();}
+/* ---- 钢琴采样 ----
+ * 萨拉曼德三角钢琴（Salamander Grand Piano，Alexander Holm，CC-BY 3.0），C2 到 A5 每隔小三度一个采样点，
+ * 共 16 个文件放在 samples/piano/。中间的音取最近的采样点按播放速率移调，最多偏 1.5 个半音，听不出音色变化。
+ * 页面打开就开始下载；创建音频环境后解码。某个采样还没就绪时，这个音临时用下面的合成音代替，保证第一题也有声音。 */
+const PIANO_DIR='samples/piano/';
+const PIANO_PTS=[];[2,3,4,5].forEach(o=>[['C',0],['Ds',3],['Fs',6],['A',9]].forEach(([n,s])=>PIANO_PTS.push({midi:12*(o+1)+s,file:n+o+'.mp3'})));
+// 采样比原来的合成音轻得多（实测中央 C 的有效值约为合成音的 1/4.4，A5 约 1/9.5），
+// 按音区补偿：中央 C 放大 5 倍，每高一个八度再多 1.26 倍，听感和原来的音量层次接近
+const pianoGain=midi=>5*Math.pow(2,(midi-60)/36);
+const SAMPLE_KEEP=6;             // 每个采样只保留前 6 秒并混成单声道，16 个采样解码后约 18MB，平板也吃得消
+const pianoRaw=new Map(),pianoBuf=new Map();
+function prefetchPiano(){
+  if(!window.fetch||location.protocol==='file:')return;   // 直接双击打开文件时取不到采样，全程用合成音
+  PIANO_PTS.forEach(p=>pianoRaw.set(p.midi,fetch(PIANO_DIR+p.file).then(r=>r.ok?r.arrayBuffer():null).catch(()=>null)));
+}
+function decodePiano(c){
+  pianoRaw.forEach((pr,midi)=>pr.then(ab=>{
+    if(!ab)return;
+    // 老版本 Safari 的 decodeAudioData 只支持回调写法
+    try{const r=c.decodeAudioData(ab,b=>pianoBuf.set(midi,trimSample(c,b)),()=>{});if(r&&r.catch)r.catch(()=>{});}catch(e){}
+  }));
+}
+function trimSample(c,b){
+  const sr=b.sampleRate,n=Math.min(b.length,Math.floor(sr*SAMPLE_KEEP)),chs=b.numberOfChannels;
+  const o=c.createBuffer(1,n,sr),d=o.getChannelData(0);
+  for(let k=0;k<chs;k++){const s=b.getChannelData(k);for(let i=0;i<n;i++)d[i]+=s[i]/chs;}
+  const fade=Math.floor(sr*0.2);for(let i=0;i<fade&&i<n;i++)d[n-1-i]*=i/fade;   // 截断处淡出，避免爆音
+  return o;
+}
+function nearestSample(midi){
+  let best=null,dist=99;
+  pianoBuf.forEach((b,m)=>{const d=Math.abs(m-midi);if(d<dist){dist=d;best=m;}});
+  return dist<=3?best:null;
+}
+prefetchPiano();
+
 function piano(midi,t,dur=0.8,vel=0.32){
-  const c=ac();t=t||c.currentTime;const f=440*Math.pow(2,(midi-69)/12);
+  const c=ac();t=t||c.currentTime;
+  const sm=nearestSample(midi);
+  if(sm!==null){
+    const s=c.createBufferSource();s.buffer=pianoBuf.get(sm);s.playbackRate.value=Math.pow(2,(midi-sm)/12);
+    const g=c.createGain(),a=vel*pianoGain(midi),off=t+Math.max(dur,0.25);
+    // 按键期间保持采样自身的衰减，松键后制音器在约 0.3 秒内把声音收掉
+    g.gain.setValueAtTime(a,t);g.gain.setValueAtTime(a,off);g.gain.setTargetAtTime(0.0001,off,0.09);
+    s.connect(g);g.connect(master);s.start(t);s.stop(off+0.6);track(s);
+    return;
+  }
+  synthPiano(midi,t,dur,vel);
+}
+function synthPiano(midi,t,dur,vel){
+  const c=ac();const f=440*Math.pow(2,(midi-69)/12);
   const g=c.createGain();g.connect(master);
   g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vel,t+0.012);
   g.gain.exponentialRampToValueAtTime(vel*0.35,t+0.35);
@@ -774,7 +824,7 @@ function renderHome(){
       <li><b>节奏视唱</b>：四分、二分、附点二分、全音符（单元二、三），可加入四分休止符（单元十）。「唱名模式」在 C 五指位置内出旋律，边唱边拍。拍的准不准由页面自动判定，建议用手机或平板操作。</li>
       <li><b>3/4 与 4/4 拍</b>：音符拍数、补全小节、辨别拍号（单元五、六）、找出拍数不对的小节，以及听强弱规律判断拍号。</li>
       <li><b>听音选片段</b>：在中央C位置内听级进与跳进旋律（单元三、七的听觉训练），「仔细听」难度下干扰选项只差一个音。</li>
-      <li>声音由浏览器实时合成，第一次进入请点一下页面再听；苹果手机、iPad 在静音模式下也能出声，如果还是没声音，先看一下媒体音量。</li>
+      <li>钢琴声音来自萨拉曼德三角钢琴采样（Salamander Grand Piano，Alexander Holm 录制，CC-BY 3.0 许可），节拍器和拍手声由浏览器实时合成。第一次进入请点一下页面再听；苹果手机、iPad 在静音模式下也能出声，如果还是没声音，先看一下媒体音量。</li>
     </ul>
   </details>
   <p class="foot">练习进度只保存在本机浏览器里 · 仅供练习使用</p>`;
