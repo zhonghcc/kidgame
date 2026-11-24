@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>童趣学园 · 孩子的学习小游戏</title>
+<title>童趣学园 Kid Game · 孩子的学习小游戏</title>
 <meta name="description" content="给孩子做的英语、乐理学习小游戏，打开即玩，不用注册。">
 <meta name="theme-color" content="#fff6ea">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 :root{--bg:#fff6ea;--bg2:#ffeedd;--ink:#2b2622;--muted:#857a70;--line:#f1e3d3;--card:#fff;--accent:#ff8a3d}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -21,6 +21,10 @@ a{color:inherit;text-decoration:none}
 .brand{display:flex;align-items:center}
 .brand-logo{width:42px;height:42px;flex:none}
 .brand-name{margin-left:10px;font-size:26px;font-weight:700;letter-spacing:3px}
+.brand-en{margin-left:8px;align-self:flex-end;margin-bottom:5px;font-family:"Avenir Next","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;color:var(--accent);white-space:nowrap}
+/* 回到 zhonghcc.com 主页，位置对应跑者拾穗的登录入口 */
+.home-link{margin-left:auto;padding:4px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:13px;white-space:nowrap;transition:color .15s ease,border-color .15s ease}
+.home-link:hover{color:var(--accent);border-color:var(--accent)}
 .lead{display:block;margin:12px 0 4px;font-family:"Songti SC","STSong","Noto Serif SC",serif;font-size:17px}
 .sub{display:block;margin:0 0 8px;color:var(--muted);font-size:14px;line-height:1.6}
 
@@ -73,6 +77,9 @@ a{color:inherit;text-decoration:none}
     -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%)}
   .hero{padding:72px 0 40px}
   .brand-logo{width:50px;height:50px;filter:drop-shadow(0 0 18px rgba(255,190,92,.45))}
+  .brand-en{font-size:16px;margin-bottom:8px;color:#ffc15e;opacity:.85}
+  .home-link{position:absolute;top:24px;right:16px;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12);color:#9aa3b8}
+  .home-link:hover{color:#ffc15e;border-color:rgba(255,193,94,.5)}
   .brand-name{font-size:40px;background:linear-gradient(100deg,#fff4dc 0%,#ffc15e 50%,#ff8a3d 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
   .lead{color:#f3ecdc;font-size:20px}
   .sub{color:#9aa3b8;font-size:15px}
@@ -106,27 +113,29 @@ a{color:inherit;text-decoration:none}
 <div class="home">
   <header class="hero">
     <div class="brand">
-      <img class="brand-logo" src="favicon.svg" alt="">
+      <img class="brand-logo" src="/favicon.svg" alt="">
       <span class="brand-name">童趣学园</span>
+      <span class="brand-en">Kid Game</span>
+      <a class="home-link" href="https://zhonghcc.com">‹ 回到主页</a>
     </div>
     <span class="lead">玩着玩着，就学会了。</span>
     <span class="sub">给孩子做的英语和乐理小游戏，打开即玩，不用注册，进度只保存在这台设备上。</span>
   </header>
 
   <main id="game-grid" class="grid">
-    <a class="tile t-train" href="/train/">
+    <a class="tile t-train" href="train/">
       <span class="icon"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="9" width="20" height="17" rx="3" fill="#185FA5"/><rect x="8" y="12" width="8" height="6" rx="1.5" fill="#E6F1FB"/><path d="M25 14h7l3 6v6H25z" fill="#E24B4A"/><rect x="27.5" y="16" width="4" height="4" rx="1" fill="#FDE7E7"/><rect x="18" y="5" width="4" height="5" rx="1" fill="#2C2C2A"/><rect x="3" y="25" width="34" height="3" rx="1.5" fill="#2C2C2A"/><circle cx="11" cy="31" r="3.6" fill="#2C2C2A"/><circle cx="11" cy="31" r="1.4" fill="#EF9F27"/><circle cx="29" cy="31" r="3.6" fill="#2C2C2A"/><circle cx="29" cy="31" r="1.4" fill="#EF9F27"/></svg></span>
       <span class="title">小火车英语</span>
       <span class="desc">火车迷最常用的英文单词，带插图和例句，点一点就能听</span>
       <span class="tags"><span class="tag">英语</span><span class="tag">单词</span></span>
     </a>
-    <a class="tile t-music" href="/music/">
+    <a class="tile t-music" href="music/">
       <span class="icon"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#FF6B4A"/><ellipse cx="16" cy="27" rx="6" ry="4.4" fill="#fff" transform="rotate(-20 16 27)"/><path d="M21.4 26V9.5c4 1.5 6.5 4 7 7.5" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/></svg></span>
       <span class="title">小音符乐理闯关</span>
       <span class="desc">跟着菲伯尔第1级看谱、拍节奏、数拍子、练耳朵，每轮都能拿星星</span>
       <span class="tags"><span class="tag">钢琴</span><span class="tag">乐理</span></span>
     </a>
-    <a class="tile t-raz" href="/raz/">
+    <a class="tile t-raz" href="raz/">
       <span class="icon"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="15" width="15" height="15" rx="3.5" fill="#FF8A3D" transform="rotate(-8 10.5 22.5)"/><rect x="22" y="15" width="15" height="15" rx="3.5" fill="#3B7BE8" transform="rotate(7 29.5 22.5)"/><rect x="12.5" y="5" width="15" height="15" rx="3.5" fill="#1F9D63"/><text x="10.5" y="27.2" font-family="Avenir Next,Arial,sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" transform="rotate(-8 10.5 22.5)">A</text><text x="20" y="16.6" font-family="Avenir Next,Arial,sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">B</text><text x="29.5" y="26.8" font-family="Avenir Next,Arial,sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" transform="rotate(7 29.5 22.5)">C</text></svg></span>
       <span class="title">RAZ Level C Games</span>
       <span class="desc">RAZ C 级配套练习：认词、听句子、看图填词，全英文界面</span>
