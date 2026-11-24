@@ -5,121 +5,133 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>童趣学园 Kid Game · 孩子的学习小游戏</title>
 <meta name="description" content="给孩子做的英语、乐理学习小游戏，打开即玩，不用注册。">
-<meta name="theme-color" content="#fff6ea">
+<meta name="theme-color" content="#fff7e8">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
-:root{--bg:#fff6ea;--bg2:#ffeedd;--ink:#2b2622;--muted:#857a70;--line:#f1e3d3;--card:#fff;--accent:#ff8a3d}
+:root{
+  --bg:#fff7e8;--ink:#3a2e26;--muted:#8a7b6e;--line:#f3e2c7;--card:#fff;
+  --orange:#ff8a3d;--sun:#ffc23d;--sky:#4aa3ff;--grass:#3cc47c;--pink:#ff6f91;
+  --round:"Yuanti SC","YouYuan","Hiragino Maru Gothic ProN","Arial Rounded MT Bold",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  --en:"Arial Rounded MT Bold","Avenir Next","Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
-body{min-height:100vh;color:var(--ink);background:linear-gradient(160deg,var(--bg),var(--bg2)) fixed;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",sans-serif}
+body{min-height:100vh;color:var(--ink);font-family:var(--round);
+  background-color:var(--bg);
+  /* 波点底纹 */
+  background-image:radial-gradient(rgba(255,170,90,.16) 2px,transparent 2.5px),radial-gradient(rgba(74,163,255,.12) 2px,transparent 2.5px);
+  background-size:36px 36px,36px 36px;background-position:0 0,18px 18px}
 a{color:inherit;text-decoration:none}
 .page{position:relative;min-height:100vh;overflow:hidden}
-.home{position:relative;max-width:1120px;margin:0 auto;padding:0 16px}
 
-/* 手机：浅色，两列卡片 */
-.hero{padding:26px 0 14px}
-.brand{display:flex;align-items:center}
-.brand-logo{width:42px;height:42px;flex:none}
-.brand-name{margin-left:10px;font-size:26px;font-weight:700;letter-spacing:3px}
-.brand-en{margin-left:8px;align-self:flex-end;margin-bottom:5px;font-family:"Avenir Next","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;color:var(--accent);white-space:nowrap}
-/* 回到 zhonghcc.com 主页，位置对应跑者拾穗的登录入口 */
-.home-link{margin-left:auto;padding:4px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:13px;white-space:nowrap;transition:color .15s ease,border-color .15s ease}
-.home-link:hover{color:var(--accent);border-color:var(--accent)}
-.lead{display:block;margin:12px 0 4px;font-family:"Songti SC","STSong","Noto Serif SC",serif;font-size:17px}
-.sub{display:block;margin:0 0 8px;color:var(--muted);font-size:14px;line-height:1.6}
+/* 角落里的彩色泡泡 */
+.blob{position:absolute;border-radius:50%;pointer-events:none;filter:blur(2px);opacity:.55}
+.b1{width:220px;height:220px;left:-90px;top:-70px;background:radial-gradient(circle at 35% 35%,#ffe08a,#ffc23d)}
+.b2{width:160px;height:160px;right:-60px;top:120px;background:radial-gradient(circle at 35% 35%,#bfe1ff,#4aa3ff);opacity:.35}
+.b3{width:260px;height:260px;right:8%;bottom:-150px;background:radial-gradient(circle at 35% 35%,#ffd0dc,#ff6f91);opacity:.3}
+.b4{width:120px;height:120px;left:6%;bottom:12%;background:radial-gradient(circle at 35% 35%,#c8f2d9,#3cc47c);opacity:.3}
 
-.grid{display:flex;flex-wrap:wrap;margin:4px -6px 16px}
-.tile{position:relative;width:calc(50% - 12px);margin:6px;display:flex;flex-direction:column;padding:16px 14px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 6px 18px rgba(214,150,90,.08);transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
-.tile:active{transform:scale(.985)}
-.tile:hover{transform:translateY(-2px);border-color:rgb(var(--tone));box-shadow:0 8px 22px rgba(var(--tone),.16)}
-.t-train{--tone:24,95,165}
-.t-music{--tone:255,107,74}
-.t-raz{--tone:255,138,61}
-.icon{position:relative;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:13px;background:rgba(var(--tone),.1);margin-bottom:10px}
-.icon svg{width:30px;height:30px}
-.title{position:relative;font-weight:600;font-size:15px;margin-bottom:4px}
-.desc{position:relative;color:var(--muted);font-size:12px;line-height:1.55}
-.tags{position:relative;display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;background:rgba(var(--tone),.1);color:rgb(var(--tone))}
+.home{position:relative;max-width:1080px;margin:0 auto;padding:0 16px}
 
-.notes{margin:4px 0 8px;padding:14px 18px;border:1.5px dashed #ecd3bb;border-radius:18px;background:rgba(255,255,255,.55);color:#5f5148;font-size:13px;line-height:1.75}
-.notes b{color:#6d5440}
+/* 顶部 */
+.topbar{display:flex;justify-content:flex-end;padding-top:14px}
+.home-link{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:999px;background:#fff;border:2px solid var(--line);color:var(--muted);font-size:13px;font-weight:600;box-shadow:0 3px 0 var(--line);transition:transform .15s ease,color .15s ease,border-color .15s ease}
+.home-link:hover{color:var(--orange);border-color:#ffc79c;transform:translateY(-1px)}
+
+.hero{position:relative;padding:6px 0 18px;text-align:center}
+.clouds{position:absolute;left:0;right:0;top:0;height:120px;pointer-events:none}
+.cloud{position:absolute;width:72px;height:34px;opacity:.9;animation:drift 14s ease-in-out infinite alternate}
+.c1{left:2%;top:18px}
+.c2{right:4%;top:56px;width:56px;animation-duration:18s;animation-delay:-6s}
+.logo{display:inline-block;width:72px;height:72px;animation:wobble 4s ease-in-out infinite;transform-origin:50% 80%}
+.logo img{width:100%;height:100%;filter:drop-shadow(0 6px 10px rgba(255,138,61,.35))}
+h1{margin:8px 0 0;font-size:34px;line-height:1.2;letter-spacing:4px;font-weight:800}
+h1 .ch{display:inline-block;text-shadow:0 3px 0 rgba(58,46,38,.08)}
+h1 .ch:nth-child(1){color:#ff8a3d;transform:rotate(-6deg)}
+h1 .ch:nth-child(2){color:#ffb000;transform:translateY(-3px) rotate(4deg)}
+h1 .ch:nth-child(3){color:#3cc47c;transform:rotate(-3deg)}
+h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
+.brand-en{display:inline-block;margin-top:8px;padding:4px 14px;border-radius:10px;background:var(--sun);color:#5a3a00;font-family:var(--en);font-size:14px;font-weight:700;letter-spacing:1px;transform:rotate(-3deg);box-shadow:0 3px 0 #e8a400}
+.lead{margin:14px 0 4px;font-size:18px;font-weight:700}
+.sub{margin:0 auto;max-width:30em;color:var(--muted);font-size:14px;line-height:1.7}
+
+/* 游戏卡片：手机单列横排，平板以上竖排 */
+.grid{display:grid;grid-template-columns:1fr;gap:16px;margin:10px 0 22px}
+.tile{--tone:255,138,61;--deep:#e5662a;position:relative;display:grid;grid-template-columns:76px 1fr;column-gap:14px;align-items:center;padding:14px;background:#fff;border:3px solid rgba(var(--tone),.28);border-radius:24px;box-shadow:0 6px 0 rgba(var(--tone),.28);transition:transform .18s cubic-bezier(.3,1.6,.5,1),box-shadow .18s ease}
+.tile:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 10px 0 rgba(var(--tone),.32)}
+.tile:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(var(--tone),.32)}
+.t-train{--tone:74,163,255;--deep:#1f6fd1}
+.t-music{--tone:255,111,145;--deep:#e0436b}
+.t-raz{--tone:60,196,124;--deep:#1d9a5a}
+.icon{grid-row:1 / span 3;display:flex;align-items:center;justify-content:center;width:76px;height:76px;border-radius:20px;background:rgba(var(--tone),.14)}
+.icon svg{width:50px;height:50px}
+.tile:hover .icon svg{animation:wiggle .5s ease}
+.title{font-size:18px;font-weight:800;color:var(--deep)}
+.desc{margin-top:2px;color:var(--muted);font-size:13px;line-height:1.55}
+.foot-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(var(--tone),.13);color:var(--deep)}
+.go{flex:none;display:none;padding:6px 14px;border-radius:999px;background:var(--deep);color:#fff;font-size:13px;font-weight:700;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+
+.notes{position:relative;margin:0 0 10px;padding:16px 18px 16px 58px;border:2px dashed #f0cfa6;border-radius:22px;background:rgba(255,255,255,.7);color:#6b5a4c;font-size:13.5px;line-height:1.75}
+.notes::before{content:"";position:absolute;left:16px;top:16px;width:30px;height:30px;border-radius:50%;background:#fff1d6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z' fill='%23ffc23d'/%3E%3Crect x='9' y='17' width='6' height='2' rx='1' fill='%23c98a1a'/%3E%3Crect x='10' y='20' width='4' height='1.6' rx='.8' fill='%23c98a1a'/%3E%3C/svg%3E") center/20px no-repeat}
+.notes b{color:#4a3a2e}
 .notes p{margin:0}
-.notes p+p{margin-top:4px}
+.notes p+p{margin-top:2px}
 
-.site-footer{color:var(--muted);font-size:12px;padding:14px 0 28px;text-align:center}
-.site-footer .line{display:block;margin:4px 0}
+.site-footer{color:var(--muted);font-size:12px;padding:16px 0 30px;text-align:center}
 .site-footer a{color:var(--muted)}
 
-/* 窄屏只有三张卡片，两列会剩一张落单，改成单列横排：图标在左，文字在右 */
-@media (max-width:639px){
-  .tile{width:calc(100% - 12px);display:grid;grid-template-columns:46px 1fr;column-gap:14px;align-items:start}
-  .icon{grid-row:1 / span 3;margin-bottom:0}
-  .tags{margin-top:8px}
-}
 @media (min-width:640px){
-  .grid{margin:4px -8px 20px}
-  .tile{width:calc(33.33% - 16px);margin:8px;padding:20px}
+  .topbar{padding-top:20px}
+  .hero{padding:0 0 26px}
+  .logo{width:84px;height:84px}
+  h1{font-size:44px}
+  .brand-en{font-size:16px}
+  .lead{font-size:20px}
+  .sub{font-size:15px}
+  .grid{grid-template-columns:repeat(3,1fr);gap:22px}
+  /* 竖排时标签和按钮压到卡片底部，描述行数不同也能对齐 */
+  .tile{display:flex;flex-direction:column;align-items:center;padding:22px 20px 20px;text-align:center}
+  .icon{grid-row:auto;width:96px;height:96px;border-radius:28px;margin:0 auto 14px}
+  .icon svg{width:62px;height:62px}
+  .title{font-size:19px}
+  .desc{font-size:13.5px}
+  .foot-row{flex-direction:column;gap:12px;margin-top:auto;padding-top:12px}
+  .tags{justify-content:center}
+  .go{display:inline-block}
+  .cloud{width:96px;height:46px}
+  .c1{left:8%;top:30px}.c2{right:10%;top:70px;width:74px}
 }
-
-/* PC：深色夜空，三列卡片，鼠标照明 */
 @media (min-width:960px){
-  html{background:#0b1020}
-  .page{color:#e9edf7;background:
-    radial-gradient(900px 520px at 12% -8%,rgba(255,190,92,.16),transparent 60%),
-    radial-gradient(760px 520px at 100% 10%,rgba(98,140,255,.14),transparent 62%),
-    radial-gradient(1000px 600px at 50% 120%,rgba(255,138,61,.08),transparent 60%),
-    #0b1020}
-  /* 星点：两层不同大小的点阵，只在页面上半部可见 */
-  .page::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(1.2px 1.2px at 20px 30px,rgba(255,255,255,.55),transparent 60%),radial-gradient(1px 1px at 80px 90px,rgba(255,255,255,.35),transparent 60%),radial-gradient(1.6px 1.6px at 140px 50px,rgba(255,226,160,.5),transparent 60%);
-    background-size:170px 130px;
-    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%)}
-  .hero{padding:72px 0 40px}
-  .brand-logo{width:50px;height:50px;filter:drop-shadow(0 0 18px rgba(255,190,92,.45))}
-  .brand-en{font-size:16px;margin-bottom:8px;color:#ffc15e;opacity:.85}
-  .home-link{position:absolute;top:24px;right:16px;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12);color:#9aa3b8}
-  .home-link:hover{color:#ffc15e;border-color:rgba(255,193,94,.5)}
-  .brand-name{font-size:40px;background:linear-gradient(100deg,#fff4dc 0%,#ffc15e 50%,#ff8a3d 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .lead{color:#f3ecdc;font-size:20px}
-  .sub{color:#9aa3b8;font-size:15px}
-
-  .grid{margin:0 -10px 24px}
-  .tile{width:calc(33.33% - 20px);margin:10px;min-height:200px;padding:26px;color:#e9edf7;
-    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 30px rgba(0,0,0,.35);
-    overflow:hidden;isolation:isolate}
-  .t-train{--tone:110,168,255}
-  .tile::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(var(--tone),.26),transparent 65%);opacity:0;transition:opacity .25s ease}
-  .tile::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:radial-gradient(460px circle at var(--mx,-999px) var(--my,-999px),rgba(var(--tone),.95),transparent 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .25s ease;pointer-events:none}
-  .grid.lit .tile::after{opacity:1}
-  .tile:hover::before{opacity:1}
-  .tile:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.12);box-shadow:0 1px 0 rgba(255,255,255,.06) inset,0 18px 40px rgba(0,0,0,.45),0 0 40px rgba(var(--tone),.12)}
-  .icon{width:52px;height:52px;background:rgba(var(--tone),.14);box-shadow:0 0 0 1px rgba(var(--tone),.22) inset;transition:box-shadow .25s ease,background .25s ease}
-  .icon svg{width:32px;height:32px}
-  .tile:hover .icon{background:rgba(var(--tone),.24);box-shadow:0 0 0 1px rgba(var(--tone),.45) inset,0 0 24px rgba(var(--tone),.35)}
-  .title{font-size:18px}
-  .desc{color:#9aa3b8;font-size:14px}
-  .tag{background:rgba(var(--tone),.16)}
-  .notes{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.03);color:#9aa3b8}
-  .notes b{color:#d9deea}
-  .site-footer,.site-footer a{color:#6b7389}
+  .hero{padding-top:8px}
+  .grid{gap:28px}
+  .tile{padding:28px 24px 24px}
+  .notes{max-width:760px;margin:0 auto 10px}
 }
+
+@keyframes wobble{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-3px)}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg) scale(1.08)}75%{transform:rotate(8deg) scale(1.08)}}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(24px)}}
+@media (prefers-reduced-motion:reduce){.logo,.cloud,.tile:hover .icon svg{animation:none}.tile{transition:none}}
 </style>
 </head>
 <body>
 <div class="page">
+<span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
 <div class="home">
+  <div class="topbar"><a class="home-link" href="https://zhonghcc.com">‹ 回到主页</a></div>
+
   <header class="hero">
-    <div class="brand">
-      <img class="brand-logo" src="/favicon.svg" alt="">
-      <span class="brand-name">童趣学园</span>
-      <span class="brand-en">Kid Game</span>
-      <a class="home-link" href="https://zhonghcc.com">‹ 回到主页</a>
+    <div class="clouds" aria-hidden="true">
+      <svg class="cloud c1" viewBox="0 0 72 34"><path d="M18 32a12 12 0 0 1-1.5-23.9A15 15 0 0 1 44 6.5 11 11 0 0 1 60 14a9 9 0 0 1-2 18z" fill="#fff" stroke="#f3e2c7" stroke-width="2"/></svg>
+      <svg class="cloud c2" viewBox="0 0 72 34"><path d="M18 32a12 12 0 0 1-1.5-23.9A15 15 0 0 1 44 6.5 11 11 0 0 1 60 14a9 9 0 0 1-2 18z" fill="#fff" stroke="#e3effc" stroke-width="2"/></svg>
     </div>
-    <span class="lead">玩着玩着，就学会了。</span>
-    <span class="sub">给孩子做的英语和乐理小游戏，打开即玩，不用注册，进度只保存在这台设备上。</span>
+    <span class="logo"><img src="/favicon.svg" alt=""></span>
+    <h1 aria-label="童趣学园"><span class="ch">童</span><span class="ch">趣</span><span class="ch">学</span><span class="ch">园</span></h1>
+    <span class="brand-en">Kid Game</span>
+    <p class="lead">玩着玩着，就学会了。</p>
+    <p class="sub">给孩子做的英语和乐理小游戏，打开即玩，不用注册，进度只保存在这台设备上。</p>
   </header>
 
   <main id="game-grid" class="grid">
@@ -127,19 +139,19 @@ a{color:inherit;text-decoration:none}
       <span class="icon"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="9" width="20" height="17" rx="3" fill="#185FA5"/><rect x="8" y="12" width="8" height="6" rx="1.5" fill="#E6F1FB"/><path d="M25 14h7l3 6v6H25z" fill="#E24B4A"/><rect x="27.5" y="16" width="4" height="4" rx="1" fill="#FDE7E7"/><rect x="18" y="5" width="4" height="5" rx="1" fill="#2C2C2A"/><rect x="3" y="25" width="34" height="3" rx="1.5" fill="#2C2C2A"/><circle cx="11" cy="31" r="3.6" fill="#2C2C2A"/><circle cx="11" cy="31" r="1.4" fill="#EF9F27"/><circle cx="29" cy="31" r="3.6" fill="#2C2C2A"/><circle cx="29" cy="31" r="1.4" fill="#EF9F27"/></svg></span>
       <span class="title">小火车英语</span>
       <span class="desc">火车迷最常用的英文单词，带插图和例句，点一点就能听</span>
-      <span class="tags"><span class="tag">英语</span><span class="tag">单词</span></span>
+      <span class="foot-row"><span class="tags"><span class="tag">英语</span><span class="tag">单词</span></span><span class="go">开始玩 ›</span></span>
     </a>
     <a class="tile t-music" href="music/">
       <span class="icon"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#FF6B4A"/><ellipse cx="16" cy="27" rx="6" ry="4.4" fill="#fff" transform="rotate(-20 16 27)"/><path d="M21.4 26V9.5c4 1.5 6.5 4 7 7.5" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/></svg></span>
       <span class="title">小音符乐理闯关</span>
       <span class="desc">跟着菲伯尔第1级看谱、拍节奏、数拍子、练耳朵，每轮都能拿星星</span>
-      <span class="tags"><span class="tag">钢琴</span><span class="tag">乐理</span></span>
+      <span class="foot-row"><span class="tags"><span class="tag">钢琴</span><span class="tag">乐理</span></span><span class="go">开始玩 ›</span></span>
     </a>
     <a class="tile t-raz" href="raz/">
       <span class="icon"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="15" width="15" height="15" rx="3.5" fill="#FF8A3D" transform="rotate(-8 10.5 22.5)"/><rect x="22" y="15" width="15" height="15" rx="3.5" fill="#3B7BE8" transform="rotate(7 29.5 22.5)"/><rect x="12.5" y="5" width="15" height="15" rx="3.5" fill="#1F9D63"/><text x="10.5" y="27.2" font-family="Avenir Next,Arial,sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" transform="rotate(-8 10.5 22.5)">A</text><text x="20" y="16.6" font-family="Avenir Next,Arial,sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">B</text><text x="29.5" y="26.8" font-family="Avenir Next,Arial,sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" transform="rotate(7 29.5 22.5)">C</text></svg></span>
       <span class="title">RAZ Level C Games</span>
       <span class="desc">RAZ C 级配套练习：认词、听句子、看图填词，全英文界面</span>
-      <span class="tags"><span class="tag">英语</span><span class="tag">分级阅读</span></span>
+      <span class="foot-row"><span class="tags"><span class="tag">英语</span><span class="tag">分级阅读</span></span><span class="go">开始玩 ›</span></span>
     </a>
   </main>
 
@@ -150,35 +162,10 @@ a{color:inherit;text-decoration:none}
   </section>
 
   <footer class="site-footer">
-    <span class="line"><a href="https://zhonghcc.com">Zhonghcc</a> · © <span id="year">2026</span> · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">京ICP备20023556号-1</a></span>
+    <a href="https://zhonghcc.com">Zhonghcc</a> · © <span id="year">2026</span> · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">京ICP备20023556号-1</a>
   </footer>
 </div>
 </div>
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
-// 照明效果：鼠标在卡片区移动时，把光源位置换算到每张卡片内，写进 CSS 变量。
-// 光源跟随整个网格，相邻卡片的边框也会被同一束光照亮。只响应鼠标，触屏不触发
-(function () {
-  var grid = document.getElementById('game-grid');
-  var frame = 0;
-  grid.addEventListener('pointermove', function (e) {
-    if (e.pointerType !== 'mouse') return;
-    cancelAnimationFrame(frame);
-    var x = e.clientX, y = e.clientY;
-    frame = requestAnimationFrame(function () {
-      grid.querySelectorAll('.tile').forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        el.style.setProperty('--mx', (x - r.left) + 'px');
-        el.style.setProperty('--my', (y - r.top) + 'px');
-      });
-      grid.classList.add('lit');
-    });
-  });
-  grid.addEventListener('pointerleave', function () {
-    cancelAnimationFrame(frame);
-    grid.classList.remove('lit');
-  });
-})();
-</script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
