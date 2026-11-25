@@ -158,6 +158,7 @@ h1{font-size:24px}
 @media (max-width:620px){.cols{grid-template-columns:1fr}}
 .col{border-radius:14px;padding:10px}
 .col.before{background:#F1EFE8}
+.col .scene{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;margin-bottom:8px;cursor:pointer}
 .col.after{background:#EAF3DE}
 .col h4,.think h4{margin:2px 2px 8px;font-size:15px}
 .ln{display:flex;width:100%;text-align:left;gap:8px;align-items:flex-start;padding:8px;border-radius:10px;margin-bottom:4px;background:rgba(255,255,255,.7)}
@@ -227,7 +228,7 @@ h1{font-size:24px}
     </div>
   </section>
 
-  <div class="foot">单词发音为美式读音，来自有道词典；句子用随页面打包的朗读音频；网络不通时改用浏览器自带朗读。<br>「课堂」两组内容依据老师的 Social Studies 板书 Evolution of trains（火车的演变）整理。<br>听过的单词会打上小星星，记录保存在本机浏览器里。</div>
+  <div class="foot">单词发音为美式读音，来自有道词典；句子用随页面打包的朗读音频；网络不通时改用浏览器自带朗读。<br>「课堂」两组内容依据老师的 Social Studies 板书 Evolution of trains（火车的演变）和课堂海报 Life before / after trains 整理。<br>听过的单词会打上小星星，记录保存在本机浏览器里。</div>
 </div>
 
 <div class="mask" id="mask">
@@ -314,6 +315,9 @@ heavygoods:`<path d="M44 18 Q50 8 56 18" stroke="${K}" stroke-width="3.5" fill="
 supplies:`<path d="M16 88 Q8 62 22 48 L20 38 H36 L34 48 Q48 62 40 88 Z" fill="${YM}"/><path d="M20 41 H36" stroke="${YD}" stroke-width="3"/><rect x="44" y="54" width="30" height="34" fill="${BR}"/><path d="M44 64 H74 M59 54 V64" stroke="#633806" stroke-width="2"/><rect x="77" y="58" width="18" height="30" rx="5" fill="#D85A30"/><path d="M77 66 H95 M77 80 H95" stroke="#993C1D" stroke-width="2.5"/>`,
 difficult:`<rect x="52" y="42" width="40" height="44" rx="3" fill="${BR}"/><path d="M52 42 L92 86 M92 42 L52 86" stroke="#633806" stroke-width="2.5"/><path d="M33 42 L24 66" stroke="${BD}" stroke-width="9" stroke-linecap="round"/><path d="M31 48 L52 54 M29 54 L52 62" stroke="${BD}" stroke-width="5" stroke-linecap="round"/><path d="M24 66 L12 86 M24 66 L32 86" stroke="${K}" stroke-width="5" stroke-linecap="round"/><circle cx="31" cy="33" r="8" fill="${SK}"/><path d="M19 20 q-3 5 0 7 q3 -2 0 -7z M14 30 q-3 5 0 7 q3 -2 0 -7z" fill="${B}"/><rect x="4" y="86" width="92" height="3" rx="1.5" fill="${GR}"/>`,
 invent:`${radial(8,38,46,Y,4)}<circle cx="50" cy="44" r="22" fill="${YM}"/><path d="M42 46 L46 40 L50 46 L54 40 L58 46" stroke="${YD}" stroke-width="2.5" fill="none" stroke-linejoin="round"/><path d="M44 58 V66 M56 58 V66" stroke="${YD}" stroke-width="2"/><rect x="40" y="64" width="20" height="8" rx="2" fill="${GR}"/><rect x="42" y="72" width="16" height="6" rx="2" fill="#5F5E5A"/><circle cx="43" cy="37" r="5" fill="#fff" fill-opacity=".7"/>`,
+journey:`<rect x="6" y="10" width="88" height="80" rx="8" fill="${GLL}"/><path d="M18 80 Q30 50 50 60 T82 24" stroke="${BR}" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M18 80 Q30 50 50 60 T82 24" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/><circle cx="18" cy="80" r="5" fill="${R}"/><path d="M82 24 V8" stroke="${K}" stroke-width="2.5"/><path d="M82 8 L94 12 L82 16 Z" fill="${R}"/><circle cx="76" cy="72" r="12" fill="#fff" stroke="${B}" stroke-width="3"/><path d="M76 72 V64 M76 72 L82 75" stroke="${K}" stroke-width="2.5" stroke-linecap="round"/>`,
+factory:`<circle cx="70" cy="13" r="6" fill="${GL}" class="puff"/><circle cx="81" cy="8" r="5" fill="${GL}"/><rect x="64" y="20" width="10" height="36" fill="#993C1D"/><rect x="78" y="28" width="8" height="28" fill="#993C1D"/><path d="M8 88 V50 L26 38 V50 L44 38 V50 L62 38 V54 H92 V88 Z" fill="#D85A30"/><rect x="16" y="60" width="10" height="10" rx="1" fill="${YL}"/><rect x="34" y="60" width="10" height="10" rx="1" fill="${YL}"/><rect x="52" y="60" width="10" height="10" rx="1" fill="${YL}"/><rect x="70" y="66" width="14" height="22" rx="1" fill="${K}"/><rect x="4" y="88" width="92" height="4" rx="2" fill="${GR}"/>`,
+connect:`<path d="M6 54 L17 43 L28 54 V68 H6 Z" fill="${R}"/><rect x="11" y="57" width="6" height="6" fill="${YL}"/><path d="M22 60 L30 52 L38 60 V68 H22 Z" fill="${Y}"/><rect x="62" y="28" width="13" height="40" fill="${B}"/><rect x="78" y="40" width="16" height="28" fill="${BD}"/><path d="M65 34 h3 M70 34 h3 M65 42 h3 M70 42 h3 M65 50 h3 M70 50 h3 M82 46 h3 M88 46 h3 M82 54 h3 M88 54 h3" stroke="${BL}" stroke-width="3"/><path d="M6 78 Q50 62 94 78" stroke="${GR}" stroke-width="3" fill="none"/><path d="M6 86 Q50 70 94 86" stroke="${GR}" stroke-width="3" fill="none"/><rect x="38" y="58" width="24" height="12" rx="3" fill="${G}"/><rect x="42" y="61" width="6" height="4" rx="1" fill="${GLL}"/><rect x="51" y="61" width="6" height="4" rx="1" fill="${GLL}"/><circle cx="17" cy="36" r="3" fill="${R}"/><circle cx="82" cy="22" r="3" fill="${R}"/><path d="M17 36 Q50 6 82 22" stroke="${R}" stroke-width="2" stroke-dasharray="3 4" fill="none"/>`,
 business:`<path d="M10 28 H70 L74 40 H6 Z" fill="${R}"/><path d="M22 28 L20 40 M34 28 L34 40 M46 28 L48 40 M58 28 L62 40" stroke="#fff" stroke-width="3"/><rect x="10" y="40" width="60" height="46" fill="${YL}"/><rect x="18" y="48" width="18" height="14" rx="2" fill="${BM}"/><rect x="44" y="54" width="16" height="32" rx="2" fill="${BD}"/><path d="M76 50 L86 36 L96 50 Z M83 50 H89 V62 H83 Z" fill="${G}"/><ellipse cx="86" cy="86" rx="11" ry="4" fill="${YD}"/><ellipse cx="86" cy="81" rx="11" ry="4" fill="${Y}" stroke="${YD}"/><ellipse cx="86" cy="75" rx="11" ry="4" fill="${Y}" stroke="${YD}"/><ellipse cx="86" cy="69" rx="11" ry="4" fill="${YM}" stroke="${YD}"/>`
 };
 
@@ -346,6 +350,9 @@ const W=[
 ['heavy goods','/ˌhevi ˈɡʊdz/','重的货物','Trains carry heavy goods.','火车运送很重的货物。','why','heavygoods'],
 ['supplies','/səˈplaɪz/','物资','Trains move people and supplies.','火车运送人和物资。','why','supplies'],
 ['difficult','/ˈdɪfɪkəlt/','困难的，很难','Carrying heavy goods was difficult.','以前搬运重货很困难。','why','difficult'],
+['journey','/ˈdʒɜːrni/','旅程','Journeys took longer.','路上要花的时间更长。','why','journey'],
+['factory','/ˈfæktəri/','工厂','Factories received supplies faster.','工厂能更快收到原料。','why','factory'],
+['connect','/kəˈnekt/','连接','Trains connected towns and cities.','火车把城镇和城市连了起来。','why','connect'],
 ['business','/ˈbɪznəs/','生意','Trains helped business grow.','火车让生意越做越大。','why','business'],
 ['train','/treɪn/','火车','I like trains!','我喜欢火车！','type','train'],
 ['engine','/ˈendʒɪn/','火车头','The engine pulls the cars.','火车头拉着车厢。','type','engine'],
@@ -470,8 +477,9 @@ ${wh(54,142,10)}${wh(188,142,10)}
 ${LBL('chimney',4,4,72,40,28,62,38)}${LBL('boiler',84,4,66,117,28,128,70)}${LBL("driver's cab",158,4,98,207,28,196,42)}${LBL('coal tender',262,4,96,300,28,262,72)}${LBL('driving wheels',92,166,124,154,166,140,146)}
 </svg>`;
 // 板书右半边：有火车以前和以后、两道讨论题
-const BEFORE=[['People travelled on foot, by horse or by boat.','以前人们步行、骑马或坐船出行。'],['Travelling was slow.','出行很慢。'],['Carrying heavy goods was difficult.','搬运很重的货物很困难。'],['People and supplies could not move easily on land.','人和物资在陆地上很难运来运去。']];
-const AFTER=[['People travelled faster and more easily.','人们出行更快、更方便了。'],['Trains carried many people and heavy goods.','火车能装很多人和很重的货物。'],['Trains helped business grow.','火车让生意越做越大。']];
+// 句子来自板书和课堂上贴的两张海报 Life before trains、Life after trains（海报上的错字已改正）
+const BEFORE=[['People travelled on foot, by horse or by boat.','以前人们步行、骑马或坐船出行。'],['Travelling was slow.','出行很慢。'],['Journeys took longer.','路上要花的时间更长。'],['Carrying heavy goods was difficult.','搬运很重的货物很困难。'],['People and supplies could not move easily on land.','人和物资在陆地上很难运来运去。'],['People and supplies mostly stayed in local areas.','人和物资大多只在附近一带活动。']];
+const AFTER=[['People travelled faster and more easily.','人们出行更快、更方便了。'],['People could travel more quickly and safely.','人们出行更快，也更安全。'],['Trains carried many people and heavy goods.','火车能装很多人和很重的货物。'],['Trains connected towns and cities.','火车把城镇和城市连了起来。'],['Factories received supplies faster.','工厂能更快收到原料。'],['Trains helped business grow.','火车让生意越做越大。']];
 const THINK=[['How would you travel to another city if there were no trains?','如果没有火车，你会怎么去另一个城市？','I would go by horse or by boat.','我会骑马或者坐船去。'],['Why are trains better than wagons?','为什么火车比马车好？','Trains are faster, and they carry more people and goods.','火车更快，还能装更多的人和货物。']];
 const PARTS=['chimney','boiler',"driver's cab",'driving wheels','coal tender'];
 let practice=false;const revealed=new Set();
@@ -485,7 +493,7 @@ function renderLesson(){
   }
   if(cat==='why'){
     el.innerHTML=`<div class="lesson"><div class="lh"><button class="say" data-say="Why did they invent trains?" aria-label="听">${ICON.play}</button><div><b>Why did they invent trains?</b><span>人们为什么发明火车？点每一句都能听</span></div></div>
-<div class="cols"><div class="col before"><h4>Before trains 有火车以前</h4>${BEFORE.map(line).join('')}</div><div class="col after"><h4>After trains 有了火车以后</h4>${AFTER.map(line).join('')}</div></div>
+<div class="cols"><div class="col before"><img class="scene" src="img/before-trains.jpg" alt="Life before trains" data-say="Life before trains" loading="lazy"><h4>Life before trains 有火车以前</h4>${BEFORE.map(line).join('')}</div><div class="col after"><img class="scene" src="img/after-trains.jpg" alt="Life after trains" data-say="Life after trains" loading="lazy"><h4>Life after trains 有了火车以后</h4>${AFTER.map(line).join('')}</div></div>
 <div class="think"><h4>Think and talk 想一想，说一说</h4>${THINK.map((q,i)=>line(q)+`<div class="ans"><button class="reveal" data-i="${i}">可以这样说</button></div>`).join('')}</div></div>`;
     return;
   }
