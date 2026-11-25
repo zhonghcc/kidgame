@@ -227,7 +227,7 @@ h1{font-size:24px}
     </div>
   </section>
 
-  <div class="foot">单词发音为美式读音，来自有道词典；句子和网络不通时改用浏览器自带朗读。<br>「课堂」两组内容依据老师的 Social Studies 板书 Evolution of trains（火车的演变）整理。<br>听过的单词会打上小星星，记录保存在本机浏览器里。</div>
+  <div class="foot">单词发音为美式读音，来自有道词典；句子用随页面打包的朗读音频；网络不通时改用浏览器自带朗读。<br>「课堂」两组内容依据老师的 Social Studies 板书 Evolution of trains（火车的演变）整理。<br>听过的单词会打上小星星，记录保存在本机浏览器里。</div>
 </div>
 
 <div class="mask" id="mask">
@@ -394,10 +394,21 @@ star:(on)=>`<svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.
 let slow=localStorage.getItem('tr-slow')==='1',ttsOnly=false,fails=0;
 const player=new Audio();player.preload='auto';
 function tts(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=slow?.7:.95;const v=speechSynthesis.getVoices().find(v=>/^en[-_]US/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}
+const hashOf=s=>{let x=5381;for(const c of s)x=((x*33)^c.charCodeAt(0))>>>0;return x.toString(16)};
 function speak(text){
   const t=text.replace(/-/g,' ');
-  // 有道只认单词和短词组，整句会返回错误；句子直接用浏览器朗读，也不计入失败次数
-  if(ttsOnly||/[.!?]$/.test(t.trim())||t.trim().split(/\s+/).length>3){tts(t);return}
+  // 有道只认单词和短词组，整句会返回错误。句子用随页面打包的音频 audio/<哈希>.mp3（和 RAZ 页同一种做法），
+  // 文件缺失或播放失败时才用浏览器朗读；部分浏览器（如一些内嵌网页、没装英文语音的系统）浏览器朗读没有声音
+  const isSent=/[.!?]$/.test(t.trim())||t.trim().split(/\s+/).length>3;
+  if(isSent){
+    let fell=false;const fb=()=>{if(fell)return;fell=true;tts(t)};
+    const r=slow?.8:1;
+    player.onerror=fb;player.onloadedmetadata=()=>{player.playbackRate=r};
+    player.src='audio/'+hashOf(t.trim())+'.mp3';player.defaultPlaybackRate=r;player.playbackRate=r;
+    const p=player.play();if(p&&p.catch)p.catch(e=>{if(e&&e.name==='NotAllowedError')return;fb()});
+    return;
+  }
+  if(ttsOnly){tts(t);return}
   let fell=false;const fb=()=>{if(fell)return;fell=true;if(++fails>=2)ttsOnly=true;tts(t)};
   const r=slow?.72:1;
   player.onerror=fb;
