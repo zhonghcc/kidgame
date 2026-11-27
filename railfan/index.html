@@ -403,14 +403,61 @@ function bogieTemplate(type){if(BOGIES[type])return BOGIES[type];const g=new THR
   });
   const ws=new THREE.Group();ws.position.set(ax,yc,0);wk.build(ws);ws.userData.wheel=R;g.add(ws)});
  g.traverse(o=>{if(o.geometry)o.geometry.userData.shared=true});return BOGIES[type]=g}
-function addPantograph(k,x,ry){const dark=mat("pantodark","#2c3336",.4,.7),bar=mat("pantobar","#9aa1a4",.3,.85),ins=mat("insul","#cfc8bb",.6,.05),hz=6.0;
- k.box(dark,1.6,.1,1.0,x,ry+.3,0);
- [[-.62,-.4],[-.62,.4],[.62,-.4],[.62,.4]].forEach(p=>{k.cyl(ins,.045,.045,.28,x+p[0],ry+.14,p[1],0,0,0,8);for(let c=0;c<4;c++)k.cyl(ins,.09,.09,.04,x+p[0],ry+.05+c*.06,p[1],0,0,0,10)});
- const ex=x+.85,ey=ry+(hz-ry)*.46;[-.22,.22].forEach(z=>k.seg(bar,x-.55,ry+.38,ex,ey,.045,z));
- k.seg(bar,ex,ey,x-.05,hz-.1,.035,0);k.seg(bar,ex,ey,x-.05,hz-.1,.022,.14);k.seg(dark,x-.55,ry+.38,x+.15,ry+.78,.03,.32);
- k.box(bar,.1,.06,1.6,x-.08,hz-.04,0);k.box(bar,.1,.06,1.6,x+.1,hz-.04,0);[-1,1].forEach(s=>k.box(bar,.08,.05,.38,x+.01,hz-.13,s*.95,s*.55,0,0));
- k.box(dark,.12,.1,.12,x-.05,hz-.1,0);k.cyl(ins,.03,.03,2.4,x-1.7,ry+.12,.0,0,0,Math.PI/2,6);
- k.box(mat("panfair","#d9dcdc",.45,.2),3.4,.26,.06,x,ry+.1,.98);k.box(mat("panfair","#d9dcdc",.45,.2),3.4,.26,.06,x,ry+.1,-.98)}
+function addPantograph(k,x,ry){
+ const dark=mat("pantodark","#2f363a",.42,.66),
+  bar=mat("pantobar","#a9b1b4",.26,.88),
+  ins=mat("insul","#d9d3c5",.58,.04),
+  carb=mat("carbon","#1d2124",.74,.12),
+  hz=6.00,x0=x,top=hz-.02;
+ /* 底架：矩形钢框 + 四个支撑绝缘子 */
+ [-1,1].forEach(s=>k.box(dark,1.90,.07,.11,x0,ry+.11,s*.47));
+ [-1,1].forEach(s=>k.box(dark,.10,.07,.94,x0+s*.90,ry+.11,0));
+ k.box(dark,.09,.05,.94,x0,ry+.09,0);
+ k.box(mat("panfair","#cfd4d4",.5,.25),1.54,.035,1.14,x0,ry+.015,0);
+ [[-.72,-.40],[-.72,.40],[.72,-.40],[.72,.40]].forEach(p=>{
+  const px=x0+p[0],pz=p[1];
+  for(let c=0;c<5;c++)k.cyl(ins,.078,.078,.042,px,ry+.20+c*.075,pz,0,0,0,12);
+  k.cyl(ins,.040,.040,.34,px,ry+.40,pz,0,0,0,10);
+  k.cyl(dark,.086,.086,.05,px,ry+.60,pz,0,0,0,12);
+ });
+ /* 下臂铰座与横轴 */
+ const ax=x0-.62,ay=ry+.60,bx=x0+.08,by=ry+1.36,cx=x0-.58,cy=top;
+ k.box(dark,.26,.20,.44,ax,ay,0);
+ k.cyl(bar,.048,.048,.46,ax,ay,0,Math.PI/2,0,0,12);
+ /* 下臂：两根粗管 + 横撑 + 肘部关节 */
+ [-1,1].forEach(s=>k.seg(bar,ax,ay,bx,by,.042,s*.20));
+ [.32,.64].forEach(t=>{const mx=ax+(bx-ax)*t,my=ay+(by-ay)*t;k.cyl(bar,.023,.023,.42,mx,my,0,Math.PI/2,0,0,8)});
+ k.box(dark,.24,.17,.46,bx,by,0);k.cyl(bar,.052,.052,.48,bx,by,0,Math.PI/2,0,0,12);
+ /* 上臂：两根细管 */
+ [-1,1].forEach(s=>k.seg(bar,bx,by,cx,cy-.08,.033,s*.16));
+ [.40,.74].forEach(t=>{const mx=bx+(cx-bx)*t,my=by+(cy-.08-by)*t;k.cyl(bar,.019,.019,.34,mx,my,0,Math.PI/2,0,0,8)});
+ /* 弓头托架：上臂顶端到滑板 */
+ k.box(dark,.34,.10,.44,cx,cy-.10,0);
+ /* 平衡杆：下臂根部到弓头托架，构成平行四连杆 */
+ const px=ax+(bx-ax)*.42,py=ay+(by-ay)*.42;
+ [-1,1].forEach(s=>k.seg(dark,px,py,cx-.14,cy-.24,.020,s*.27));
+ [-1,1].forEach(s=>k.cyl(bar,.017,.017,.16,px,py,s*.21,0,0,0,8));
+ /* 升弓弹簧与阻尼器 */
+ [-1,1].forEach(s=>{for(let c=0;c<17;c++)k.add(bar,new THREE.TorusGeometry(.038,.0105,5,12),x0-.74,ry+.21+c*.022,s*.055,Math.PI/2,0,0)});
+ k.cyl(bar,.012,.012,.40,x0-.74,ry+.37,0,0,0,0,8);
+ k.cyl(dark,.030,.024,.34,x0-.34,ry+.90,0,0,0,-.52,10);
+ k.cyl(bar,.013,.013,.18,x0-.26,ry+1.04,0,0,0,-.52,8);
+ /* 弓头：托架 + 两根碳滑板 + 弓角 */
+ [-1,0,1].forEach(s=>k.box(dark,.46,.05,.06,cx,cy-.11,s*.52));
+ k.box(dark,.10,.05,1.12,cx,cy-.11,0);
+ [-.19,.19].forEach(dx=>{
+  k.box(bar,.075,.055,1.84,cx+dx,cy-.070,0);
+  k.box(carb,.048,.062,1.78,cx+dx,cy+.010,0);
+  [-1,1].forEach(s=>k.box(bar,.045,.038,.09,cx+dx,cy-.020,s*.885));
+ });
+ [-1,1].forEach(s=>[-.19,.19].forEach(dx=>{
+  k.cyl(bar,.022,.016,.34,cx+dx,cy-.11,s*1.02,s*Math.PI*.72,0,0,10);
+ }));
+ /* 高压母线引下 */
+ k.cyl(bar,.020,.020,.94,x0-1.12,ry+.32,0,0,0,Math.PI/2,8);
+ k.cyl(ins,.058,.058,.11,x0-1.58,ry+.22,0,0,0,0,10);
+ k.box(mat("panfair","#d9dcdc",.45,.2),3.4,.24,.05,x0,ry+.06,.96);
+ k.box(mat("panfair","#d9dcdc",.45,.2),3.4,.24,.05,x0,ry+.06,-.96)}
 /* ===== 车头特征件：曲面风挡、车灯、后视镜、排障器 ===== */
 const NOSE_LAMP={
  bf:[{cx:.838,cy:.250,hw:.062,hh:.034,kind:"led"}],
