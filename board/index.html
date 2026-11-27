@@ -71,6 +71,10 @@ h1 span{color:var(--red)}
 .diagram .pt.on{filter:drop-shadow(0 0 5px #EF9F27) drop-shadow(0 0 2px #EF9F27)}
 .diagram .lbl rect{fill:#fff;stroke:#378ADD;stroke-width:2}
 .diagram .lbl text{fill:#185FA5;font-size:14px;font-weight:700;font-family:var(--round),Arial,sans-serif}
+/* 名词蓝、形容词粉（汉堡板书） */
+.diagram .lbl.adj rect{stroke:#E0436B}
+.diagram .lbl.adj text{fill:#C02E57}
+.diagram .lead.adj{stroke:#E0436B}
 .diagram .lbl.on rect{fill:#EF9F27;stroke:#BA7517}
 .diagram .lbl.on text{fill:#fff}
 .diagram .lbl.ask rect{fill:#FAEEDA;stroke:#EF9F27;stroke-dasharray:4 3}
@@ -255,7 +259,7 @@ details.photos summary span{font-weight:400;font-size:12px;color:var(--muted);ma
 <div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt="板书大图"></div>
 
 <!-- 改了 lessons.js 记得同时改这里的版本号：服务器对 js 缓存 12 小时，页面本身不缓存 -->
-<script src="lessons.js?v=20261127c"></script>
+<script src="lessons.js?v=20261127d"></script>
 <script>
 const LESSONS=window.BOARD_LESSONS;
 const draw=window.BOARD_HELPER.svgOf,quote=window.BOARD_HELPER.esc;
@@ -334,7 +338,7 @@ function renderPage(){
   const board=L.board?`<div class="board">
     <div class="lh"><button class="say" data-say="${quote(L.board.ask)}" data-audio="1" aria-label="听标题">${ICON.play}</button><div><b>${L.board.title}</b><span>${L.board.zh}</span></div><button class="mini ${practice?'ghost':''}" id="practice">${practice?'显示名字':'遮住名字考一考'}</button></div>
     <div class="diagram">${L.board.svg}</div>
-    <div class="cap" id="cap"><div class="t">${practice?'名字都遮住了。点一个标签，先自己说说它是什么，再看答案。':'点图上的部件或者蓝标签，就能听到读音。'}</div></div>
+    <div class="cap" id="cap"><div class="t">${practice?'名字都遮住了。点一个标签，先自己说说它是什么，再看答案。':'点图上的部件或者标签，就能听到读音。'}</div></div>
   </div>`:'';
   document.getElementById('page').innerHTML=`
   <div class="head">

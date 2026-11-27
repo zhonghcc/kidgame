@@ -68,6 +68,7 @@ short:sticker('#F1EFE8',`<circle cx="32" cy="16" r="8" fill="${SK}"/><rect x="22
 square:sticker('#E6F1FB',`<rect x="24" y="24" width="52" height="52" rx="3" fill="${BM}" stroke="${BD}" stroke-width="4"/><path d="M24 38 h12 v-14 M76 38 h-12 v-14 M24 62 h12 v14 M76 62 h-12 v14" stroke="${BD}" stroke-width="2" fill="none"/>`),
 middle:sticker('#EAF3DE',[0,1,2].map(r=>[0,1,2].map(c=>`<circle cx="${26+c*24}" cy="${26+r*24}" r="${r===1&&c===1?10:6}" fill="${r===1&&c===1?R:GM}"/>`).join('')).join('')),
 zipper:sticker('#FAEEDA',`<rect x="22" y="10" width="24" height="80" fill="${B}"/><rect x="54" y="10" width="24" height="80" fill="${B}"/>${Array.from({length:9},(_,i)=>`<rect x="${i%2?50:44}" y="${12+i*8}" width="6" height="6" rx="1" fill="${GR}"/>`).join('')}<rect x="40" y="40" width="20" height="14" rx="4" fill="${D}"/><rect x="45" y="52" width="10" height="22" rx="5" fill="${D}"/>`),
+meat:sticker('#FAEEDA',`<rect x="12" y="36" width="76" height="30" rx="14" fill="${BR}"/><path d="M24 46 h14 M46 56 h14 M66 46 h12" stroke="#633806" stroke-width="3.5" stroke-linecap="round"/><path d="M18 70 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0" stroke="#F5A623" stroke-width="3" fill="none" stroke-linecap="round"/>`),
 'dir-north':'','dir-south':'','dir-east':'','dir-west':''
 };
 /* 指南针方向贴纸：箭头指向哪边，那个字母就变红 */
@@ -103,20 +104,22 @@ ${wh(54,142,10)}${wh(188,142,10)}
 ${LBL('chimney',4,4,72,40,28,62,38)}${LBL('boiler',84,4,66,117,28,128,70)}${LBL("driver's cab",158,4,98,207,28,196,42)}${LBL('coal tender',262,4,96,300,28,262,72)}${LBL('driving wheels',92,166,124,154,166,140,146)}
 </svg>`;
 
-/* 可点板书：Describe the hamburger（照着今天白板上的汉堡重画） */
-const HAM_LBL=(w,x,y,wd,lx,ly,px,py)=>`<line class="lead" x1="${lx}" y1="${ly}" x2="${px}" y2="${py}"/><circle cx="${px}" cy="${py}" r="3" fill="#378ADD"/><g class="lbl" data-w="${esc(w)}"><rect x="${x}" y="${y}" width="${wd}" height="24" rx="12"/><text x="${x+wd/2}" y="${y+16.5}" text-anchor="middle">${w}</text></g>`;
-const HAMBURGER_DIAGRAM=`<svg viewBox="0 0 360 230" xmlns="http://www.w3.org/2000/svg">
-<ellipse cx="180" cy="212" rx="96" ry="9" fill="#EFE9DC"/>
-<path d="M104 100 Q108 44 180 42 Q252 44 256 100 Z" fill="#EBC183" stroke="${YD}" stroke-width="2.5"/>
-<g fill="#fff" opacity=".9"><ellipse cx="142" cy="76" rx="4" ry="2.4" transform="rotate(-20 142 76)"/><ellipse cx="172" cy="60" rx="4" ry="2.4" transform="rotate(15 172 60)"/><ellipse cx="206" cy="68" rx="4" ry="2.4" transform="rotate(-10 206 68)"/><ellipse cx="228" cy="86" rx="4" ry="2.4" transform="rotate(20 228 86)"/><ellipse cx="122" cy="92" rx="4" ry="2.4" transform="rotate(10 122 92)"/></g>
-<path d="M100 100 Q116 112 130 100 Q146 116 160 100 Q176 116 190 100 Q206 116 220 100 Q238 112 260 100 L260 112 Q180 126 100 112 Z" fill="${GM}" stroke="${GD}" stroke-width="2"/>
-<path d="M104 116 L256 116 L248 132 L112 132 Z" fill="${YM}" stroke="${YD}" stroke-width="2"/>
-<rect x="104" y="132" width="152" height="20" rx="8" fill="${BR}"/>
-<circle cx="132" cy="160" r="18" fill="#F26D6B" stroke="${RD}" stroke-width="2"/><circle cx="132" cy="160" r="11" fill="none" stroke="#FFB3AE" stroke-width="2"/>
-<circle cx="228" cy="160" r="18" fill="#F26D6B" stroke="${RD}" stroke-width="2"/><circle cx="228" cy="160" r="11" fill="none" stroke="#FFB3AE" stroke-width="2"/>
-<path d="M104 152 H256 V172 Q256 194 232 196 H128 Q104 194 104 172 Z" fill="#EBC183" stroke="${YD}" stroke-width="2.5"/>
-${HAM_LBL('brown',4,10,72,76,22,140,66)}${HAM_LBL('green',4,52,66,70,64,120,106)}${HAM_LBL('red',4,94,52,56,106,130,160)}${HAM_LBL('round',4,136,70,74,148,112,134)}${HAM_LBL('soft',4,178,54,58,190,150,190)}
-${HAM_LBL('bun',284,10,52,284,22,214,58)}${HAM_LBL('lettuce',276,52,80,276,64,224,108)}${HAM_LBL('juicy',284,94,64,284,106,200,140)}${HAM_LBL('sweet',284,136,66,284,148,232,152)}${HAM_LBL('salty',284,178,64,284,190,206,170)}
+/* 可点板书：Describe the hamburger
+   按老师讲的顺序，从上到下：bun（brown、round）、lettuce（green）、cheese（soft）、meat（juicy）、tomato（red）、bun（round）
+   左边蓝标签是名词，右边粉标签是形容词 */
+const HAM_LBL=(w,x,cy,wd,px,py,adj)=>{const lx=adj?x:x+wd,c=adj?'#E0436B':'#378ADD';return `<line class="lead${adj?' adj':''}" x1="${lx}" y1="${cy}" x2="${px}" y2="${py}"/><circle cx="${px}" cy="${py}" r="3" fill="${c}"/><g class="lbl${adj?' adj':''}" data-w="${esc(w)}"><rect x="${x}" y="${cy-12}" width="${wd}" height="24" rx="12"/><text x="${x+wd/2}" y="${cy+4.5}" text-anchor="middle">${w}</text></g>`};
+const hamN=(w,wd,cy,px,py)=>HAM_LBL(w,96-wd,cy,wd,px,py,false);
+const hamA=(w,wd,cy,px,py)=>HAM_LBL(w,264,cy,wd,px,py,true);
+const HAMBURGER_DIAGRAM=`<svg viewBox="0 0 360 226" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="180" cy="202" rx="86" ry="7" fill="#EFE9DC"/>
+<g class="pt" data-w="bun"><path d="M104 158 H256 V172 Q256 192 232 194 H128 Q104 192 104 172 Z" fill="#EBC183" stroke="${YD}" stroke-width="2.5"/></g>
+<g class="pt" data-w="tomato"><rect x="108" y="144" width="144" height="16" rx="8" fill="#F26D6B" stroke="${RD}" stroke-width="2"/><g fill="#FFC2BD"><ellipse cx="132" cy="152" rx="5" ry="3"/><ellipse cx="162" cy="152" rx="5" ry="3"/><ellipse cx="198" cy="152" rx="5" ry="3"/><ellipse cx="228" cy="152" rx="5" ry="3"/></g></g>
+<g class="pt" data-w="meat"><rect x="102" y="122" width="156" height="24" rx="11" fill="${BR}"/><path d="M124 130 h14 M152 138 h14 M182 130 h14 M212 138 h14 M236 130 h10" stroke="#633806" stroke-width="3" stroke-linecap="round"/></g>
+<g class="pt" data-w="cheese"><path d="M104 106 H256 V120 H244 L236 132 L228 120 H178 L170 130 L162 120 H134 L126 132 L118 120 H104 Z" fill="${YM}" stroke="${YD}" stroke-width="2" stroke-linejoin="round"/></g>
+<g class="pt" data-w="lettuce"><path d="M100 92 Q114 104 128 94 Q142 106 156 94 Q170 106 184 94 Q198 106 212 94 Q226 106 240 94 Q252 104 260 92 L260 104 Q180 114 100 104 Z" fill="${GM}" stroke="${GD}" stroke-width="2"/></g>
+<g class="pt" data-w="bun"><path d="M104 94 Q106 30 180 28 Q254 30 256 94 Z" fill="#EBC183" stroke="${YD}" stroke-width="2.5"/><g fill="#fff" opacity=".9"><ellipse cx="146" cy="58" rx="4" ry="2.4" transform="rotate(-20 146 58)"/><ellipse cx="174" cy="44" rx="4" ry="2.4" transform="rotate(15 174 44)"/><ellipse cx="206" cy="52" rx="4" ry="2.4" transform="rotate(-10 206 52)"/><ellipse cx="228" cy="72" rx="4" ry="2.4" transform="rotate(20 228 72)"/><ellipse cx="128" cy="78" rx="4" ry="2.4" transform="rotate(10 128 78)"/><ellipse cx="180" cy="70" rx="4" ry="2.4"/></g></g>
+${hamN('bun',52,24,124,62)}${hamN('lettuce',80,60,104,100)}${hamN('cheese',76,96,106,112)}${hamN('meat',62,132,104,134)}${hamN('tomato',80,168,110,152)}${hamN('bun',52,204,108,180)}
+${hamA('brown',72,22,220,46)}${hamA('round',70,52,250,76)}${hamA('green',66,82,258,98)}${hamA('soft',56,112,256,112)}${hamA('juicy',64,142,258,134)}${hamA('red',52,172,250,152)}${hamA('round',70,202,254,182)}
 </svg>`;
 
 /* 可点板书：Spell and Write · Compass（照着板书上的指南针和四周的拼写词重画） */
@@ -396,23 +399,24 @@ Action Verb: A word showing what someone or something does.`}
     ['green','/ɡriːn/','绿色的','The lettuce is green.','生菜是绿色的。','look','green'],
     ['brown','/braʊn/','棕色的','The bun is brown.','面包是棕色的。','look','brown'],
     ['bright','/braɪt/','明亮的','A bright star.','一颗明亮的星星。','look','bright'],
-    ['round','/raʊnd/','圆的','The hamburger is round.','汉堡是圆的。','look','round'],
+    ['round','/raʊnd/','圆的','The bun is round.','面包是圆的。','look','round'],
     ['big','/bɪɡ/','大的','The hamburger is big.','汉堡很大。','look','big'],
     ['cold','/koʊld/','凉的','The ice is cold.','冰块是凉的。','look','cold'],
     ['sweet','/swiːt/','甜的','Sugar is sweet.','糖是甜的。','taste','sweet'],
     ['salty','/ˈsɔːlti/','咸的','Salt is salty.','盐是咸的。','taste','salty'],
     ['sour','/ˈsaʊər/','酸的','A lemon is sour.','柠檬是酸的。','taste','sour'],
-    ['juicy','/ˈdʒuːsi/','多汁的','The hamburger is juicy.','汉堡很多汁。','taste','juicy'],
-    ['soft','/sɔːft/','软的','The bun is soft.','面包很软。','taste','soft'],
+    ['juicy','/ˈdʒuːsi/','多汁的','The meat is juicy.','肉饼很多汁。','taste','juicy'],
+    ['soft','/sɔːft/','软的','The cheese is soft.','芝士软软的。','taste','soft'],
     ['hamburger','/ˈhæmbɜːrɡər/','汉堡','Describe the hamburger.','说说这个汉堡是什么样。','food','hamburger'],
-    ['bun','/bʌn/','圆面包','The bun is soft and brown.','面包软软的，是棕色的。','food','bun'],
+    ['bun','/bʌn/','圆面包','The bun is brown and round.','面包是棕色的，圆圆的。','food','bun'],
     ['lettuce','/ˈletɪs/','生菜','The lettuce is green.','生菜是绿色的。','food','lettuce'],
     ['tomato','/təˈmeɪtoʊ/','番茄','The tomato is red.','番茄是红色的。','food','tomato'],
-    ['cheese','/tʃiːz/','芝士','The cheese is big.','芝士片很大。','food','cheese'],
+    ['cheese','/tʃiːz/','芝士','The cheese is soft.','芝士软软的。','food','cheese'],
+    ['meat','/miːt/','肉饼','The meat is juicy.','肉饼很多汁。','food','meat'],
     ['sugar','/ˈʃʊɡər/','糖','Sugar is sweet.','糖是甜的。','food','sugar'],
     ['salt','/sɔːlt/','盐','Salt is salty.','盐是咸的。','food','salt']
   ],
-  board:{title:'Describe the hamburger',zh:'说说这个汉堡 · 点蓝标签听读音，也可以遮住名字考一考',ask:'Describe the hamburger',svg:HAMBURGER_DIAGRAM,parts:['brown','green','red','round','soft','bun','lettuce','juicy','sweet','salty']},
+  board:{title:'Describe the hamburger',zh:'从上到下说一说 · 蓝色是名词，粉色是形容词，点一点听读音',ask:'Describe the hamburger',svg:HAMBURGER_DIAGRAM,parts:['bun','brown','round','lettuce','green','cheese','soft','meat','juicy','tomato','red']},
   groups:[
     {title:'Grammar 语法怎么说',tone:'idea',lines:[
       ['A word that tells us more about a noun.','用来多说一点名词的词。'],
@@ -420,15 +424,19 @@ Action Verb: A word showing what someone or something does.`}
       ['We use adjectives to describe things.','我们用形容词来描述东西。']]},
     {title:'Examples 白板上的三个例子',tone:'look',lines:[
       ['A red apple.','一个红苹果。'],['A bright star.','一颗明亮的星星。'],['A cold ice.','一块凉凉的冰。']]},
-    {title:'Describe the hamburger · 看得见',tone:'food',lines:[
-      ['The bun is brown.','面包是棕色的。'],['The lettuce is green.','生菜是绿色的。'],
-      ['The tomato is red.','番茄是红色的。'],['The hamburger is round and big.','汉堡又圆又大。']]},
-    {title:'Describe the hamburger · 尝得到',tone:'taste',lines:[
-      ['The bun is soft.','面包软软的。'],['The hamburger is juicy.','汉堡很多汁。'],
-      ['Sugar is sweet.','糖是甜的。'],['Salt is salty.','盐是咸的。'],
-      ['The cheese is big.','芝士片很大。']]}
+    {title:'Describe the hamburger 从上到下说一说',tone:'food',lines:[
+      ['The bun is brown and round.','最上面的面包是棕色的，圆圆的。'],
+      ['The lettuce is green.','生菜是绿色的。'],
+      ['The cheese is soft.','芝士软软的。'],
+      ['The meat is juicy.','肉饼很多汁。'],
+      ['The tomato is red.','番茄是红色的。'],
+      ['The bun is round.','最下面的面包也是圆的。']]},
+    {title:'The board also says 白板上还写了',tone:'taste',lines:[
+      ['The hamburger is big.','汉堡很大。'],['The cheese is big.','芝士片很大。'],
+      ['Sugar is sweet.','糖是甜的。'],['Salt is salty.','盐是咸的。']]}
   ],
   think:[
+    ['Can you describe the hamburger from top to bottom?','你能从上到下说说这个汉堡吗？','The bun is brown and round. The lettuce is green. The cheese is soft. The meat is juicy. The tomato is red.','面包棕色、圆圆的，生菜绿绿的，芝士软软的，肉饼多汁，番茄红红的。'],
     ['What adjectives can you use to describe an apple?','你会用哪些形容词说苹果？','It is red, round and sweet.','它又红、又圆、又甜。'],
     ['Is the hamburger sweet or salty?','这个汉堡是甜的还是咸的？','It is salty and juicy.','咸咸的，还很多汁。'],
     ['Can you describe your favourite food?','你能说说最爱吃的东西吗？','It is sweet and soft.','它甜甜的、软软的。']
