@@ -35,11 +35,13 @@ h1 span{color:var(--red)}
 .lessons::-webkit-scrollbar{display:none}
 .lesson-tab{flex:none;display:flex;align-items:center;gap:10px;min-width:190px;padding:10px 14px;border-radius:16px;background:#fff;border:2px solid var(--line);text-align:left;transition:transform .15s}
 .lesson-tab:active{transform:scale(.97)}
+@media(min-width:720px){.lessons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}.lesson-tab{min-width:0}}
 .lesson-tab.on{border-color:var(--yellow);box-shadow:0 4px 0 #F7C970}
 .lno{width:34px;height:34px;border-radius:11px;background:#F1EFE8;color:var(--muted);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
 .lesson-tab.on .lno{background:var(--yellow);color:#fff}
-.lt{font-size:14px;font-weight:700;line-height:1.35}
-.ls{font-size:11.5px;color:var(--muted);margin-top:2px}
+.lesson-tab>span:last-child{min-width:0;flex:1}
+.lt{display:block;font-size:14px;font-weight:700;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ls{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* 本课抬头 */
 .head{background:#fff;border:2px solid var(--line);border-radius:20px;padding:16px;margin:10px 0 14px}
@@ -86,7 +88,7 @@ h1 span{color:var(--red)}
 @media(min-width:720px){.cols{grid-template-columns:1fr 1fr}}
 .col{border:2px solid var(--line);border-radius:16px;padding:10px;background:#fff}
 .col.before{background:#F7F4EC}.col.after{background:#EAF3DE}
-.col.idea{background:#E6F1FB}.col.look{background:#FAEEDA}.col.food{background:#EAF3DE}.col.taste{background:#FBEAF0}
+.col.many{background:#FFF1D6}.col.spell{background:#EEEDFE}.col.idea{background:#E6F1FB}.col.look{background:#FAEEDA}.col.food{background:#EAF3DE}.col.taste{background:#FBEAF0}
 .col .scene{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;margin-bottom:8px;cursor:pointer}
 .col h4,.think h4{margin:2px 2px 8px;font-size:15px}
 .ln{display:flex;width:100%;text-align:left;gap:8px;align-items:flex-start;padding:8px;border-radius:10px;margin-bottom:4px;background:rgba(255,255,255,.76)}
@@ -98,12 +100,23 @@ h1 span{color:var(--red)}
 .think{border:2px solid #DCD8FA;border-radius:16px;padding:10px;background:#EEEDFE;margin-bottom:12px}
 .ans{margin:2px 8px 10px 38px;font-size:13.5px;color:#534AB7;line-height:1.6}
 .ans button{padding:4px 10px;border-radius:999px;background:#fff;border:1px solid #CECBF6;color:#534AB7;font-size:12.5px;font-weight:600}
-details.photo{background:#fff;border:2px dashed #F0C987;border-radius:16px;padding:10px 12px;margin-bottom:14px}
-details.photo summary{cursor:pointer;font-size:14px;font-weight:700;color:#8A5A00;list-style:none}
-details.photo summary::-webkit-details-marker{display:none}
-details.photo summary::before{content:"▸ ";color:var(--yellow)}
-details.photo[open] summary::before{content:"▾ "}
-details.photo img{display:block;width:100%;margin-top:10px;border-radius:10px;cursor:zoom-in;border:1px solid var(--line)}
+/* 老师的原始板书 */
+.photos{background:#fff;border:2px solid var(--line);border-radius:20px;padding:12px 14px 14px;margin-bottom:14px}
+.ph-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
+.ph-h b{font-size:16px}.ph-h span{font-size:12px;color:var(--muted)}
+.ph-grid{display:grid;gap:12px}
+@media(min-width:720px){.ph-grid.two{grid-template-columns:1fr 1fr}}
+.photos figure{margin:0}
+.photos img{display:block;width:100%;border-radius:12px;border:1px solid var(--line);cursor:zoom-in;background:#F7F4EC}
+.photos figcaption{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.5}
+/* 老师发的课堂小结（英文原文） */
+details.tnotes{background:#fff;border:2px dashed #F0C987;border-radius:16px;padding:10px 12px;margin-bottom:14px}
+details.tnotes summary{cursor:pointer;font-size:14px;font-weight:700;color:#8A5A00;list-style:none}
+details.tnotes summary::-webkit-details-marker{display:none}
+details.tnotes summary::before{content:"▸ ";color:var(--yellow)}
+details.tnotes[open] summary::before{content:"▾ "}
+.tnote{margin-top:10px;padding:10px 12px;border-radius:12px;background:#FBF8F2;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;font-size:13.5px;line-height:1.7;color:#4a3a2e}
+.tnote b{display:block;margin-bottom:4px;color:#8A5A00}
 .lightbox{position:fixed;inset:0;background:rgba(44,44,42,.82);display:none;align-items:center;justify-content:center;padding:12px;z-index:30}
 .lightbox.show{display:flex}
 .lightbox img{max-width:100%;max-height:90vh;border-radius:10px}
@@ -284,7 +297,7 @@ function tone(ok){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)
 /* 当前课、当前分类、听过记录 */
 /* 默认打开最新一课；手动选课写进网址，刷新后还停在这一课 */
 let lid=decodeURIComponent(location.hash.replace(/^#/,''));
-if(!LESSONS.some(l=>l.id===lid))lid=LESSONS[LESSONS.length-1].id;
+if(!LESSONS.some(l=>l.id===lid))lid=window.BOARD_DEFAULT||LESSONS[LESSONS.length-1].id;
 let L=LESSONS.find(l=>l.id===lid);
 let W=L.words.map((a,i)=>({i,w:a[0],ipa:a[1],zh:a[2],s:a[3],sz:a[4],cat:a[5],icon:a[6]}));
 const catBg=k=>(L.cats.find(c=>c.k===k)||{bg:'#F1EFE8'}).bg;
@@ -298,7 +311,7 @@ const line=([en,cn])=>`<button class="ln" data-say="${quote(en)}" data-audio="1"
 
 /* 课程切换 */
 function renderLessons(){
-  document.getElementById('lessons').innerHTML=LESSONS.map(l=>`<button class="lesson-tab ${l.id===L.id?'on':''}" data-l="${l.id}"><span class="lno">${l.no}</span><span><span class="lt">${l.zh}</span><span class="ls">${l.subject} · ${l.title}</span></span></button>`).join('');
+  document.getElementById('lessons').innerHTML=LESSONS.map(l=>`<button class="lesson-tab ${l.id===L.id?'on':''}" data-l="${l.id}"><span class="lno">${l.no}</span><span><span class="lt">${l.tab||l.zh}</span><span class="ls">${l.subject} · ${l.title}</span></span></button>`).join('');
   document.querySelectorAll('.lesson-tab').forEach(b=>b.onclick=()=>{if(b.dataset.l===L.id)return;setLesson(b.dataset.l)});
 }
 function setLesson(id){
@@ -315,24 +328,29 @@ function setLesson(id){
 function renderPage(){
   const groups=L.groups.map(g=>`<div class="col ${g.tone}">${g.img?`<img class="scene" src="${g.img}" alt="${quote(g.alt||'')}" data-say="${quote(g.alt||g.title)}" data-audio="1" loading="lazy">`:''}<h4>${g.title}</h4>${g.lines.map(line).join('')}</div>`).join('');
   const think=L.think.map((q,i)=>line(q)+`<div class="ans"><button class="reveal" data-i="${i}">可以这样说</button></div>`).join('');
-  const photo=L.photo?`<details class="photo"><summary>${L.photo.caption}</summary><img src="${L.photo.src}" alt="${quote(L.photo.alt)}" loading="lazy"></details>`:'';
+  const ph=L.photos||[];
+  const photos=ph.length?`<div class="photos"><div class="ph-h"><b>老师的原始板书</b><span>点图片看大图</span></div><div class="ph-grid ${ph.length>1?'two':''}">${ph.map(p=>`<figure><img src="${p.src}" alt="${quote(p.caption)}" loading="lazy"><figcaption>${p.caption}</figcaption></figure>`).join('')}</div></div>`:'';
+  const tn=L.notes||[];
+  const notes=tn.length?`<details class="tnotes"><summary>老师发的课堂小结 · 英文原文 ${tn.length} 段</summary>${tn.map(n=>`<div class="tnote"><b>${quote(n.title)}</b>${quote(n.text).replace(/\n/g,'<br>')}</div>`).join('')}</details>`:'';
+  const board=L.board?`<div class="board">
+    <div class="lh"><button class="say" data-say="${quote(L.board.ask)}" data-audio="1" aria-label="听标题">${ICON.play}</button><div><b>${L.board.title}</b><span>${L.board.zh}</span></div><button class="mini ${practice?'ghost':''}" id="practice">${practice?'显示名字':'遮住名字考一考'}</button></div>
+    <div class="diagram">${L.board.svg}</div>
+    <div class="cap" id="cap"><div class="t">${practice?'名字都遮住了。点一个标签，先自己说说它是什么，再看答案。':'点图上的部件或者蓝标签，就能听到读音。'}</div></div>
+  </div>`:'';
   document.getElementById('page').innerHTML=`
   <div class="head">
-    <div class="meta"><span class="tag">第 ${L.no} 课 · ${L.date}</span><span class="tag subject">${L.subject}</span></div>
-    <div class="line1"><button class="say" data-say="${quote(L.headSents[0])}" data-audio="${L.id==='trains'?1:0}" aria-label="听课题">${ICON.play}</button><div style="flex:1"><h2>${L.title}</h2><div class="zh">${L.zh}</div></div></div>
+    <div class="meta"><span class="tag">第 ${L.no} 课${L.date?' · '+L.date:''}</span><span class="tag subject">${L.subject}</span></div>
+    <div class="line1"><button class="say" data-say="${quote(L.headSents[0])}" data-audio="1" aria-label="听课题">${ICON.play}</button><div style="flex:1"><h2>${L.title}</h2><div class="zh">${L.zh}</div></div></div>
     <p class="lead">${L.lead}<br><span style="font-size:13px">${L.headSents[1]}</span></p>
     <div class="src">${L.source}</div>
   </div>
 
-  <div class="board">
-    <div class="lh"><button class="say" data-say="${quote(L.board.ask)}" data-audio="1" aria-label="听标题">${ICON.play}</button><div><b>${L.board.title}</b><span>${L.board.zh}</span></div><button class="mini ${practice?'ghost':''}" id="practice">${practice?'显示名字':'遮住名字考一考'}</button></div>
-    <div class="diagram">${L.board.svg}</div>
-    <div class="cap" id="cap"><div class="t">${practice?'名字都遮住了。点一个标签，先自己说说它是什么，再看答案。':'点图上的部件或者蓝标签，就能听到读音。'}</div></div>
-  </div>
+  ${photos}
+  ${board}
 
   <div class="cols">${groups}</div>
   <div class="think"><h4>Think and talk 想一想，说一说</h4>${think}</div>
-  ${photo}
+  ${notes}
 
   <div class="progress"><span id="progTxt"></span><div class="bar"><i id="progBar"></i></div></div>
   <div class="tabs"><button class="on" data-tab="learn">认识单词</button><button data-tab="quiz">听音选图</button></div>
@@ -349,7 +367,7 @@ function renderPage(){
     </div>
   </section>`;
   document.getElementById('foot').innerHTML=`单词发音为美式读音，来自有道词典；句子用随页面打包的朗读音频，文件没找到时才用浏览器自带朗读。<br>${L.note}<br>听过的单词会打上小星星，记录保存在本机浏览器里，每一课分开记。`;
-  paintLabels();bindPage();bindQuizButtons();
+  paintLabels();bindPageParts();bindQuizButtons();
 }
 
 /* 板书标签 */
@@ -369,18 +387,18 @@ function tapPart(w){
   const done=practice&&L.board.parts.every(p=>revealed.has(p));
   document.getElementById('cap').innerHTML=`<div class="t"><span class="w">${it.w}</span> ${it.ipa} · ${it.zh}<div class="en">${it.s}</div><div>${it.sz}${done?' · 这一板的名字都认过一遍啦！':''}</div></div><button class="say" data-say="${quote(it.s)}" aria-label="听句子">${ICON.play}</button>`;
 }
-function bindPage(){
-  const page=document.getElementById('page');
-  page.addEventListener('click',e=>{
+/* 整页点击只绑定一次：重绘时若重复绑定，「考一考」按钮会被连按两次而失效 */
+const page=document.getElementById('page');
+page.addEventListener('click',e=>{
     const t=e.target;
     if(t.closest('#practice')){practice=!practice;revealed.clear();renderPage();renderChips();renderGrid();renderScope();renderProg();return}
     const rv=t.closest('.reveal');if(rv){const q=L.think[+rv.dataset.i];rv.parentNode.innerHTML=`<b>${q[2]}</b><br>${q[3]}`;speak(q[2],true);return}
     const s=t.closest('[data-say]');if(s){page.querySelectorAll('.ln').forEach(x=>x.classList.toggle('on',x===s));speak(s.dataset.say,s.dataset.audio==='1');return}
     const p=t.closest('[data-w]');if(p){tapPart(p.dataset.w);return}
+    const im=t.closest('.photos img');if(im){document.getElementById('lightboxImg').src=im.src;document.getElementById('lightbox').classList.add('show');return}
     const c=t.closest('.card');if(c){const w=W[+c.dataset.i];if(t.closest('.zoom')){openDetail(list().indexOf(w));return}speak(w.w);markHeard(w);c.classList.remove('bounce');void c.offsetWidth;c.classList.add('bounce')}
-  });
-  const img=page.querySelector('details.photo img');
-  if(img)img.onclick=()=>{document.getElementById('lightboxImg').src=img.src;document.getElementById('lightbox').classList.add('show')};
+});
+function bindPageParts(){
   page.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
     page.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
     page.querySelector('#learn').classList.toggle('hide',b.dataset.tab!=='learn');

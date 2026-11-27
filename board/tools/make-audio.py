@@ -25,7 +25,7 @@ const out = new Set();
 const norm = s => s.replace(/-/g, ' ').trim();
 for (const l of window.BOARD_LESSONS) {
   l.headSents.forEach(s => out.add(norm(s)));
-  out.add(norm(l.board.ask));
+  if (l.board) out.add(norm(l.board.ask));
   l.words.forEach(w => out.add(norm(w[3])));
   l.groups.forEach(g => {
     if (g.alt) out.add(norm(g.alt));
@@ -36,8 +36,9 @@ for (const l of window.BOARD_LESSONS) {
 out.add('Life before trains');
 out.add('Life after trains');
 out.add('Great job!');
-const short = new Set(['The first steam train', 'Describe the hamburger',
-                       'Life before trains', 'Life after trains']);
+// 课题、板书标题按钮强制走打包音频，即使只有一两个词也要生成
+const short = new Set(['Life before trains', 'Life after trains']);
+for (const l of window.BOARD_LESSONS) { short.add(norm(l.headSents[0])); if (l.board) short.add(norm(l.board.ask)); }
 const sents = [...out].filter(s => /[.!?]$/.test(s) || s.split(/\s+/).length > 3 || short.has(s));
 console.log(JSON.stringify(sents));
 """
