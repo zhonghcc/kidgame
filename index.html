@@ -65,6 +65,7 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
 .t-music{--tone:255,111,145;--deep:#e0436b}
 .t-raz{--tone:60,196,124;--deep:#1d9a5a}
 .t-board{--tone:127,119,221;--deep:#5a52b8}
+.t-wonder{--tone:29,158,117;--deep:#0f7a58}
 .icon{grid-row:1 / span 3;display:flex;align-items:center;justify-content:center;width:76px;height:76px;border-radius:20px;background:rgba(var(--tone),.14)}
 .icon svg{width:50px;height:50px}
 .tile:hover .icon svg{animation:wiggle .5s ease}
@@ -107,7 +108,7 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
 }
 @media (min-width:960px){
   .hero{padding-top:8px}
-  .grid{grid-template-columns:repeat(5,1fr);gap:16px}
+  .grid{grid-template-columns:repeat(3,1fr);gap:20px}
   .tile{padding:20px 14px 18px}
   .icon{width:82px;height:82px;border-radius:24px;margin:0 auto 12px}
   .icon svg{width:52px;height:52px}
@@ -137,7 +138,7 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
     <h1 aria-label="童趣学园"><span class="ch">童</span><span class="ch">趣</span><span class="ch">学</span><span class="ch">园</span></h1>
     <span class="brand-en">Kid Game</span>
     <p class="lead">玩着玩着，就学会了。</p>
-    <p class="sub">给孩子做的英语、乐理、铁路和课堂白板小游戏，打开即玩，不用注册，进度只保存在这台设备上。</p>
+    <p class="sub">给孩子做的英语、乐理、铁路、课堂白板和科普小游戏，打开即玩，不用注册，进度只保存在这台设备上。</p>
   </header>
 
   <main id="game-grid" class="grid">
@@ -170,6 +171,12 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
       <span class="title">白板口袋</span>
       <span class="desc">老师今天写的英语，装进口袋里点一点就能听，按课整理</span>
       <span class="foot-row"><span class="tags"><span class="tag">课堂英语</span><span class="tag">按课更新</span></span><span class="go">开始玩 ›</span></span>
+    </a>
+    <a class="tile t-wonder" href="wonder/">
+      <span class="icon"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="17" cy="17" r="11" fill="#E1F5EE" stroke="#1D9E75" stroke-width="2.6"/><path d="M25 25l9 9" stroke="#1D9E75" stroke-width="3.4" stroke-linecap="round"/><path d="M12 19c2-6 8-7 10-3-3 0-5 2-6 5" fill="#97C459"/><circle cx="18" cy="12.5" r="1.6" fill="#EF9F27"/></svg></span>
+      <span class="title">好奇口袋</span>
+      <span class="desc">老师讲的自然和科学，看板书、听句子，再把例子分一分</span>
+      <span class="foot-row"><span class="tags"><span class="tag">课堂科普</span><span class="tag">按课更新</span></span><span class="go">开始玩 ›</span></span>
     </a>
   </main>
 

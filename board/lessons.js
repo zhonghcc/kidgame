@@ -382,7 +382,7 @@ Action Verb: A word showing what someone or something does.`}
   id:'adjectives',tab:'形容词·汉堡',no:'04',date:'11 月 27 日',subject:'Grammar',
   title:'Adjectives',zh:'形容词：说说它是什么样',
   lead:'一个红苹果、一颗亮星星。形容词就是多说一点，让别人知道它是什么样。',
-  source:'依据今天老师的白板板书 Adjectives 整理：语法定义、三个例句、Describe the hamburger 的标注词和句子。老师的原始板书放在页面下方，可展开对照。',
+  source:'依据今天老师的白板板书 Adjectives 整理：语法定义、三个例句、Describe the hamburger 的标注词，以及老师发的汉堡描述和味道句子。老师的原始板书放在页面下方，可展开对照。',
   headSents:['Adjectives','A word that tells us more about a noun.'],
   cats:[
     {k:'idea',n:'语法小词',bg:'#E6F1FB'},
@@ -395,22 +395,23 @@ Action Verb: A word showing what someone or something does.`}
     ['noun','/naʊn/','名词','A noun is a person, a place or a thing.','名词说的是人、地方或东西。','idea','noun'],
     ['describe','/dɪˈskraɪb/','描述','We use adjectives to describe things.','我们用形容词来描述东西。','idea','describe'],
     ['word','/wɜːrd/','单词','Red is a word.','red 就是一个词。','idea','word'],
-    ['red','/red/','红色的','The tomato is red.','番茄是红色的。','look','red'],
+    ['red','/red/','红色的','The tomatoes are red.','番茄是红色的。','look','red'],
     ['green','/ɡriːn/','绿色的','The lettuce is green.','生菜是绿色的。','look','green'],
     ['brown','/braʊn/','棕色的','The bun is brown.','面包是棕色的。','look','brown'],
     ['bright','/braɪt/','明亮的','A bright star.','一颗明亮的星星。','look','bright'],
-    ['round','/raʊnd/','圆的','The bun is round.','面包是圆的。','look','round'],
+    ['round','/raʊnd/','圆的','The hamburger is big and round.','汉堡又大又圆。','look','round'],
     ['big','/bɪɡ/','大的','The hamburger is big.','汉堡很大。','look','big'],
     ['cold','/koʊld/','凉的','The ice is cold.','冰块是凉的。','look','cold'],
     ['sweet','/swiːt/','甜的','Sugar is sweet.','糖是甜的。','taste','sweet'],
     ['salty','/ˈsɔːlti/','咸的','Salt is salty.','盐是咸的。','taste','salty'],
     ['sour','/ˈsaʊər/','酸的','A lemon is sour.','柠檬是酸的。','taste','sour'],
+    ['lemon','/ˈlemən/','柠檬','A lemon is sour.','柠檬是酸的。','food','e:🍋'],
     ['juicy','/ˈdʒuːsi/','多汁的','The meat is juicy.','肉饼很多汁。','taste','juicy'],
     ['soft','/sɔːft/','软的','The cheese is soft.','芝士软软的。','taste','soft'],
     ['hamburger','/ˈhæmbɜːrɡər/','汉堡','Describe the hamburger.','说说这个汉堡是什么样。','food','hamburger'],
-    ['bun','/bʌn/','圆面包','The bun is brown and round.','面包是棕色的，圆圆的。','food','bun'],
+    ['bun','/bʌn/','圆面包','The bun is brown and soft.','面包是棕色的，软软的。','food','bun'],
     ['lettuce','/ˈletɪs/','生菜','The lettuce is green.','生菜是绿色的。','food','lettuce'],
-    ['tomato','/təˈmeɪtoʊ/','番茄','The tomato is red.','番茄是红色的。','food','tomato'],
+    ['tomato','/təˈmeɪtoʊ/','番茄','The tomatoes are red.','番茄是红色的。','food','tomato'],
     ['cheese','/tʃiːz/','芝士','The cheese is soft.','芝士软软的。','food','cheese'],
     ['meat','/miːt/','肉饼','The meat is juicy.','肉饼很多汁。','food','meat'],
     ['sugar','/ˈʃʊɡər/','糖','Sugar is sweet.','糖是甜的。','food','sugar'],
@@ -424,25 +425,41 @@ Action Verb: A word showing what someone or something does.`}
       ['We use adjectives to describe things.','我们用形容词来描述东西。']]},
     {title:'Examples 白板上的三个例子',tone:'look',lines:[
       ['A red apple.','一个红苹果。'],['A bright star.','一颗明亮的星星。'],['A cold ice.','一块凉凉的冰。']]},
-    {title:'Describe the hamburger 从上到下说一说',tone:'food',lines:[
-      ['The bun is brown and round.','最上面的面包是棕色的，圆圆的。'],
+    {title:'Describe the hamburger 说说这个汉堡',tone:'food',lines:[
+      ['The hamburger is big and round.','汉堡又大又圆。'],
+      ['The bun is brown and soft.','面包是棕色的，软软的。'],
       ['The lettuce is green.','生菜是绿色的。'],
-      ['The cheese is soft.','芝士软软的。'],
       ['The meat is juicy.','肉饼很多汁。'],
-      ['The tomato is red.','番茄是红色的。'],
-      ['The bun is round.','最下面的面包也是圆的。']]},
-    {title:'The board also says 白板上还写了',tone:'taste',lines:[
-      ['The hamburger is big.','汉堡很大。'],['The cheese is big.','芝士片很大。'],
-      ['Sugar is sweet.','糖是甜的。'],['Salt is salty.','盐是咸的。']]}
+      ['The tomatoes are red.','番茄是红色的。'],
+      ['The cheese is soft.','芝士软软的。']]},
+    {title:'Describing taste 说说味道',tone:'taste',lines:[
+      ['Sugar is sweet.','糖是甜的。'],
+      ['Salt is salty.','盐是咸的。'],
+      ['A lemon is sour.','柠檬是酸的。']]},
+    {title:'The board also says 白板上还写了',tone:'look',lines:[
+      ['The hamburger is big.','汉堡很大。'],['The cheese is big.','芝士片很大。']]}
   ],
   think:[
-    ['Can you describe the hamburger from top to bottom?','你能从上到下说说这个汉堡吗？','The bun is brown and round. The lettuce is green. The cheese is soft. The meat is juicy. The tomato is red.','面包棕色、圆圆的，生菜绿绿的，芝士软软的，肉饼多汁，番茄红红的。'],
+    ['Can you describe the hamburger?','你能说说这个汉堡吗？','The hamburger is big and round. The bun is brown and soft. The lettuce is green. The meat is juicy. The tomatoes are red. The cheese is soft.','汉堡又大又圆，面包棕色、软软的，生菜绿绿的，肉饼多汁，番茄红红的，芝士软软的。'],
+    ['What does a lemon taste like?','柠檬是什么味道？','A lemon is sour.','柠檬是酸的。'],
     ['What adjectives can you use to describe an apple?','你会用哪些形容词说苹果？','It is red, round and sweet.','它又红、又圆、又甜。'],
     ['Is the hamburger sweet or salty?','这个汉堡是甜的还是咸的？','It is salty and juicy.','咸咸的，还很多汁。'],
     ['Can you describe your favourite food?','你能说说最爱吃的东西吗？','It is sweet and soft.','它甜甜的、软软的。']
   ],
-  photos:[{src:'img/adjectives-board.jpg',caption:'Grammar · Adjectives：Describe the hamburger'}],notes:[],
-  note:'白板手写里有 EXamples、tomatoe、A cold ice 这类笔误和口语写法，句子组照原板书展示，词卡里的例句按规范写法给出（The ice is cold.）。'
+  photos:[{src:'img/adjectives-board.jpg',caption:'Grammar · Adjectives：Describe the hamburger'}],notes:[
+    {title:'Describe the hamburger',text:`The hamburger is big and round.
+• The bun is brown and soft.
+• The lettuce is green.
+• The meat is juicy.
+• The tomatoes are red.
+• The cheese is soft.
+
+👅 Describing Taste:
+• Sugar is sweet.
+• Salt is salty.
+• A lemon is sour.`}
+  ],
+  note:'「说说这个汉堡」「说说味道」两组照老师发的原句；汉堡图的分层按家长口述整理。白板手写里的 EXamples、tomatoe 已按规范写法给出，A cold ice 照原板书保留，词卡例句用 The ice is cold.'
 },
 {
   id:'describing',tab:'找出形容词',no:'05',subject:'Grammar',
