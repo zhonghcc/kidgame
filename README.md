@@ -56,7 +56,7 @@ python3 -m http.server 8080   # 在仓库根目录执行，打开 http://localho
 1. 在 `board/lessons.js` 的课程数组里追加一个对象：抬头、分类、词表、句子组、讨论题；原始板书照片放 `board/img/` 并写进 `photos`，老师发的英文课堂小结写进 `notes`，可点板书图 `board` 可以为 `null`。照片里有同学名单或计分的地方先打码
    词卡插图可以用 `ART` 里画好的图，也可以写 `e:🐘` 用表情、写 `t:I am` 用文字贴纸；`BOARD_DEFAULT` 决定默认打开哪一课
 2. 跑一次 `python3 board/tools/make-audio.py`，新出现的句子会补成 `board/audio/<哈希>.mp3`，已有文件不重下
-3. 刷新页面就能看到新课程，听过记录和进度按课程 `id` 分别存在浏览器里
+3. 把 `board/index.html` 里 `lessons.js?v=` 后面的版本号改一下（服务器给 js 缓存 12 小时，不改的话老访客会拿到旧课程），刷新页面就能看到新课程，听过记录和进度按课程 `id` 分别存在浏览器里
 
 ## 新增一个游戏
 
