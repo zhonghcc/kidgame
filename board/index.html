@@ -101,20 +101,18 @@ h1 span{color:var(--red)}
 .ans{margin:2px 8px 10px 38px;font-size:13.5px;color:#534AB7;line-height:1.6}
 .ans button{padding:4px 10px;border-radius:999px;background:#fff;border:1px solid #CECBF6;color:#534AB7;font-size:12.5px;font-weight:600}
 /* 老师的原始板书 */
-.photos{background:#fff;border:2px solid var(--line);border-radius:20px;padding:12px 14px 14px;margin-bottom:14px}
-.ph-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
-.ph-h b{font-size:16px}.ph-h span{font-size:12px;color:var(--muted)}
-.ph-grid{display:grid;gap:12px}
+.ph-grid{display:grid;gap:12px;margin-top:10px}
 @media(min-width:720px){.ph-grid.two{grid-template-columns:1fr 1fr}}
 .photos figure{margin:0}
 .photos img{display:block;width:100%;border-radius:12px;border:1px solid var(--line);cursor:zoom-in;background:#F7F4EC}
 .photos figcaption{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.5}
 /* 老师发的课堂小结（英文原文） */
-details.tnotes{background:#fff;border:2px dashed #F0C987;border-radius:16px;padding:10px 12px;margin-bottom:14px}
-details.tnotes summary{cursor:pointer;font-size:14px;font-weight:700;color:#8A5A00;list-style:none}
-details.tnotes summary::-webkit-details-marker{display:none}
-details.tnotes summary::before{content:"▸ ";color:var(--yellow)}
-details.tnotes[open] summary::before{content:"▾ "}
+details.photos,details.tnotes{background:#fff;border:2px dashed #F0C987;border-radius:16px;padding:10px 12px;margin-bottom:14px}
+details.photos summary,details.tnotes summary{cursor:pointer;font-size:14px;font-weight:700;color:#8A5A00;list-style:none}
+details.photos summary::-webkit-details-marker,details.tnotes summary::-webkit-details-marker{display:none}
+details.photos summary::before,details.tnotes summary::before{content:"▸ ";color:var(--yellow)}
+details.photos[open] summary::before,details.tnotes[open] summary::before{content:"▾ "}
+details.photos summary span{font-weight:400;font-size:12px;color:var(--muted);margin-left:6px}
 .tnote{margin-top:10px;padding:10px 12px;border-radius:12px;background:#FBF8F2;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;font-size:13.5px;line-height:1.7;color:#4a3a2e}
 .tnote b{display:block;margin-bottom:4px;color:#8A5A00}
 .lightbox{position:fixed;inset:0;background:rgba(44,44,42,.82);display:none;align-items:center;justify-content:center;padding:12px;z-index:30}
@@ -257,7 +255,7 @@ details.tnotes[open] summary::before{content:"▾ "}
 <div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt="板书大图"></div>
 
 <!-- 改了 lessons.js 记得同时改这里的版本号：服务器对 js 缓存 12 小时，页面本身不缓存 -->
-<script src="lessons.js?v=20261127b"></script>
+<script src="lessons.js?v=20261127c"></script>
 <script>
 const LESSONS=window.BOARD_LESSONS;
 const draw=window.BOARD_HELPER.svgOf,quote=window.BOARD_HELPER.esc;
@@ -330,7 +328,7 @@ function renderPage(){
   const groups=L.groups.map(g=>`<div class="col ${g.tone}">${g.img?`<img class="scene" src="${g.img}" alt="${quote(g.alt||'')}" data-say="${quote(g.alt||g.title)}" data-audio="1" loading="lazy">`:''}<h4>${g.title}</h4>${g.lines.map(line).join('')}</div>`).join('');
   const think=L.think.map((q,i)=>line(q)+`<div class="ans"><button class="reveal" data-i="${i}">可以这样说</button></div>`).join('');
   const ph=L.photos||[];
-  const photos=ph.length?`<div class="photos"><div class="ph-h"><b>老师的原始板书</b><span>点图片看大图</span></div><div class="ph-grid ${ph.length>1?'two':''}">${ph.map(p=>`<figure><img src="${p.src}" alt="${quote(p.caption)}" loading="lazy"><figcaption>${p.caption}</figcaption></figure>`).join('')}</div></div>`:'';
+  const photos=ph.length?`<details class="photos"><summary>老师的原始板书 · ${ph.length} 张<span>展开后点图片看大图</span></summary><div class="ph-grid ${ph.length>1?'two':''}">${ph.map(p=>`<figure><img src="${p.src}" alt="${quote(p.caption)}" loading="lazy"><figcaption>${p.caption}</figcaption></figure>`).join('')}</div></details>`:'';
   const tn=L.notes||[];
   const notes=tn.length?`<details class="tnotes"><summary>老师发的课堂小结 · 英文原文 ${tn.length} 段</summary>${tn.map(n=>`<div class="tnote"><b>${quote(n.title)}</b>${quote(n.text).replace(/\n/g,'<br>')}</div>`).join('')}</details>`:'';
   const board=L.board?`<div class="board">
@@ -346,11 +344,11 @@ function renderPage(){
     <div class="src">${L.source}</div>
   </div>
 
-  ${photos}
   ${board}
 
   <div class="cols">${groups}</div>
   <div class="think"><h4>Think and talk 想一想，说一说</h4>${think}</div>
+  ${photos}
   ${notes}
 
   <div class="progress"><span id="progTxt"></span><div class="bar"><i id="progBar"></i></div></div>

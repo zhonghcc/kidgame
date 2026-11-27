@@ -379,7 +379,7 @@ Action Verb: A word showing what someone or something does.`}
   id:'adjectives',tab:'形容词·汉堡',no:'04',date:'11 月 27 日',subject:'Grammar',
   title:'Adjectives',zh:'形容词：说说它是什么样',
   lead:'一个红苹果、一颗亮星星。形容词就是多说一点，让别人知道它是什么样。',
-  source:'依据今天老师的白板板书 Adjectives 整理：语法定义、三个例句、Describe the hamburger 的标注词和句子。老师的原始板书在上方。',
+  source:'依据今天老师的白板板书 Adjectives 整理：语法定义、三个例句、Describe the hamburger 的标注词和句子。老师的原始板书放在页面下方，可展开对照。',
   headSents:['Adjectives','A word that tells us more about a noun.'],
   cats:[
     {k:'idea',n:'语法小词',bg:'#E6F1FB'},
