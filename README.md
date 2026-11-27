@@ -7,6 +7,7 @@
 | 游戏 | 地址 | 内容 |
 |---|---|---|
 | 小火车英语 | [/train/](https://kidgame.zhonghcc.com/train/) | 火车主题英文单词，带插图、音标、例句，可慢速朗读 |
+| 白板口袋 | [/board/](https://kidgame.zhonghcc.com/board/) | 按课收录老师白板上的英语：可点板书、逐句听读、遮住名字考一考、听音选图 |
 | 小音符乐理闯关 | [/music/](https://kidgame.zhonghcc.com/music/) | 对应菲伯尔第1级：认谱、节奏、拍号、听音 |
 | RAZ Level C Games | [/raz/](https://kidgame.zhonghcc.com/raz/) | RAZ C 级配套：认词、听句子、看图填词，全英文界面 |
 
@@ -18,6 +19,11 @@
 index.html        入口页（导航），右上角回到 zhonghcc.com 主页
 favicon.svg
 train/index.html  小火车英语
+board/index.html  白板口袋（页面与交互）
+board/lessons.js  每课的词表、板书图、句子与讨论题
+board/audio/      句子朗读音频（mp3）
+board/img/        课堂海报与白板照片
+board/tools/make-audio.py  补生成句子音频
 music/index.html  小音符乐理闯关
 music/samples/piano/  钢琴采样，C2 到 A5 每隔小三度一个，共 16 个 mp3（约 1.2MB）
 raz/index.html    RAZ Level C Games
@@ -44,6 +50,12 @@ raz/audio/        句子朗读音频（mp3）
 ```bash
 python3 -m http.server 8080   # 在仓库根目录执行，打开 http://localhost:8080/
 ```
+
+## 白板口袋加一课
+
+1. 在 `board/lessons.js` 的课程数组里追加一个对象：抬头、分类、词表、可点板书、句子组、讨论题；板书照片放 `board/img/`
+2. 跑一次 `python3 board/tools/make-audio.py`，新出现的句子会补成 `board/audio/<哈希>.mp3`，已有文件不重下
+3. 刷新页面就能看到新课程，听过记录和进度按课程 `id` 分别存在浏览器里
 
 ## 新增一个游戏
 

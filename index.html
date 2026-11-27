@@ -63,6 +63,7 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
 .t-train{--tone:74,163,255;--deep:#1f6fd1}
 .t-music{--tone:255,111,145;--deep:#e0436b}
 .t-raz{--tone:60,196,124;--deep:#1d9a5a}
+.t-board{--tone:127,119,221;--deep:#5a52b8}
 .icon{grid-row:1 / span 3;display:flex;align-items:center;justify-content:center;width:76px;height:76px;border-radius:20px;background:rgba(var(--tone),.14)}
 .icon svg{width:50px;height:50px}
 .tile:hover .icon svg{animation:wiggle .5s ease}
@@ -90,7 +91,7 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
   .brand-en{font-size:16px}
   .lead{font-size:20px}
   .sub{font-size:15px}
-  .grid{grid-template-columns:repeat(3,1fr);gap:22px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:22px}
   /* 竖排时标签和按钮压到卡片底部，描述行数不同也能对齐 */
   .tile{display:flex;flex-direction:column;align-items:center;padding:22px 20px 20px;text-align:center}
   .icon{grid-row:auto;width:96px;height:96px;border-radius:28px;margin:0 auto 14px}
@@ -105,7 +106,7 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
 }
 @media (min-width:960px){
   .hero{padding-top:8px}
-  .grid{gap:28px}
+  .grid{grid-template-columns:repeat(4,1fr);gap:22px}
   .tile{padding:28px 24px 24px}
   .notes{max-width:760px;margin:0 auto 10px}
 }
@@ -131,7 +132,7 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
     <h1 aria-label="童趣学园"><span class="ch">童</span><span class="ch">趣</span><span class="ch">学</span><span class="ch">园</span></h1>
     <span class="brand-en">Kid Game</span>
     <p class="lead">玩着玩着，就学会了。</p>
-    <p class="sub">给孩子做的英语和乐理小游戏，打开即玩，不用注册，进度只保存在这台设备上。</p>
+    <p class="sub">给孩子做的英语、乐理和课堂白板小游戏，打开即玩，不用注册，进度只保存在这台设备上。</p>
   </header>
 
   <main id="game-grid" class="grid">
@@ -152,6 +153,12 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
       <span class="title">RAZ Level C Games</span>
       <span class="desc">RAZ C 级配套练习：认词、听句子、看图填词，全英文界面</span>
       <span class="foot-row"><span class="tags"><span class="tag">英语</span><span class="tag">分级阅读</span></span><span class="go">开始玩 ›</span></span>
+    </a>
+    <a class="tile t-board" href="board/">
+      <span class="icon"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="5" width="32" height="25" rx="3" fill="#fff" stroke="#7F77DD" stroke-width="2"/><path d="M9 13h13 M9 19h9 M9 25h15" stroke="#B4A8F0" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="11" r="3" fill="#FF8A3D"/><circle cx="30" cy="23" r="3" fill="#3CC47C"/><path d="M13 30v5 M27 30v5" stroke="#7F77DD" stroke-width="2" stroke-linecap="round"/><rect x="9" y="34" width="22" height="3" rx="1.5" fill="#7F77DD"/></svg></span>
+      <span class="title">白板口袋</span>
+      <span class="desc">老师今天写的英语，装进口袋里点一点就能听，按课整理</span>
+      <span class="foot-row"><span class="tags"><span class="tag">课堂英语</span><span class="tag">按课更新</span></span><span class="go">开始玩 ›</span></span>
     </a>
   </main>
 

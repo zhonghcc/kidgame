@@ -125,52 +125,7 @@ h1{font-size:24px}
 .qengine{width:62px;height:48px}
 }
 .foot{margin-top:28px;font-size:12px;color:#9A988F;text-align:center;line-height:1.7}
-/* 课堂同步 */
-.classbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px;padding:10px 12px;border-radius:14px;background:#FFF6E5;border:1px dashed #F0C987;font-size:14px;color:#7A5410}
-.classbar b{color:#5A3A00}
-.classbar button{padding:6px 12px;border-radius:999px;background:#fff;border:1px solid #F0C987;color:#7A5410;font-size:13px;font-weight:600}
-.lesson{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px}
-.lh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.lh>div{flex:1;min-width:180px}
-.lh b{display:block;font-size:18px}
-.lh span{font-size:13px;color:var(--muted)}
-.say{flex:none;width:38px;height:38px;border-radius:50%;background:var(--blue-l);color:var(--blue);display:inline-flex;align-items:center;justify-content:center}
-.say svg{width:18px;height:18px}
-.mini{padding:7px 14px;border-radius:999px;background:var(--ink);color:#fff;font-size:13px;font-weight:600}
-.mini.ghost{background:#F1EFE8;color:var(--ink)}
-.diagram{margin-top:10px;border-radius:14px;background:#F7F4EC}
-.diagram svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
-.diagram [data-w]{cursor:pointer}
-.diagram .pt{transition:filter .2s}
-.diagram .pt.on{filter:drop-shadow(0 0 5px #EF9F27) drop-shadow(0 0 2px #EF9F27)}
-.diagram .lbl rect{fill:#fff;stroke:#378ADD;stroke-width:2}
-.diagram .lbl text{fill:#185FA5;font:700 14px Arial,sans-serif}
-.diagram .lbl.on rect{fill:#EF9F27;stroke:#BA7517}
-.diagram .lbl.on text{fill:#fff}
-.diagram .lbl.ask rect{fill:#FAEEDA;stroke:#EF9F27;stroke-dasharray:4 3}
-.diagram .lbl.ask text{fill:#BA7517}
-.diagram .lead{stroke:#378ADD;stroke-width:1.8}
-.cap{margin-top:10px;padding:10px 12px;border-radius:12px;background:#FBF8F2;font-size:14px;color:var(--muted);min-height:48px;display:flex;align-items:center;gap:10px}
-.cap .t{flex:1}
-.cap .w{font-size:18px;font-weight:700;color:var(--ink)}
-.cap .en{color:var(--ink);font-weight:600;margin-top:2px}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-@media (max-width:620px){.cols{grid-template-columns:1fr}}
-.col{border-radius:14px;padding:10px}
-.col.before{background:#F1EFE8}
-.col .scene{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;margin-bottom:8px;cursor:pointer}
-.col.after{background:#EAF3DE}
-.col h4,.think h4{margin:2px 2px 8px;font-size:15px}
-.ln{display:flex;width:100%;text-align:left;gap:8px;align-items:flex-start;padding:8px;border-radius:10px;margin-bottom:4px;background:rgba(255,255,255,.7)}
-.ln .ic{flex:none;width:22px;height:22px;color:var(--blue);margin-top:1px}
-.ln .ic svg{width:100%;height:100%}
-.ln .en{display:block;font-size:15px;font-weight:600}
-.ln .cn{display:block;font-size:12.5px;color:var(--muted);margin-top:1px}
-.ln.on{background:#FAEEDA}
-.think{margin-top:12px;border-radius:14px;padding:10px;background:#EEEDFE}
-.ans{margin:2px 8px 10px 38px;font-size:13.5px;color:#534AB7}
-.ans button{padding:4px 10px;border-radius:999px;background:#fff;border:1px solid #CECBF6;color:#534AB7;font-size:12.5px;font-weight:600}
-.hide{display:none!important}
+.hide{display:none!important}.hide{display:none!important}
 </style>
 </head>
 <body>
@@ -179,7 +134,7 @@ h1{font-size:24px}
   <div class="top">
     <div>
       <h1>小火车<span>英语</span></h1>
-      <div class="sub">火车主题的 <span id="total">40</span> 个词，还有课堂上学的火车知识，点一点就能听</div>
+      <div class="sub">火车主题的 <span id="total">40</span> 个词，点一点就能听</div>
     </div>
     <div class="speed">慢速朗读 <button class="switch" id="slowSw" aria-label="慢速朗读"></button></div>
   </div>
@@ -228,7 +183,7 @@ h1{font-size:24px}
     </div>
   </section>
 
-  <div class="foot">单词发音为美式读音，来自有道词典；句子用随页面打包的朗读音频；网络不通时改用浏览器自带朗读。<br>「课堂」两组内容依据老师的 Social Studies 板书 Evolution of trains（火车的演变）和课堂海报 Life before / after trains 整理。<br>听过的单词会打上小星星，记录保存在本机浏览器里。</div>
+  <div class="foot">单词发音为美式读音，来自有道词典；句子用随页面打包的朗读音频；网络不通时改用浏览器自带朗读。<br>听过的单词会打上小星星，记录保存在本机浏览器里。</div>
 </div>
 
 <div class="mask" id="mask">
@@ -258,12 +213,10 @@ const radial=(n,r1,r2,stroke,w,cap='round')=>{let s='';for(let i=0;i<n;i++){cons
 const ties=()=>{let s='';for(let k=0;k<7;k++){const y=30+k*10,h=11+(y-30)*.378+6;s+=`<rect x="${(50-h).toFixed(1)}" y="${y}" width="${(2*h).toFixed(1)}" height="${(3+k*.6).toFixed(1)}" rx="1" fill="${BR}"/>`}return s};
 const colorTrain=(c,cd,cl)=>`<rect x="10" y="36" width="52" height="36" rx="6" fill="${c}"/><rect x="20" y="22" width="10" height="16" fill="${cd}"/><rect x="17" y="19" width="16" height="5" rx="2" fill="${cd}"/><rect x="56" y="24" width="34" height="48" rx="5" fill="${c}"/><rect x="52" y="20" width="42" height="6" rx="3" fill="${cd}"/><rect x="63" y="31" width="20" height="14" rx="3" fill="${cl}"/><rect x="6" y="70" width="88" height="5" rx="2" fill="${K}"/>${wh(22,80,8)}${wh(46,80,8)}${wh(74,80,8)}`;
 
-const bigWheel=(cx,cy,r,rim=K,hub=R)=>{let s='';for(let i=0;i<8;i++){const a=i*Math.PI/4;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r*.78*Math.cos(a)).toFixed(1)+'" y2="'+(cy+r*.78*Math.sin(a)).toFixed(1)+'" stroke="'+rim+'" stroke-width="'+(r*.13).toFixed(1)+'"/>'}return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+rim+'"/><circle cx="'+cx+'" cy="'+cy+'" r="'+(r*.8).toFixed(1)+'" fill="'+hub+'"/>'+s+'<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*.25).toFixed(1)+'" fill="'+rim+'"/><circle cx="'+cx+'" cy="'+cy+'" r="'+(r*.1).toFixed(1)+'" fill="'+YM+'"/>'};
 const SVG={
 train:`<rect x="6" y="38" width="42" height="36" rx="6" fill="${B}"/><rect x="12" y="44" width="16" height="14" rx="3" fill="${BL}"/><rect x="32" y="44" width="10" height="14" rx="2" fill="${BL}"/><rect x="6" y="64" width="42" height="4" fill="${BD}"/><rect x="47" y="63" width="8" height="3" fill="${K}"/><rect x="54" y="42" width="40" height="32" rx="5" fill="${Y}"/><rect x="59" y="48" width="12" height="11" rx="2" fill="${YL}"/><rect x="76" y="48" width="12" height="11" rx="2" fill="${YL}"/>${wh(17,78)}${wh(37,78)}${wh(64,78)}${wh(84,78)}${rail()}`,
 engine:`<rect x="58" y="28" width="30" height="44" rx="4" fill="${R}"/><rect x="54" y="24" width="38" height="6" rx="2" fill="${K}"/><rect x="64" y="34" width="18" height="14" rx="2" fill="${RL}"/><rect x="12" y="44" width="48" height="26" rx="10" fill="${R}"/><rect x="20" y="30" width="9" height="16" fill="${K}"/><rect x="17" y="27" width="15" height="5" rx="2" fill="${K}"/><rect x="38" y="37" width="10" height="9" rx="4.5" fill="${Y}"/><circle cx="12" cy="56" r="5" fill="${YM}"/><rect x="6" y="66" width="86" height="6" rx="2" fill="${K}"/>${wh(24,78,8)}${wh(46,78,8)}${wh(74,78,8)}${rail()}`,
 car:`<rect x="8" y="34" width="84" height="40" rx="7" fill="${G}"/><rect x="8" y="34" width="84" height="7" rx="3" fill="${GD}"/><rect x="15" y="46" width="14" height="14" rx="2" fill="${GLL}"/><rect x="35" y="46" width="14" height="14" rx="2" fill="${GLL}"/><rect x="55" y="46" width="14" height="14" rx="2" fill="${GLL}"/><rect x="74" y="46" width="12" height="24" rx="2" fill="${GD}"/><rect x="76" y="49" width="8" height="8" rx="1" fill="${GLL}"/>${wh(22,78)}${wh(36,78)}${wh(64,78)}${wh(78,78)}${rail()}`,
-steamtrain:`<circle cx="22" cy="23" r="7" fill="${GL}" class="puff"/><circle cx="33" cy="14" r="9" fill="${GL}"/><circle cx="47" cy="10" r="7" fill="${GL}"/><rect x="18" y="28" width="8" height="15" fill="${K}"/><rect x="8" y="42" width="34" height="22" rx="8" fill="${D}"/><rect x="38" y="32" width="20" height="34" rx="3" fill="${D}"/><rect x="42" y="37" width="12" height="10" rx="2" fill="${YM}"/><rect x="6" y="62" width="54" height="5" fill="${R}"/><rect x="62" y="40" width="32" height="26" rx="4" fill="${R}"/><rect x="66" y="45" width="10" height="9" rx="1.5" fill="${RL}"/><rect x="80" y="45" width="10" height="9" rx="1.5" fill="${RL}"/>${wh(17,74,7)}${wh(33,74,7)}${wh(50,74,6)}${wh(70,74,6)}${wh(86,74,6)}${rail(82)}`,
 bullet:`<path d="M6 70 Q8 46 40 40 L94 40 L94 70 Z" fill="#fff" stroke="#B4B2A9" stroke-width="1.5"/><path d="M17 51 Q25 44 40 43 L40 52 L16 55 Z" fill="${BD}"/><rect x="46" y="46" width="10" height="8" rx="2" fill="${BM}"/><rect x="60" y="46" width="10" height="8" rx="2" fill="${BM}"/><rect x="74" y="46" width="10" height="8" rx="2" fill="${BM}"/><path d="M7 63 L94 59 L94 64 L7 67 Z" fill="${B}"/><rect x="10" y="70" width="84" height="5" fill="#B4B2A9"/>${rail(80)}`,
 subway:`<path d="M4 94 L4 42 Q50 -2 96 42 L96 94 Z" fill="${GL}"/><rect x="22" y="22" width="56" height="62" rx="10" fill="${B}"/><rect x="40" y="26" width="20" height="6" rx="1.5" fill="${Y}"/><rect x="28" y="36" width="44" height="22" rx="4" fill="${BL}"/><rect x="48" y="36" width="4" height="22" fill="${B}"/><circle cx="32" cy="70" r="4" fill="${YM}"/><circle cx="68" cy="70" r="4" fill="${YM}"/><rect x="22" y="78" width="56" height="6" fill="${BD}"/><path d="M36 84 L28 96 M64 84 L72 96" stroke="${K}" stroke-width="3"/>`,
 tram:`<line x1="4" y1="10" x2="96" y2="10" stroke="${K}" stroke-width="1.5"/><path d="M50 27 L62 11" stroke="${K}" stroke-width="2.5"/><rect x="20" y="24" width="60" height="7" rx="3" fill="${YD}"/><rect x="10" y="30" width="80" height="44" rx="8" fill="${Y}"/><rect x="16" y="38" width="14" height="15" rx="2" fill="${YL}"/><rect x="34" y="38" width="14" height="15" rx="2" fill="${YL}"/><rect x="52" y="38" width="14" height="15" rx="2" fill="${YL}"/><rect x="70" y="38" width="14" height="15" rx="2" fill="${YL}"/><rect x="10" y="60" width="80" height="4" fill="${R}"/>${wh(28,78,6)}${wh(72,78,6)}<rect x="4" y="84" width="92" height="3" fill="${GR}"/>`,
@@ -296,34 +249,10 @@ switch:`${[14,24,34,44,54,64,74,84].map(y=>`<rect x="26" y="${y}" width="32" hei
 choo:`<path d="M14 16 H86 Q92 16 92 22 V62 Q92 68 86 68 H42 L26 84 L29 68 H14 Q8 68 8 62 V22 Q8 16 14 16 Z" fill="${BL}" stroke="${B}" stroke-width="2"/><circle cx="29" cy="25" r="3.5" fill="${GL}"/><circle cx="36" cy="22" r="4" fill="${GL}"/><rect x="26" y="29" width="5" height="9" fill="${K}"/><rect x="20" y="37" width="24" height="17" rx="3" fill="${R}"/><rect x="40" y="31" width="14" height="23" rx="2" fill="${R}"/><rect x="43" y="34" width="8" height="7" rx="1" fill="${RL}"/><rect x="58" y="39" width="26" height="15" rx="3" fill="${Y}"/><circle cx="27" cy="57" r="3.5" fill="${K}"/><circle cx="42" cy="57" r="3.5" fill="${K}"/><circle cx="64" cy="57" r="3.5" fill="${K}"/><circle cx="78" cy="57" r="3.5" fill="${K}"/>`,
 toot:`<path d="M12 42 H28 L64 22 V78 L28 58 H12 Z" fill="${Y}"/><rect x="62" y="20" width="7" height="60" rx="3.5" fill="${YD}"/><rect x="12" y="42" width="6" height="16" fill="${YD}"/><path d="M77 38 Q83 50 77 62 M86 30 Q96 50 86 70" stroke="${B}" stroke-width="4" fill="none" stroke-linecap="round"/>`,
 aboard:`<rect x="6" y="26" width="72" height="50" rx="6" fill="${R}"/><rect x="6" y="26" width="72" height="6" rx="3" fill="${RD}"/><rect x="12" y="38" width="14" height="14" rx="2" fill="${RL}"/><rect x="30" y="38" width="14" height="14" rx="2" fill="${RL}"/><rect x="52" y="36" width="20" height="40" fill="${YL}"/><path d="M98 49 H84 V41 L66 56 L84 71 V63 H98 Z" fill="${G}"/><rect x="50" y="76" width="24" height="4" fill="${K}"/>${wh(18,82,6)}${wh(36,82,6)}`,
-/* 课堂同步：第一辆蒸汽火车的各个部分 */
-chimney:`<circle cx="44" cy="17" r="8" fill="${GL}" class="puff"/><circle cx="58" cy="10" r="7" fill="#fff" stroke="${GL}" stroke-width="2"/><rect x="36" y="28" width="18" height="40" fill="${K}"/><rect x="30" y="22" width="30" height="9" rx="3" fill="${K}"/><rect x="6" y="64" width="88" height="26" rx="13" fill="${D}"/><path d="M30 64 V90 M70 64 V90" stroke="${K}" stroke-width="2"/><rect x="24" y="16" width="42" height="56" rx="7" fill="none" stroke="${Y}" stroke-width="3" stroke-dasharray="5 4"/>`,
-boiler:`<rect x="40" y="18" width="14" height="14" rx="6" fill="${D}"/><rect x="8" y="28" width="80" height="42" rx="21" fill="${D}"/><ellipse cx="14" cy="49" rx="8" ry="21" fill="#5F5E5A"/><path d="M36 28 V70 M62 28 V70" stroke="${YM}" stroke-width="3"/><circle cx="24" cy="36" r="1.8" fill="${GL}"/><circle cx="24" cy="62" r="1.8" fill="${GL}"/><circle cx="76" cy="36" r="1.8" fill="${GL}"/><circle cx="76" cy="62" r="1.8" fill="${GL}"/><rect x="58" y="72" width="34" height="16" rx="3" fill="${K}"/><path d="M62 88 Q66 76 72 82 Q76 72 82 82 Q86 76 88 88 Z" fill="${R}"/><path d="M68 88 Q71 81 75 84 Q78 79 82 88 Z" fill="${Y}"/>`,
-drivercab:`<rect x="10" y="18" width="80" height="9" rx="3" fill="${K}"/><rect x="16" y="27" width="68" height="60" rx="4" fill="${R}"/><rect x="26" y="35" width="48" height="32" rx="4" fill="${YL}"/><path d="M38 67 Q38 59 50 59 Q62 59 62 67 Z" fill="${BD}"/><circle cx="50" cy="51" r="9" fill="${SK}"/><path d="M40 48 Q41 38 50 38 Q59 38 60 48 Z" fill="#0C447C"/><rect x="38" y="46" width="24" height="3" rx="1.5" fill="${K}"/><circle cx="46.5" cy="52" r="1.4" fill="${K}"/><circle cx="53.5" cy="52" r="1.4" fill="${K}"/><rect x="10" y="85" width="80" height="6" rx="2" fill="${K}"/>`,
-drivingwheels:`${bigWheel(29,58,21)}${bigWheel(71,58,21)}<rect x="27" y="61" width="46" height="5" rx="2.5" fill="${GR}"/><circle cx="29" cy="63" r="3" fill="${YM}"/><circle cx="71" cy="63" r="3" fill="${YM}"/>${rail(80)}`,
-tender:`<circle cx="20" cy="40" r="7" fill="${K}"/><circle cx="32" cy="36" r="8" fill="${K}"/><circle cx="46" cy="38" r="7" fill="${K}"/><circle cx="58" cy="35" r="8" fill="${K}"/><circle cx="71" cy="38" r="7" fill="${K}"/><circle cx="82" cy="40" r="6" fill="${K}"/><rect x="10" y="40" width="80" height="34" rx="4" fill="${D}"/><rect x="10" y="40" width="80" height="6" fill="#5F5E5A"/><text x="50" y="66" font-size="13" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial">COAL</text>${wh(28,80,7)}${wh(72,80,7)}${rail(87)}`,
-steam:`<rect x="8" y="62" width="44" height="18" rx="9" fill="${D}"/><rect x="48" y="66" width="10" height="10" fill="${GR}"/><circle cx="66" cy="68" r="8" fill="#fff" stroke="${GL}" stroke-width="2"/><circle cx="74" cy="52" r="11" fill="#fff" stroke="${GL}" stroke-width="2"/><circle cx="66" cy="36" r="8" fill="#fff" stroke="${GL}" stroke-width="2"/><circle cx="82" cy="30" r="10" fill="#fff" stroke="${GL}" stroke-width="2" class="puff"/><path d="M60 24 q4 -6 0 -12 M88 50 q5 -5 0 -11" stroke="${GL}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`,
-/* 课堂同步：为什么发明火车 */
-travel:`<path d="M18 30 Q50 4 82 30" stroke="${B}" stroke-width="3" stroke-dasharray="5 5" fill="none"/><circle cx="18" cy="32" r="6" fill="${R}"/><circle cx="82" cy="32" r="6" fill="${G}"/><rect x="40" y="44" width="20" height="11" rx="4" fill="none" stroke="${BR}" stroke-width="4"/><rect x="24" y="52" width="52" height="38" rx="6" fill="${Y}"/><path d="M38 52 V90 M62 52 V90" stroke="${YD}" stroke-width="4"/>`,
-onfoot:`<g transform="translate(34 64) rotate(-12)"><ellipse cx="0" cy="0" rx="9" ry="15" fill="${BR}"/><circle cx="-5" cy="-20" r="3.4" fill="${BR}"/><circle cx="1" cy="-22" r="2.8" fill="${BR}"/><circle cx="6" cy="-20" r="2.4" fill="${BR}"/><circle cx="9" cy="-16" r="2" fill="${BR}"/></g><g transform="translate(64 36) rotate(12)"><ellipse cx="0" cy="0" rx="9" ry="15" fill="${BR}"/><circle cx="5" cy="-20" r="3.4" fill="${BR}"/><circle cx="-1" cy="-22" r="2.8" fill="${BR}"/><circle cx="-6" cy="-20" r="2.4" fill="${BR}"/><circle cx="-9" cy="-16" r="2" fill="${BR}"/></g>`,
-horse:`<path d="M80 46 Q93 54 87 72" stroke="${K}" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="36" y="58" width="6" height="30" fill="${BR}"/><rect x="45" y="58" width="6" height="30" fill="${BR}"/><rect x="66" y="58" width="6" height="30" fill="${BR}"/><rect x="75" y="58" width="6" height="30" fill="${BR}"/><ellipse cx="57" cy="52" rx="27" ry="14" fill="${BR}"/><path d="M33 50 L23 25 L36 21 L46 44 Z" fill="${BR}"/><path d="M24 25 L9 36 Q7 41 13 42 L29 34 Z" fill="${BR}"/><path d="M30 22 L33 13 L37 22 Z" fill="${BR}"/><path d="M37 21 Q43 30 46 44" stroke="${K}" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="24" cy="30" r="1.8" fill="${K}"/><path d="M34 86 H44 M43 86 H53 M64 86 H74 M73 86 H83" stroke="${K}" stroke-width="4"/><rect x="4" y="89" width="92" height="3" rx="1.5" fill="${GM}"/>`,
-boat:`<path d="M50 12 V64" stroke="${BR}" stroke-width="3"/><path d="M53 14 L82 58 L53 58 Z" fill="#fff" stroke="${GL}" stroke-width="1.5"/><path d="M47 22 L24 58 L47 58 Z" fill="${R}"/><path d="M12 62 H88 L77 79 H23 Z" fill="${BR}"/><path d="M4 87 q8 -6 16 0 t16 0 t16 0 t16 0 t16 0 t16 0" stroke="${B}" stroke-width="3" fill="none"/>`,
-wagon:`<path d="M14 62 L2 70" stroke="${BR}" stroke-width="3" stroke-linecap="round"/><path d="M20 56 V40 Q20 20 50 20 Q80 20 80 40 V56 Z" fill="#fff" stroke="${GL}" stroke-width="2"/><path d="M35 22 V56 M50 20 V56 M65 22 V56" stroke="${GL}" stroke-width="2"/><rect x="14" y="54" width="72" height="14" rx="2" fill="${BR}"/>${bigWheel(30,76,12,BR,YL)}${bigWheel(70,76,12,BR,YL)}<rect x="4" y="88" width="92" height="3" rx="1.5" fill="${GM}"/>`,
-slow:`<path d="M10 82 Q10 72 24 72 H72 Q84 72 86 62 L88 54 Q93 50 94 56 L92 70 Q90 82 76 82 Z" fill="${YM}"/><circle cx="48" cy="52" r="23" fill="${YD}"/><path d="M48 52 m-4 0 a4 4 0 1 1 8 0 a9 9 0 1 1 -18 0 a15 15 0 1 1 30 0" stroke="${YL}" stroke-width="3" fill="none"/><path d="M87 56 L84 41 M91 55 L95 41" stroke="${YD}" stroke-width="2.5" stroke-linecap="round"/><circle cx="84" cy="40" r="3" fill="${YD}"/><circle cx="95" cy="40" r="3" fill="${YD}"/><rect x="4" y="84" width="92" height="3" rx="1.5" fill="${GM}"/>`,
-fast:`<path d="M6 48 H26 M2 57 H28 M10 65 H26" stroke="${B}" stroke-width="3.5" stroke-linecap="round"/><path d="M34 42 L66 42 Q92 46 94 70 L34 70 Z" fill="${R}"/><path d="M66 46 Q82 49 87 57 L66 57 Z" fill="${BL}"/><rect x="40" y="48" width="9" height="8" rx="2" fill="${RL}"/><rect x="53" y="48" width="9" height="8" rx="2" fill="${RL}"/><rect x="34" y="63" width="60" height="4" fill="${RD}"/>${wh(46,74,5)}${wh(80,74,5)}${rail(80)}`,
-heavygoods:`<path d="M44 18 Q50 8 56 18" stroke="${K}" stroke-width="3.5" fill="none"/><path d="M36 40 L42 18 H58 L64 40 Z" fill="${K}"/><text x="50" y="35" font-size="11" fill="#fff" text-anchor="middle" font-family="Arial" font-weight="700">1t</text><rect x="14" y="40" width="72" height="46" rx="3" fill="${BR}"/><path d="M14 40 L86 86 M86 40 L14 86" stroke="#633806" stroke-width="3"/><rect x="14" y="40" width="72" height="46" rx="3" fill="none" stroke="#633806" stroke-width="4"/>`,
-supplies:`<path d="M16 88 Q8 62 22 48 L20 38 H36 L34 48 Q48 62 40 88 Z" fill="${YM}"/><path d="M20 41 H36" stroke="${YD}" stroke-width="3"/><rect x="44" y="54" width="30" height="34" fill="${BR}"/><path d="M44 64 H74 M59 54 V64" stroke="#633806" stroke-width="2"/><rect x="77" y="58" width="18" height="30" rx="5" fill="#D85A30"/><path d="M77 66 H95 M77 80 H95" stroke="#993C1D" stroke-width="2.5"/>`,
-difficult:`<rect x="52" y="42" width="40" height="44" rx="3" fill="${BR}"/><path d="M52 42 L92 86 M92 42 L52 86" stroke="#633806" stroke-width="2.5"/><path d="M33 42 L24 66" stroke="${BD}" stroke-width="9" stroke-linecap="round"/><path d="M31 48 L52 54 M29 54 L52 62" stroke="${BD}" stroke-width="5" stroke-linecap="round"/><path d="M24 66 L12 86 M24 66 L32 86" stroke="${K}" stroke-width="5" stroke-linecap="round"/><circle cx="31" cy="33" r="8" fill="${SK}"/><path d="M19 20 q-3 5 0 7 q3 -2 0 -7z M14 30 q-3 5 0 7 q3 -2 0 -7z" fill="${B}"/><rect x="4" y="86" width="92" height="3" rx="1.5" fill="${GR}"/>`,
-invent:`${radial(8,38,46,Y,4)}<circle cx="50" cy="44" r="22" fill="${YM}"/><path d="M42 46 L46 40 L50 46 L54 40 L58 46" stroke="${YD}" stroke-width="2.5" fill="none" stroke-linejoin="round"/><path d="M44 58 V66 M56 58 V66" stroke="${YD}" stroke-width="2"/><rect x="40" y="64" width="20" height="8" rx="2" fill="${GR}"/><rect x="42" y="72" width="16" height="6" rx="2" fill="#5F5E5A"/><circle cx="43" cy="37" r="5" fill="#fff" fill-opacity=".7"/>`,
-journey:`<rect x="6" y="10" width="88" height="80" rx="8" fill="${GLL}"/><path d="M18 80 Q30 50 50 60 T82 24" stroke="${BR}" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M18 80 Q30 50 50 60 T82 24" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/><circle cx="18" cy="80" r="5" fill="${R}"/><path d="M82 24 V8" stroke="${K}" stroke-width="2.5"/><path d="M82 8 L94 12 L82 16 Z" fill="${R}"/><circle cx="76" cy="72" r="12" fill="#fff" stroke="${B}" stroke-width="3"/><path d="M76 72 V64 M76 72 L82 75" stroke="${K}" stroke-width="2.5" stroke-linecap="round"/>`,
-factory:`<circle cx="70" cy="13" r="6" fill="${GL}" class="puff"/><circle cx="81" cy="8" r="5" fill="${GL}"/><rect x="64" y="20" width="10" height="36" fill="#993C1D"/><rect x="78" y="28" width="8" height="28" fill="#993C1D"/><path d="M8 88 V50 L26 38 V50 L44 38 V50 L62 38 V54 H92 V88 Z" fill="#D85A30"/><rect x="16" y="60" width="10" height="10" rx="1" fill="${YL}"/><rect x="34" y="60" width="10" height="10" rx="1" fill="${YL}"/><rect x="52" y="60" width="10" height="10" rx="1" fill="${YL}"/><rect x="70" y="66" width="14" height="22" rx="1" fill="${K}"/><rect x="4" y="88" width="92" height="4" rx="2" fill="${GR}"/>`,
-connect:`<path d="M6 54 L17 43 L28 54 V68 H6 Z" fill="${R}"/><rect x="11" y="57" width="6" height="6" fill="${YL}"/><path d="M22 60 L30 52 L38 60 V68 H22 Z" fill="${Y}"/><rect x="62" y="28" width="13" height="40" fill="${B}"/><rect x="78" y="40" width="16" height="28" fill="${BD}"/><path d="M65 34 h3 M70 34 h3 M65 42 h3 M70 42 h3 M65 50 h3 M70 50 h3 M82 46 h3 M88 46 h3 M82 54 h3 M88 54 h3" stroke="${BL}" stroke-width="3"/><path d="M6 78 Q50 62 94 78" stroke="${GR}" stroke-width="3" fill="none"/><path d="M6 86 Q50 70 94 86" stroke="${GR}" stroke-width="3" fill="none"/><rect x="38" y="58" width="24" height="12" rx="3" fill="${G}"/><rect x="42" y="61" width="6" height="4" rx="1" fill="${GLL}"/><rect x="51" y="61" width="6" height="4" rx="1" fill="${GLL}"/><circle cx="17" cy="36" r="3" fill="${R}"/><circle cx="82" cy="22" r="3" fill="${R}"/><path d="M17 36 Q50 6 82 22" stroke="${R}" stroke-width="2" stroke-dasharray="3 4" fill="none"/>`,
-business:`<path d="M10 28 H70 L74 40 H6 Z" fill="${R}"/><path d="M22 28 L20 40 M34 28 L34 40 M46 28 L48 40 M58 28 L62 40" stroke="#fff" stroke-width="3"/><rect x="10" y="40" width="60" height="46" fill="${YL}"/><rect x="18" y="48" width="18" height="14" rx="2" fill="${BM}"/><rect x="44" y="54" width="16" height="32" rx="2" fill="${BD}"/><path d="M76 50 L86 36 L96 50 Z M83 50 H89 V62 H83 Z" fill="${G}"/><ellipse cx="86" cy="86" rx="11" ry="4" fill="${YD}"/><ellipse cx="86" cy="81" rx="11" ry="4" fill="${Y}" stroke="${YD}"/><ellipse cx="86" cy="75" rx="11" ry="4" fill="${Y}" stroke="${YD}"/><ellipse cx="86" cy="69" rx="11" ry="4" fill="${YM}" stroke="${YD}"/>`
+
 };
 
 const CATS=[
- {k:'steam',n:'课堂·蒸汽火车',bg:'#F1EFE8'},
- {k:'why',n:'课堂·为什么有火车',bg:'#E1F5EE'},
  {k:'type',n:'火车家族',bg:'#E6F1FB'},
  {k:'part',n:'火车身上',bg:'#FAEEDA'},
  {k:'rail',n:'铁路沿线',bg:'#EAF3DE'},
@@ -331,29 +260,6 @@ const CATS=[
  {k:'fun',n:'声音和口令',bg:'#EEEDFE'}
 ];
 const W=[
-['steam train','/ˈstiːm treɪn/','蒸汽火车','The first train was a steam train.','第一辆火车是蒸汽火车。','steam','steamtrain'],
-['chimney','/ˈtʃɪmni/','烟囱','The chimney releases smoke and steam.','烟囱冒出烟和蒸汽。','steam','chimney'],
-['boiler','/ˈbɔɪlər/','锅炉','Water in the boiler turns into steam.','锅炉里的水变成蒸汽。','steam','boiler'],
-["driver's cab",'/ˈdraɪvərz kæb/','司机室',"The driver works in the driver's cab.",'司机在司机室里工作。','steam','drivercab'],
-['driving wheels','/ˈdraɪvɪŋ wiːlz/','驱动轮','Steam turns the driving wheels.','蒸汽推动驱动轮转起来。','steam','drivingwheels'],
-['coal tender','/ˈkoʊl ˌtendər/','煤水车','The coal tender carries coal and water.','煤水车装着煤和水。','steam','tender'],
-['steam','/stiːm/','蒸汽','Steam makes the train go.','蒸汽让火车跑起来。','steam','steam'],
-['smoke','/smoʊk/','烟','Smoke comes out of the chimney.','烟从烟囱里冒出来。','steam','smoke'],
-['invent','/ɪnˈvent/','发明','Why did they invent trains?','人们为什么发明火车？','why','invent'],
-['travel','/ˈtrævəl/','出行','People travel from one place to another.','人们从一个地方去另一个地方。','why','travel'],
-['on foot','/ɑːn ˈfʊt/','步行','People travelled on foot.','以前人们走路出行。','why','onfoot'],
-['horse','/hɔːrs/','马','People travelled by horse.','以前人们骑马出行。','why','horse'],
-['boat','/boʊt/','船','People travelled by boat.','以前人们坐船出行。','why','boat'],
-['wagon','/ˈwæɡən/','马车','Trains are better than wagons.','火车比马车好。','why','wagon'],
-['slow','/sloʊ/','慢','Travelling was slow.','以前出行很慢。','why','slow'],
-['fast','/fæst/','快','With trains, people travelled faster.','有了火车，人们出行更快了。','why','fast'],
-['heavy goods','/ˌhevi ˈɡʊdz/','重的货物','Trains carry heavy goods.','火车运送很重的货物。','why','heavygoods'],
-['supplies','/səˈplaɪz/','物资','Trains move people and supplies.','火车运送人和物资。','why','supplies'],
-['difficult','/ˈdɪfɪkəlt/','困难的，很难','Carrying heavy goods was difficult.','以前搬运重货很困难。','why','difficult'],
-['journey','/ˈdʒɜːrni/','旅程','Journeys took longer.','路上要花的时间更长。','why','journey'],
-['factory','/ˈfæktəri/','工厂','Factories received supplies faster.','工厂能更快收到原料。','why','factory'],
-['connect','/kəˈnekt/','连接','Trains connected towns and cities.','火车把城镇和城市连了起来。','why','connect'],
-['business','/ˈbɪznəs/','生意','Trains helped business grow.','火车让生意越做越大。','why','business'],
 ['train','/treɪn/','火车','I like trains!','我喜欢火车！','type','train'],
 ['engine','/ˈendʒɪn/','火车头','The engine pulls the cars.','火车头拉着车厢。','type','engine'],
 ['car','/kɑːr/','车厢','This train has five cars.','这列火车有五节车厢。','type','car'],
@@ -446,7 +352,6 @@ function renderChips(){
   document.querySelector('#bigMode svg').setAttribute('style','width:16px;height:16px');
 }
 function renderGrid(){
-  renderLesson();
   grid.innerHTML=list().map(w=>`<div class="card ${heard.has(w.w)?'done':''}" data-i="${w.i}"><span class="heard">${ICON.star(true)}</span><button class="zoom" aria-label="放大">${ICON.zoom}</button><div class="pic" style="background:${catBg(w.cat)}">${svgOf(w)}</div><div class="word">${w.w}</div><div class="zh">${w.zh}</div></div>`).join('');
   grid.querySelectorAll('.card').forEach(c=>{
     const w=W[+c.dataset.i];
@@ -456,72 +361,6 @@ function renderGrid(){
     };
   });
 }
-
-/* 课堂同步：依据老师的 Social Studies 板书「Evolution of trains」 */
-const byW=w=>W.find(x=>x.w===w);
-const esc=s=>s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-// 板书左半边：第一辆蒸汽火车的结构图，部件和名字都能点
-const LBL=(w,x,y,wd,lx1,ly1,lx2,ly2)=>`<line class="lead" x1="${lx1}" y1="${ly1}" x2="${lx2}" y2="${ly2}"/><circle cx="${lx2}" cy="${ly2}" r="3" fill="#378ADD"/><g class="lbl" data-w="${esc(w)}"><rect x="${x}" y="${y}" width="${wd}" height="24" rx="12"/><text x="${x+wd/2}" y="${y+16.5}" text-anchor="middle">${w}</text></g>`;
-const DIAGRAM=`<svg viewBox="0 0 360 196" xmlns="http://www.w3.org/2000/svg">
-<rect x="0" y="152" width="360" height="4" fill="${GR}"/>${Array.from({length:18},(_,i)=>`<rect x="${4+i*20}" y="156" width="10" height="4" fill="${BR}"/>`).join('')}
-<circle cx="66" cy="28" r="7" fill="${GL}" class="puff"/><circle cx="54" cy="22" r="6" fill="#fff" stroke="${GL}" stroke-width="2"/>
-<g class="pt" data-w="boiler"><rect x="102" y="62" width="16" height="14" rx="6" fill="${D}"/><rect x="34" y="72" width="122" height="46" rx="23" fill="${D}"/><path d="M82 72 V118 M122 72 V118" stroke="#5F5E5A" stroke-width="3"/><ellipse cx="38" cy="95" rx="8" ry="23" fill="#5F5E5A"/><circle cx="32" cy="82" r="5" fill="${YM}"/></g>
-<g class="pt" data-w="chimney"><rect x="56" y="40" width="16" height="34" fill="${K}"/><rect x="51" y="34" width="26" height="8" rx="3" fill="${K}"/></g>
-<g class="pt" data-w="driver's cab"><rect x="146" y="40" width="64" height="8" rx="3" fill="${K}"/><rect x="152" y="48" width="52" height="70" fill="${R}"/><rect x="164" y="58" width="28" height="22" rx="3" fill="${YL}"/><circle cx="178" cy="73" r="6" fill="${SK}"/><path d="M171 71 Q172 63 178 63 Q184 63 185 71 Z" fill="#0C447C"/></g>
-<rect x="26" y="110" width="184" height="8" fill="${K}"/><path d="M26 118 L14 148 H40 L40 118 Z" fill="${R}"/>
-${wh(54,142,10)}${wh(188,142,10)}
-<g class="pt" data-w="driving wheels">${bigWheel(88,132,20)}${bigWheel(136,132,20)}<rect x="86" y="134" width="52" height="5" rx="2.5" fill="${GR}"/></g>
-<rect x="206" y="112" width="12" height="5" fill="${K}"/>
-<g class="pt" data-w="coal tender"><circle cx="226" cy="80" r="8" fill="${K}"/><circle cx="240" cy="76" r="9" fill="${K}"/><circle cx="255" cy="79" r="8" fill="${K}"/><circle cx="269" cy="75" r="9" fill="${K}"/><circle cx="282" cy="80" r="7" fill="${K}"/><rect x="216" y="80" width="74" height="44" rx="4" fill="${D}"/><text x="253" y="108" font-size="13" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial">COAL</text>${wh(234,142,10)}${wh(272,142,10)}</g>
-<rect x="290" y="112" width="10" height="5" fill="${K}"/><rect x="298" y="64" width="58" height="60" rx="6" fill="${G}"/><rect x="304" y="72" width="20" height="18" rx="2" fill="${GLL}"/><rect x="330" y="72" width="20" height="18" rx="2" fill="${GLL}"/>${wh(312,142,10)}${wh(342,142,10)}
-${LBL('chimney',4,4,72,40,28,62,38)}${LBL('boiler',84,4,66,117,28,128,70)}${LBL("driver's cab",158,4,98,207,28,196,42)}${LBL('coal tender',262,4,96,300,28,262,72)}${LBL('driving wheels',92,166,124,154,166,140,146)}
-</svg>`;
-// 板书右半边：有火车以前和以后、两道讨论题
-// 句子来自板书和课堂上贴的两张海报 Life before trains、Life after trains（海报上的错字已改正）
-const BEFORE=[['People travelled on foot, by horse or by boat.','以前人们步行、骑马或坐船出行。'],['Travelling was slow.','出行很慢。'],['Journeys took longer.','路上要花的时间更长。'],['Carrying heavy goods was difficult.','搬运很重的货物很困难。'],['People and supplies could not move easily on land.','人和物资在陆地上很难运来运去。'],['People and supplies mostly stayed in local areas.','人和物资大多只在附近一带活动。']];
-const AFTER=[['People travelled faster and more easily.','人们出行更快、更方便了。'],['People could travel more quickly and safely.','人们出行更快，也更安全。'],['Trains carried many people and heavy goods.','火车能装很多人和很重的货物。'],['Trains connected towns and cities.','火车把城镇和城市连了起来。'],['Factories received supplies faster.','工厂能更快收到原料。'],['Trains helped business grow.','火车让生意越做越大。']];
-const THINK=[['How would you travel to another city if there were no trains?','如果没有火车，你会怎么去另一个城市？','I would go by horse or by boat.','我会骑马或者坐船去。'],['Why are trains better than wagons?','为什么火车比马车好？','Trains are faster, and they carry more people and goods.','火车更快，还能装更多的人和货物。']];
-const PARTS=['chimney','boiler',"driver's cab",'driving wheels','coal tender'];
-let practice=false;const revealed=new Set();
-const line=([en,cn])=>`<button class="ln" data-say="${esc(en)}"><span class="ic">${ICON.play}</span><span><span class="en">${en}</span><span class="cn">${cn}</span></span></button>`;
-function renderLesson(){
-  const el=document.getElementById('lesson');
-  if(cat==='all'){el.innerHTML=`<div class="classbar"><span>课堂同步 · <b>Evolution of trains</b> 火车的演变</span><button data-k="steam">第一辆蒸汽火车</button><button data-k="why">为什么发明火车</button></div>`;return}
-  if(cat==='steam'){
-    el.innerHTML=`<div class="lesson"><div class="lh"><button class="say" data-say="The first steam train" aria-label="听">${ICON.play}</button><div><b>The first steam train</b><span>第一辆蒸汽火车 · 点一点各个部分，听听它叫什么</span></div><button class="mini ${practice?'ghost':''}" id="practice">${practice?'显示名字':'遮住名字考一考'}</button></div><div class="diagram">${DIAGRAM}</div><div class="cap" id="cap"><div class="t">${practice?'名字都遮住了。点火车的一个部分，先自己说说它叫什么，再看答案。':'点图上的部件或者名字，就能听到读音。'}</div></div></div>`;
-    paintLabels();return;
-  }
-  if(cat==='why'){
-    el.innerHTML=`<div class="lesson"><div class="lh"><button class="say" data-say="Why did they invent trains?" aria-label="听">${ICON.play}</button><div><b>Why did they invent trains?</b><span>人们为什么发明火车？点每一句都能听</span></div></div>
-<div class="cols"><div class="col before"><img class="scene" src="img/before-trains.jpg" alt="Life before trains" data-say="Life before trains" loading="lazy"><h4>Life before trains 有火车以前</h4>${BEFORE.map(line).join('')}</div><div class="col after"><img class="scene" src="img/after-trains.jpg" alt="Life after trains" data-say="Life after trains" loading="lazy"><h4>Life after trains 有了火车以后</h4>${AFTER.map(line).join('')}</div></div>
-<div class="think"><h4>Think and talk 想一想，说一说</h4>${THINK.map((q,i)=>line(q)+`<div class="ans"><button class="reveal" data-i="${i}">可以这样说</button></div>`).join('')}</div></div>`;
-    return;
-  }
-  el.innerHTML='';
-}
-function paintLabels(){
-  document.querySelectorAll('#lesson .lbl').forEach(g=>{
-    const w=g.dataset.w,ask=practice&&!revealed.has(w);
-    g.classList.toggle('ask',ask);g.querySelector('text').textContent=ask?'?':w;
-  });
-}
-function tapPart(w){
-  const it=byW(w);if(!it)return;
-  if(practice)revealed.add(w);
-  paintLabels();
-  document.querySelectorAll('#lesson [data-w]').forEach(g=>g.classList.toggle('on',g.dataset.w===w));
-  speak(it.w);markHeard(it);
-  const done=practice&&PARTS.every(p=>revealed.has(p));
-  document.getElementById('cap').innerHTML=`<div class="t"><span class="w">${it.w}</span> ${it.ipa} · ${it.zh}<div class="en">${it.s}</div><div>${it.sz}${done?' · 5 个部分都认过一遍啦！':''}</div></div><button class="say" data-say="${esc(it.s)}" aria-label="听句子">${ICON.play}</button>`;
-}
-document.getElementById('lesson').addEventListener('click',e=>{
-  const t=e.target;
-  const k=t.closest('[data-k]');if(k){cat=k.dataset.k;renderChips();renderGrid();return}
-  if(t.closest('#practice')){practice=!practice;revealed.clear();renderLesson();return}
-  const rv=t.closest('.reveal');if(rv){const q=THINK[+rv.dataset.i];rv.parentNode.innerHTML=`<b>${q[2]}</b><br>${q[3]}`;speak(q[2]);return}
-  const s=t.closest('[data-say]');if(s){document.querySelectorAll('#lesson .ln').forEach(x=>x.classList.toggle('on',x===s));speak(s.dataset.say);return}
-  const p=t.closest('[data-w]');if(p)tapPart(p.dataset.w);
-});
 
 /* 大卡片 */
 const mask=document.getElementById('mask');let di=0;
