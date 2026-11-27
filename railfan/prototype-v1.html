@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#dff1f2">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<title>小小火车迷 · 西北环线看车记</title>
+<style>
+:root{--ink:#23343a;--muted:#63777c;--paper:#fffdf7;--teal:#087f8c;--teal2:#0fa3a8;--gold:#f4b942;--line:rgba(32,67,73,.13);--shadow:0 12px 34px rgba(30,65,72,.16);--round:"Yuanti SC","YouYuan","PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:var(--round);color:var(--ink);background:#cce4e8}button{font:inherit;color:inherit}button:focus-visible,a:focus-visible{outline:3px solid #f4b942;outline-offset:3px}button{cursor:pointer}#world{position:fixed;inset:0}#world canvas{display:block;width:100%;height:100%;touch-action:none}.hidden{display:none!important}
+.topbar{position:fixed;z-index:10;left:0;right:0;top:0;height:68px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;pointer-events:none;background:linear-gradient(180deg,rgba(242,250,249,.88),rgba(242,250,249,0))}.topbar>*{pointer-events:auto}.brand{display:flex;align-items:center;gap:11px}.back{width:39px;height:39px;border-radius:13px;background:rgba(255,255,255,.9);border:1px solid var(--line);display:grid;place-items:center;text-decoration:none;color:var(--ink);font-size:25px;box-shadow:0 3px 10px rgba(30,60,65,.08)}.brand-title{font-weight:900;font-size:19px;letter-spacing:1px}.brand-sub{font-size:10px;color:var(--muted);letter-spacing:1.5px;margin-top:1px}.top-actions{display:flex;gap:8px}.icon-btn{height:39px;padding:0 13px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.92);box-shadow:0 3px 10px rgba(30,60,65,.08);font-size:13px;font-weight:700}.icon-btn:hover{background:#fff}.collection-dot{display:inline-grid;place-items:center;min-width:21px;height:21px;padding:0 5px;margin-left:5px;border-radius:8px;background:#e4f3ef;color:#087f8c;font-size:11px}
+.location-card{position:fixed;z-index:8;left:18px;top:82px;width:242px;background:rgba(255,253,247,.94);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.8);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}.location-head{padding:15px 16px 10px;display:flex;justify-content:space-between;align-items:start}.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.6px;color:var(--teal)}#location-name{margin:3px 0 0;font-size:21px;font-weight:900}#location-kind{font-size:11px;color:var(--muted);margin-top:3px}.live-badge{font-size:10px;color:#2a7560;background:#e1f2e8;border-radius:99px;padding:5px 8px;white-space:nowrap}.route{padding:8px 14px 14px}.route-line{position:relative;display:flex;justify-content:space-between;align-items:start}.route-line:before{content:"";position:absolute;left:17px;right:17px;top:11px;height:3px;background:#d5e2df;border-radius:3px}.station{position:relative;width:37px;padding:0;border:0;background:transparent;font-size:10px;color:#63777c}.station:before{content:"";display:block;width:11px;height:11px;margin:5px auto 7px;border-radius:50%;background:#fff;border:3px solid #9ab6b2;box-shadow:0 0 0 3px #fffdf7}.station.active{color:var(--teal);font-weight:900}.station.active:before{border-color:var(--teal);background:#f4b942}.station:hover:before{border-color:var(--teal2)}.location-switch{width:calc(100% - 28px);margin:0 14px 14px;padding:10px;border:1px dashed #aac5c1;border-radius:13px;background:#eff7f4;color:#286b6a;font-size:12px;font-weight:800}.location-switch:hover{background:#e4f2ed}.scene-note{margin:0;padding:10px 15px 12px;background:rgba(230,240,237,.55);font-size:10px;line-height:1.6;color:var(--muted)}
+.view-tools{position:fixed;z-index:7;right:18px;top:86px;display:flex;flex-direction:column;gap:7px}.view-btn{width:46px;height:44px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.9);box-shadow:0 4px 14px rgba(30,65,72,.1);font-size:18px}.view-btn span{display:block;font-size:8px;color:var(--muted);margin-top:-1px}.view-btn.active{background:#dff2ed;color:#087f8c;border-color:#9accc3}
+.action-card{position:fixed;z-index:8;right:18px;top:295px;width:186px;padding:13px;background:rgba(255,253,247,.94);border-radius:19px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.8)}#status-row{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);margin:0 2px 10px}.status-light{width:8px;height:8px;border-radius:50%;background:#65aa8a;box-shadow:0 0 0 4px rgba(101,170,138,.13)}.status-light.moving{background:#e79835;box-shadow:0 0 0 4px rgba(231,152,53,.14)}.primary-btn{width:100%;padding:11px 8px;border:0;border-radius:13px;background:var(--teal);color:white;font-weight:900;font-size:13px;box-shadow:0 4px 0 #06636d}.primary-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #06636d}.primary-btn:disabled{cursor:default;background:#8aa9aa;box-shadow:0 4px 0 #6e8f91}.collect-btn{width:100%;margin-top:10px;padding:9px 6px;border:1px solid #d4e3de;border-radius:12px;background:#fff;color:#286e68;font-size:11px;font-weight:800}.collect-btn.collected{background:#eaf4ef;color:#71817f;border-color:transparent}.mini-help{margin:9px 2px 0;font-size:9px;color:#81908f;line-height:1.5;text-align:center}
+.train-dock{position:fixed;z-index:9;left:50%;bottom:16px;transform:translateX(-50%);width:min(1010px,calc(100% - 36px));padding:10px 12px 11px;background:rgba(255,253,247,.95);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.85);border-radius:23px;box-shadow:0 12px 40px rgba(30,65,72,.2)}.dock-head{display:flex;justify-content:space-between;align-items:center;padding:0 4px 8px}.dock-title{font-size:11px;font-weight:900}.dock-tip{font-size:9px;color:var(--muted)}.train-list{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding:1px 1px 3px}.train-card{position:relative;flex:1 0 137px;min-height:61px;padding:9px 10px 8px 14px;text-align:left;border:2px solid transparent;border-radius:14px;background:#edf2f0;overflow:hidden}.train-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--train-color,#729c9a)}.train-card:hover{background:#e5efeb}.train-card.active{border-color:var(--teal);background:#fff;box-shadow:0 3px 10px rgba(8,127,140,.12)}.train-model{font-family:"Avenir Next","Arial",sans-serif;font-size:12px;font-weight:900;letter-spacing:.2px}.train-no{font-size:9px;color:var(--muted);margin-top:2px}.train-nick{font-size:10px;color:#4a6264;margin-top:3px;white-space:nowrap}.train-check{position:absolute;right:7px;top:7px;font-size:10px;color:#2c9a76}
+#toast{position:fixed;z-index:30;left:50%;top:84px;transform:translate(-50%,-15px);padding:11px 18px;background:#233f42;color:#fff;border-radius:99px;box-shadow:var(--shadow);font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.25s}#toast.show{opacity:1;transform:translate(-50%,0)}
+.start-screen{position:fixed;z-index:50;inset:0;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.8),transparent 35%),linear-gradient(145deg,rgba(214,239,236,.93),rgba(194,224,232,.95));backdrop-filter:blur(8px)}.start-card{width:min(610px,100%);padding:35px 35px 29px;text-align:center;border-radius:34px;background:rgba(255,253,247,.95);box-shadow:0 25px 80px rgba(38,78,83,.2);border:1px solid white}.start-logo{width:83px;height:83px;margin:0 auto 15px;border-radius:27px;background:#087f8c;display:grid;place-items:center;box-shadow:0 7px 0 #08616b;transform:rotate(-3deg)}.start-logo svg{width:62px}.start-card h1{font-size:35px;margin:10px 0 3px;letter-spacing:3px}.start-subtitle{font-size:13px;color:var(--teal);font-weight:900;letter-spacing:2px}.start-desc{max-width:420px;margin:18px auto;color:#5e7274;font-size:13px;line-height:1.9}.start-tags{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:18px 0 23px}.start-tags span{padding:6px 11px;border-radius:99px;background:#eaf3ef;color:#48716d;font-size:11px}.start-btn{border:0;border-radius:16px;background:#f0b63f;color:#493611;font-weight:900;font-size:16px;padding:13px 44px;box-shadow:0 5px 0 #cf9224}.start-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #cf9224}.start-foot{margin-top:18px;font-size:9px;color:#8b9997}
+.modal{position:fixed;z-index:40;inset:0;display:grid;place-items:center;padding:20px;background:rgba(22,43,47,.52);backdrop-filter:blur(7px)}.modal-box{width:min(780px,100%);max-height:88vh;overflow:auto;background:var(--paper);border-radius:27px;box-shadow:0 24px 80px rgba(15,40,45,.32);padding:23px}.modal-top{display:flex;justify-content:space-between;align-items:start;gap:15px}.modal-title{font-size:22px;font-weight:900;margin:0}.modal-sub{font-size:11px;color:var(--muted);margin-top:4px}.close-btn{width:35px;height:35px;border:0;border-radius:12px;background:#edf2ef;font-size:20px;flex:none}.album-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.album-item{border:1px solid #dce6e1;border-radius:17px;overflow:hidden;background:white}.album-photo{position:relative;height:145px;background:#dce8e5;overflow:hidden}.album-photo img{width:100%;height:100%;object-fit:cover;display:block}.album-photo .lock{position:absolute;inset:0;display:grid;place-items:center;background:rgba(38,63,66,.75);color:white;font-size:12px;font-weight:800}.album-info{padding:12px}.album-name{font-size:14px;font-weight:900}.album-desc{font-size:10px;line-height:1.65;color:var(--muted);margin-top:4px}.album-link{display:inline-block;margin-top:8px;color:var(--teal);font-size:10px;text-decoration:none}.reference-strip{display:flex;gap:12px;margin-top:16px;align-items:stretch}.reference-strip img{width:48%;border-radius:15px;object-fit:cover;max-height:230px}.reference-copy{flex:1;padding:10px 4px}.reference-copy h3{font-size:17px;margin:0 0 7px}.reference-copy p{font-size:11px;line-height:1.75;color:var(--muted)}.reference-copy .fact{padding:8px 10px;border-radius:11px;background:#edf4f0;color:#375e5b;margin-top:8px}.source-note{font-size:9px;color:#84928f;line-height:1.6;margin-top:14px}.mobile-location{display:none}
+@media(max-width:850px){.location-card{width:215px}.action-card{width:160px}.train-card{flex-basis:126px}.train-dock{width:calc(100% - 24px);bottom:10px}.view-tools{right:12px}.action-card{right:12px}}
+@media(max-width:650px){.topbar{height:58px;padding:9px 10px}.back{width:36px;height:36px}.brand-title{font-size:15px}.brand-sub{display:none}.icon-btn{height:36px;padding:0 10px;font-size:11px}.location-card{left:10px;right:10px;top:61px;width:auto;display:none}.location-card.open{display:block}.mobile-location{display:inline-block}.route{padding-top:4px}.scene-note{display:none}.view-tools{top:65px;right:9px;gap:6px}.view-btn{width:40px;height:38px;border-radius:12px;font-size:15px}.view-btn span{font-size:7px}.action-card{left:10px;right:10px;top:auto;bottom:125px;width:auto;padding:8px 10px;display:flex;gap:8px;align-items:center;border-radius:16px}#status-row{flex:1;margin:0 4px;font-size:10px}.primary-btn{width:auto;padding:10px 13px;font-size:11px;box-shadow:0 3px 0 #06636d}.collect-btn{width:auto;margin:0;padding:9px 10px;font-size:10px}.mini-help{display:none}.train-dock{padding:8px 9px 9px;border-radius:18px}.dock-head{padding-bottom:6px}.dock-tip{display:none}.train-card{flex-basis:117px;min-height:54px;padding:7px 8px 7px 12px}.train-model{font-size:11px}.train-nick{font-size:9px}.train-no{font-size:8px}.start-card{padding:27px 20px 23px;border-radius:27px}.start-card h1{font-size:28px}.start-desc{font-size:12px}.album-grid{grid-template-columns:1fr}.album-photo{height:180px}.modal{padding:10px}.modal-box{padding:17px;border-radius:21px}.reference-strip{flex-direction:column}.reference-strip img{width:100%}.reference-copy{padding:0}.collection-dot{min-width:18px;height:18px}.brand{gap:7px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="world" aria-label="3D 火车场景"></div>
+<header class="topbar">
+  <div class="brand"><a class="back" href="../" aria-label="返回全部游戏">‹</a><div><div class="brand-title">小小火车迷</div><div class="brand-sub">西北环线看车记</div></div></div>
+  <div class="top-actions"><button class="icon-btn mobile-location" id="location-toggle">地点</button><button class="icon-btn" id="sound-toggle" aria-label="开关声音">声音 开</button><button class="icon-btn" id="album-open">我的图鉴<span class="collection-dot" id="collection-count">0/6</span></button></div>
+</header>
+<section class="location-card" id="location-card">
+  <div class="location-head"><div><div class="eyebrow">今天的看车地点</div><div id="location-name">三家店站</div><div id="location-kind">西北环线 · 货运铁路</div></div><span class="live-badge">实地去过</span></div>
+  <div class="route"><div class="route-line" id="route-line"></div></div>
+  <button class="location-switch" id="crossing-switch">去水南庄道口看动车组 →</button>
+  <p class="scene-note" id="scene-note">参考三家店站房与西北环线山景制作。点击站名，可以换一座车站看看。</p>
+</section>
+<div class="view-tools" aria-label="观察视角">
+  <button class="view-btn active" data-view="observe" title="观察视角">◉<span>看车</span></button>
+  <button class="view-btn" data-view="front" title="车头视角">▰<span>车头</span></button>
+  <button class="view-btn" data-view="side" title="侧面视角">▥<span>侧面</span></button>
+  <button class="view-btn" id="zoom-in" title="放大">＋</button><button class="view-btn" id="zoom-out" title="缩小">−</button>
+</div>
+<section class="action-card">
+  <div id="status-row"><span class="status-light" id="status-light"></span><span id="status-text">列车已就位，慢慢看</span></div>
+  <button class="primary-btn" id="pass-btn">让列车通过</button>
+  <button class="collect-btn" id="collect-btn">收进我的图鉴</button>
+  <div class="mini-help">拖动画面转视角 · 滚轮缩放</div>
+</section>
+<section class="train-dock">
+  <div class="dock-head"><span class="dock-title">选择今天想看的列车</span><span class="dock-tip">车型和车号来自你的看车记录</span></div>
+  <div class="train-list" id="train-list"></div>
+</section>
+<div id="toast"></div>
+<div class="start-screen" id="start-screen">
+  <div class="start-card">
+    <div class="start-logo"><svg viewBox="0 0 80 70" aria-hidden="true"><path d="M14 15h42c8 0 13 7 13 15v24H10V20c0-3 1-5 4-5z" fill="#fff"/><path d="M18 21h17v14H18zm23 0h17v14H41z" fill="#a7e0e1"/><path d="M10 43h59v11H10z" fill="#f4b942"/><circle cx="23" cy="57" r="7" fill="#263b40"/><circle cx="56" cy="57" r="7" fill="#263b40"/><circle cx="23" cy="57" r="3" fill="#d8e4df"/><circle cx="56" cy="57" r="3" fill="#d8e4df"/><path d="M61 8v11M55 13h12" stroke="#f4b942" stroke-width="4" stroke-linecap="round"/></svg></div>
+    <h1>小小火车迷</h1><div class="start-subtitle">西北环线 · 水南庄道口</div>
+    <p class="start-desc">回到我们看过火车的地方。转动视角看清车头，等列车从面前通过，再把真实车号收进自己的图鉴。</p>
+    <div class="start-tags"><span>轻量 3D 场景</span><span>六组真实车号</span><span>实拍照片对照</span></div>
+    <button class="start-btn" id="start-btn">开始看车</button>
+    <div class="start-foot">原型版本 · 自由看车不代表真实列车停靠关系 · 请在安全位置观察铁路</div>
+  </div>
+</div>
+<div class="modal hidden" id="album-modal" role="dialog" aria-modal="true" aria-label="我的火车图鉴">
+  <div class="modal-box"><div class="modal-top"><div><h2 class="modal-title">我的火车图鉴</h2><div class="modal-sub">收集的是我们真正见过的车型和车号。点击「实拍对照」可以看参考照片。</div></div><button class="close-btn" id="album-close">×</button></div><div class="album-grid" id="album-grid"></div><p class="source-note">照片来自 Wikimedia Commons，原作者与授权信息见各照片链接。CRH380BG 的参考照片为同车型其他车号，仅用于观察共同外观。3D 模型为低多边形演绎，并非工程模型。</p></div>
+</div>
+<div class="modal hidden" id="reference-modal" role="dialog" aria-modal="true" aria-label="实拍对照"><div class="modal-box" id="reference-content"></div></div>
+<script src="vendor/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const trains=[
+ {id:"df4c",model:"DF4C",no:"4458",nick:"星光·燕赵号",family:"东风4C型内燃机车",color:"#4aaeb4",cars:7,kind:"diesel",speed:"旅游专列",feature:"蓝绿渐变车身、白色司机室、红色排障器",desc:"星光·燕赵号旅游专列的内燃机车。车头保留东风4C方正的轮廓，车身换成白、青、蓝渐变涂装。",photo:"assets/df4c-4458.jpg",source:"https://commons.wikimedia.org/wiki/File:DF4C_4458_with_Y963_at_Shuinanzhuang_(20250709084329).jpg"},
+ {id:"cr400bf",model:"CR400BF",no:"3090",nick:"金凤凰",family:"复兴号高速动车组",color:"#d7a044",cars:8,kind:"bf",speed:"350 km/h 级",feature:"白色车身、金色飘带、细长流线车头",desc:"金色识别带从车头两侧向后展开，所以得到「金凤凰」的昵称。黑色前窗与车头线条连成一体。",photo:"assets/cr400bf-3090.jpg",source:"https://commons.wikimedia.org/wiki/File:20250722_CR400BF-3090@G366.jpg"},
+ {id:"crh380al",model:"CRH380AL",no:"2543",nick:"长耗子 / 冲高鼠",family:"和谐号高速动车组",color:"#385d91",cars:16,kind:"al",speed:"16 节长编组",feature:"细长尖车头、灰色车身、深蓝色腰线",desc:"16 节长编组让整列车非常长。车头细长，前窗位置较高，车身有深蓝色腰线。",photo:"assets/crh380al-2543.jpg",source:"https://commons.wikimedia.org/wiki/File:201705_CRH380AL-2543_at_Hangzhoudong_Station.jpg"},
+ {id:"crh380bg-5768",model:"CRH380BG",no:"5768",nick:"高寒兔子",family:"和谐号高寒动车组",color:"#435c9a",cars:8,kind:"bg",speed:"8 节编组",feature:"圆润车头、环绕黑窗、蓝色折线",desc:"CRH380BG 为适应寒冷环境设计。车头比 CRH380AL 更圆润，蓝色线条在车头侧面形成折角。",photo:"assets/crh380bg.jpg",source:"https://commons.wikimedia.org/wiki/File:CRH380BG-5785@BJN_(20150807092504).JPG"},
+ {id:"crh380bg-5007",model:"CRH380BG",no:"5007",nick:"高寒兔子",family:"和谐号高寒动车组",color:"#435c9a",cars:8,kind:"bg",speed:"8 节编组",feature:"圆润车头、环绕黑窗、蓝色折线",desc:"与 5768 同属 CRH380BG。外观很接近，看车时可以通过车身编号把它认出来。",photo:"assets/crh380bg.jpg",source:"https://commons.wikimedia.org/wiki/File:CRH380BG-5785@BJN_(20150807092504).JPG"},
+ {id:"crh6f",model:"CRH6F",no:"0231",nick:"京通号·小青铜剑",family:"市域通勤动车组",color:"#5c87bc",cars:8,kind:"6f",speed:"160 km/h 级",feature:"银灰车身、淡粉色车顶、蓝色腰线",desc:"用于市域通勤的动车组。车身有蓝色腰线，车顶带淡粉色装饰，车头侧面是面积很大的黑色区域。",photo:"assets/crh6f-0231.jpg",source:"https://commons.wikimedia.org/wiki/File:CRH6F-0231_at_Shuinanzhuang_(20260712121909a).jpg"}
+];
+const stations=["三家店","军庄","寨口","崔各庄","后章村"];
+let scene,camera,renderer,worldRoot,trainRoot,stationSign,gates=[],signals=[],currentTrain=trains[0],currentStation=0,atCrossing=false,passing=false,passSpeed=12,passEnd=125,trainWheels=[],soundOn=true,audioCtx=null,noiseGain=null,noiseSource=null,bellTimer=null;
+let cameraTarget=new THREE.Vector3(-6,2.3,0),cameraGoal=new THREE.Vector3(25,10,28),targetGoal=new THREE.Vector3(-6,2.3,0),cameraTween=false;
+let collected=new Set();try{JSON.parse(localStorage.getItem("railfan-collection")||"[]").forEach(x=>collected.add(x))}catch(e){}
+const clock=new THREE.Clock();
+const mats={};
+function material(color,roughness,metalness){const key=color+"-"+roughness+"-"+metalness;if(!mats[key])mats[key]=new THREE.MeshStandardMaterial({color:color,roughness:roughness===undefined?.72:roughness,metalness:metalness||0});return mats[key]}
+function box(parent,w,h,d,color,x,y,z,roughness){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material(color,roughness));m.position.set(x||0,y||0,z||0);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m}
+function cylinder(parent,r1,r2,h,color,x,y,z,segments){const m=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,segments||16),material(color));m.position.set(x||0,y||0,z||0);m.castShadow=true;parent.add(m);return m}
+function sphere(parent,color,x,y,z,sx,sy,sz){const m=new THREE.Mesh(new THREE.SphereGeometry(1,24,16),material(color,.45,.04));m.position.set(x,y,z);m.scale.set(sx,sy,sz);m.castShadow=true;parent.add(m);return m}
+function makeLabel(text,w,h,opts){opts=opts||{};const c=document.createElement("canvas");c.width=1024;c.height=256;const ctx=c.getContext("2d");if(opts.bg){ctx.fillStyle=opts.bg;ctx.fillRect(0,0,c.width,c.height)}ctx.fillStyle=opts.color||"#24383d";ctx.textAlign="center";ctx.textBaseline="middle";ctx.font=(opts.weight||"800")+" "+(opts.size||100)+"px "+(opts.font||"Arial, PingFang SC, Microsoft YaHei, sans-serif");ctx.fillText(text,512,130,960);const tex=new THREE.CanvasTexture(c);tex.encoding=THREE.sRGBEncoding;tex.anisotropy=4;const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:tex,transparent:true,side:THREE.DoubleSide,depthWrite:false}));return mesh}
+function sideShape(parent,points,color,z){const s=new THREE.Shape();s.moveTo(points[0][0],points[0][1]);for(let i=1;i<points.length;i++)s.lineTo(points[i][0],points[i][1]);s.closePath();const m=new THREE.Mesh(new THREE.ShapeGeometry(s),new THREE.MeshBasicMaterial({color:color,side:THREE.DoubleSide}));m.position.z=z;parent.add(m);return m}
+function addWheels(g,xs,y,z,width){xs.forEach(x=>{[-1,1].forEach(side=>{const w=cylinder(g,.48,.48,.24,"#293235",x,y,side*z,16);w.rotation.x=Math.PI/2;trainWheels.push(w);const hub=cylinder(g,.18,.18,.26,"#87908d",x,y,side*(z+side*.02),12);hub.rotation.x=Math.PI/2})});box(g,xs[xs.length-1]-xs[0]+1,.25,width||2.5,"#353c3d",(xs[0]+xs[xs.length-1])/2,y+.35,0)}
+function addPantograph(g,x,y,z){const p=new THREE.Group();p.position.set(x,y,z);const a=box(p,.09,1.25,.09,"#343d42",-.35,.55,0);a.rotation.z=-.55;const b=box(p,.09,1.25,.09,"#343d42",.35,.55,0);b.rotation.z=.55;box(p,1.45,.08,.18,"#272f33",0,1.1,0);g.add(p)}
+function buildDiesel(g,t){
+ box(g,14.7,2.7,3.05,"#40aeb2",0,2.6,0);box(g,14.9,.65,3.1,"#839393",0,1.15,0);box(g,14.4,.18,3.18,"#323e42",0,4.03,0);
+ box(g,4.2,2.75,3.08,"#edf2ef",5.35,2.75,0);box(g,4.15,.24,3.18,"#d8e2df",5.35,4.18,0);
+ sideShape(g,[[-7.3,1.4],[-7.3,3.95],[-2.2,3.95],[-3.5,1.4]],"#70d2c6",1.535);sideShape(g,[[-2.2,1.4],[-.8,3.95],[2.2,3.95],[1.4,1.4]],"#2396a7",1.54);sideShape(g,[[1.4,1.4],[2.2,3.95],[4.0,3.95],[4.0,1.4]],"#176c88",1.545);
+ for(let i=0;i<6;i++){box(g,1.25,1.05,.035,i%2?"#1e5664":"#263b41",-5.9+i*1.55,2.85,1.57);box(g,1.25,1.05,.035,"#263b41",-5.9+i*1.55,2.85,-1.57)}
+ box(g,1.15,.82,.05,"#233b43",4.9,3.38,1.57);box(g,1.15,.82,.05,"#233b43",6.35,3.38,1.57);box(g,1.15,.82,.05,"#233b43",4.9,3.38,-1.57);box(g,1.15,.82,.05,"#233b43",6.35,3.38,-1.57);
+ const windshield=box(g,.06,1.05,2.35,"#29434b",7.47,3.34,0);windshield.rotation.z=-.07;box(g,.08,1.1,.07,"#d8e5e2",7.51,3.34,0);
+ box(g,.55,.32,3.25,"#b53b35",7.3,.88,0);box(g,.32,.22,2.45,"#d9e0db",7.55,1.75,0);
+ [-1,1].forEach(s=>{const lamp=sphere(g,"#f3e5af",7.57,2.25,s*.85,.12,.2,.22);const num=makeLabel("DF4C 4458",1.7,.36,{color:"#23373a",size:94});num.position.set(7.59,1.48,s*.68);num.rotation.y=Math.PI/2;g.add(num)});
+ const logo=makeLabel("星光·燕赵号",3.5,.5,{color:"#143f56",size:94});logo.position.set(-.6,3.45,1.585);g.add(logo);
+ const sideNo=makeLabel("DF4C 4458",2.1,.38,{color:"#25373c",size:90});sideNo.position.set(5.5,1.75,1.59);g.add(sideNo);
+ for(let x=-6.8;x<7;x+=.65)box(g,.05,.65,.05,"#d5ded9",x,1.65,1.67);box(g,13.8,.05,.05,"#d5ded9",0,1.95,1.67);
+ addWheels(g,[-5.3,-4.15,-3,2.5,3.65,4.8],.66,1.34,2.7);
+ for(let i=0;i<4;i++)box(g,.85,.13,1.4,"#1e3034",-4+i*2.1,4.2,0);
+ for(let i=0;i<6;i++){const car=new THREE.Group();car.position.x=-16.5-i*12.8;const colors=["#8ed9cf","#5bb7c0","#377da4","#5a80ac","#7986b6","#9b77a6"];box(car,11.9,2.7,3.05,colors[i],0,2.25,0);box(car,11.7,.55,3.08,"#e9eeee",0,3.85,0);box(car,11.8,.25,3.1,"#37444a",0,.8,0);for(let w=0;w<7;w++){box(car,1.05,1.05,.035,"#263f4c",-4.8+w*1.6,2.65,1.55);box(car,1.05,1.05,.035,"#263f4c",-4.8+w*1.6,2.65,-1.55)}addWheels(car,[-4.2,4.2],.55,1.3,2.6);g.add(car)}
+}
+function highCar(g,x,t,lead){
+ const c=new THREE.Group();c.position.x=x;const base=t.kind==="al"?"#d9dddf":t.kind==="6f"?"#d4d8da":"#f1f2ef";
+ box(c,10.8,2.25,3.0,base,0,2.25,0,.42);box(c,10.6,.28,2.86,t.kind==="6f"?"#d7a6b4":"#d9dfe0",0,3.5,0,.5);box(c,10.5,.35,2.65,"#4c565c",0,.98,0);
+ const stripe=t.kind==="bf"?"#c9973f":t.kind==="6f"?"#3474ae":"#244d87";
+ [-1,1].forEach(s=>{box(c,10.75,.13,.025,stripe,0,1.78,s*1.515);box(c,8.8,.66,.035,"#23373f",-.15,2.63,s*1.52);for(let d=-3;d<=3;d+=3){box(c,.065,1.78,.04,"#738186",d,2.25,s*1.535)}});
+ addWheels(c,[-3.75,3.75],.62,1.22,2.5);if((Math.round(Math.abs(x)/11.7)%3)===1)addPantograph(c,0,3.67,0);
+ if(lead){
+  let nose;if(t.kind==="al")nose=sphere(c,base,6.3,2.08,0,4.25,1.48,1.48);else if(t.kind==="bg")nose=sphere(c,base,5.9,2.1,0,3.25,1.55,1.5);else nose=sphere(c,base,6.15,2.08,0,3.65,1.5,1.48);
+  const glass=sphere(c,"#172c35",t.kind==="al"?7.15:6.75,2.95,0,t.kind==="al"?2.15:1.8,.72,1.22);glass.rotation.z=t.kind==="al"?-.2:-.28;
+  [-1,1].forEach(s=>{
+   if(t.kind==="bf"){
+    sideShape(c,[[3.6,1.75],[5.5,2.1],[8.15,2.65],[6.2,1.62]],"#c9973f",s*1.47);
+    sideShape(c,[[4.9,2.75],[6.0,3.38],[7.5,3.0],[6.4,2.28]],"#172c35",s*1.34);
+   }else if(t.kind==="al"){
+    sideShape(c,[[3.5,1.75],[7.9,1.88],[9.2,1.7],[6.0,1.58]],stripe,s*1.34);
+   }else if(t.kind==="bg"){
+    sideShape(c,[[3.4,1.78],[5.1,2.42],[6.0,2.38],[4.7,1.78]],"#244d87",s*1.47);
+    sideShape(c,[[5.0,2.55],[6.2,3.3],[7.6,2.9],[6.25,2.15]],"#172c35",s*1.31);
+   }else{
+    sideShape(c,[[3.4,1.78],[6.1,2.0],[8.5,1.75],[5.8,1.58]],"#3474ae",s*1.39);
+    sideShape(c,[[4.6,2.45],[5.8,3.4],[7.9,2.95],[6.35,2.1]],"#172c35",s*1.3);
+   }
+  });
+  const label=makeLabel(t.model+"-"+t.no,2.5,.3,{color:"#35454c",size:80,weight:"600"});label.position.set(2.8,1.47,1.535);c.add(label);
+  const brand=makeLabel(t.kind==="bf"?"复兴号":t.kind==="6f"?"京通号":"和谐号",2.25,.38,{color:t.kind==="bf"?"#6b5329":"#293d55",size:96});brand.position.set(4.15,2.12,1.53);c.add(brand);
+ }
+ g.add(c)
+}
+function buildHigh(g,t){for(let i=t.cars-1;i>=0;i--)highCar(g,-i*11.7,t,i===0)}
+function clearGroup(g){while(g.children.length){const c=g.children.pop();c.traverse(o=>{if(o.geometry)o.geometry.dispose()})}}
+function setTrain(id){currentTrain=trains.find(t=>t.id===id)||trains[0];passing=false;clearInterval(bellTimer);if(trainRoot){scene.remove(trainRoot);clearGroup(trainRoot)}trainWheels=[];trainRoot=new THREE.Group();if(currentTrain.kind==="diesel")buildDiesel(trainRoot,currentTrain);else buildHigh(trainRoot,currentTrain);trainRoot.position.x=0;scene.add(trainRoot);renderTrainCards();updateCollect();$("#pass-btn").disabled=false;$("#pass-btn").textContent="让列车通过";setStatus("列车已就位，慢慢看",false);setView("observe");if(noiseGain)noiseGain.gain.setTargetAtTime(0,audioCtx.currentTime,.1)}
+function tree(parent,x,z,s){const g=new THREE.Group();g.position.set(x,0,z);cylinder(g,.18*s,.25*s,2.5*s,"#70533b",0,1.25*s,0,8);sphere(g,"#4e8d62",0,3*s,0,1.35*s,1.8*s,1.3*s);sphere(g,"#6ca76d",.65*s,3.1*s,.15*s,1.1*s,1.45*s,1.05*s);parent.add(g)}
+function mountain(parent,x,z,s,color){const m=new THREE.Mesh(new THREE.ConeGeometry(s,s*1.4,7),material(color));m.position.set(x,s*.55,z);m.scale.z=.7;parent.add(m)}
+function track(parent,z,length){box(parent,length,.18,3.25,"#9a9990",0,.1,z);for(let x=-length/2;x<length/2;x+=2.4)box(parent,1.45,.12,2.45,"#807464",x,.25,z);box(parent,length,.12,.095,"#6c6258",0,.39,z-.76);box(parent,length,.12,.095,"#6c6258",0,.39,z+.76)}
+function catenary(parent,z){for(let x=-90;x<=90;x+=18){cylinder(parent,.09,.12,7.6,"#798685",x,3.8,z-2.4,10);box(parent,.12,.12,5.1,"#71807e",x,7.25,z);cylinder(parent,.045,.045,1.3,"#777e7d",x,6.55,z,8)}const pts=[new THREE.Vector3(-110,7,z),new THREE.Vector3(110,7,z)];const geo=new THREE.BufferGeometry().setFromPoints(pts);parent.add(new THREE.Line(geo,new THREE.LineBasicMaterial({color:"#586765"})))}
+function building(parent,x,z,w,h,d,color){const b=box(parent,w,h,d,color,x,h/2,z);for(let yy=2;yy<h-1;yy+=2.2)for(let xx=x-w/2+1;xx<x+w/2-.5;xx+=1.6)box(parent,.75,.85,.04,"#9fc0c5",xx,yy,z+d/2+.025);return b}
+function makeCrossingGate(z,reverse){const g=new THREE.Group();g.position.set(-4,0,z);box(g,.45,1.8,.45,"#e5e8df",0,.9,0);const pivot=new THREE.Group();pivot.position.set(0,1.55,0);const arm=box(pivot,8,.18,.2,"#f4eee3",4,0,0);for(let x=.5;x<8;x+=1)box(pivot,.5,.19,.21,"#c65148",x,0,0);g.add(pivot);worldRoot.add(g);gates.push(pivot);const sig=new THREE.Group();sig.position.set(-5.1,0,z);cylinder(sig,.07,.09,3.5,"#495859",0,1.75,0,8);box(sig,.7,1.05,.45,"#273638",0,3.25,0);[-1,1].forEach(s=>{const l=sphere(sig,"#5e2725",s*.19,3.3,.25,.18,.18,.08);signals.push(l)});worldRoot.add(sig)}
+function buildWorld(){
+ if(worldRoot){scene.remove(worldRoot);clearGroup(worldRoot)}worldRoot=new THREE.Group();scene.add(worldRoot);gates=[];signals=[];
+ box(worldRoot,260,.35,150,atCrossing?"#8ca681":"#829b69",0,-.2,0);
+ for(let z=-5;z<=5;z+=5)track(worldRoot,z,240);catenary(worldRoot,0);catenary(worldRoot,-5);
+ if(atCrossing){
+  box(worldRoot,8,.16,120,"#4b5556",0,.39,0);for(let z=-45;z<45;z+=5)box(worldRoot,.16,.02,2.2,"#e8d68d",0,.49,z);
+  for(let x=-3.5;x<=3.5;x+=1)box(worldRoot,.18,.025,9,"#e8c65b",x,.5,0);
+  makeCrossingGate(8,false);makeCrossingGate(-8,true);
+  const stop=makeLabel("停",1.2,1.2,{color:"#ffffff",bg:"#b73d36",size:160});stop.position.set(-5.1,4.7,8.3);worldRoot.add(stop);
+  building(worldRoot,-20,-23,10,18,8,"#b9b0a3");building(worldRoot,-5,-28,12,25,9,"#a8b2b1");building(worldRoot,14,-26,10,16,8,"#c0a993");building(worldRoot,29,-31,13,29,10,"#8eaaa9");building(worldRoot,-37,-26,12,13,8,"#b7a38f");
+  for(let x=-45;x<50;x+=12)tree(worldRoot,x,18+(x%3)*2,.9);
+  const sign=makeLabel("水南庄道口",5.2,1,{color:"#254b51",bg:"#eef3e9",size:102});sign.position.set(8,3.3,12);worldRoot.add(sign);
+ }else{
+  mountain(worldRoot,-42,-42,24,"#789486");mountain(worldRoot,-10,-48,29,"#718c7c");mountain(worldRoot,28,-46,25,"#7e9b86");mountain(worldRoot,58,-44,22,"#6f897a");
+  const st=new THREE.Group();st.position.set(-17,0,15);box(st,18,6,6,"#e5ddc6",0,3,0);box(st,18.4,.65,6.3,"#a65a49",0,.55,0);box(st,18.5,.35,6.5,"#9a5a4c",0,6.05,0);for(let x=-7;x<=7;x+=3.5){box(st,1.8,1.7,.08,"#68888a",x,3.6,3.04);box(st,1.8,1.45,.08,"#68888a",x,1.45,3.04)}
+  stationSign=makeLabel(stations[currentStation]+"站",7.2,1.15,{color:"#a64037",size:128});stationSign.position.set(0,5.05,3.08);st.add(stationSign);worldRoot.add(st);
+  box(worldRoot,70,.65,6,"#c6c2ac",-5,.32,10);for(let x=-50;x<45;x+=9)tree(worldRoot,x,21+(x%4),.8+(Math.abs(x)%3)*.15);for(let x=-65;x<70;x+=14)tree(worldRoot,x,-15-(Math.abs(x)%4),1.1);
+  if(currentStation===1){track(worldRoot,-10,240);track(worldRoot,-15,240)}
+  if(currentStation===2){mountain(worldRoot,20,34,19,"#78907b")}
+  if(currentStation===4){mountain(worldRoot,30,-45,16,"#8ca08a")}
+ }
+ for(let i=0;i<8;i++){const cloud=new THREE.Group();sphere(cloud,"#f3f7f2",0,0,0,3,1.2,1.2);sphere(cloud,"#f3f7f2",2.4,.1,0,2.2,1,1);cloud.position.set(-70+i*21,23+(i%3)*3,-38-(i%2)*8);worldRoot.add(cloud)}
+}
+function init3D(){
+ scene=new THREE.Scene();scene.background=new THREE.Color("#c6e0e4");scene.fog=new THREE.Fog("#c6e0e4",70,175);
+ if(innerWidth<650){cameraGoal.set(34,13,39);targetGoal.set(0,2.3,0);cameraTarget.copy(targetGoal)}
+ camera=new THREE.PerspectiveCamera(43,innerWidth/innerHeight,.1,500);camera.position.copy(cameraGoal);camera.lookAt(cameraTarget);
+ renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:"high-performance"});renderer.setPixelRatio(Math.min(devicePixelRatio,1.65));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.9;$("#world").appendChild(renderer.domElement);
+ const hemi=new THREE.HemisphereLight("#eaf9ff","#66735a",.65);scene.add(hemi);const sun=new THREE.DirectionalLight("#fff2d8",.82);sun.position.set(30,55,28);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-70;sun.shadow.camera.right=70;sun.shadow.camera.top=55;sun.shadow.camera.bottom=-55;scene.add(sun);
+ buildWorld();setTrain(currentTrain.id);bindCanvas();animate()
+}
+function setView(name){const lead=passing?trainRoot.position.x:0;if(name==="front"){cameraGoal.set(lead+20,6.2,10);targetGoal.set(lead+3,2.5,0)}else if(name==="side"){cameraGoal.set(lead-12,6.5,32);targetGoal.set(lead-14,2.2,0)}else if(atCrossing){cameraGoal.set(innerWidth<650?32:24,innerWidth<650?11:8,innerWidth<650?35:26);targetGoal.set(-4,2.2,0)}else{cameraGoal.set(innerWidth<650?34:25,innerWidth<650?13:10,innerWidth<650?39:28);targetGoal.set(innerWidth<650?0:-6,2.3,0)}cameraTween=true;document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===name))}
+function zoom(factor){const off=camera.position.clone().sub(cameraTarget);off.multiplyScalar(factor);off.clampLength(7,80);cameraGoal.copy(cameraTarget).add(off);targetGoal.copy(cameraTarget);cameraTween=true}
+function bindCanvas(){const el=renderer.domElement;let down=false,lx=0,ly=0;el.addEventListener("pointerdown",e=>{down=true;lx=e.clientX;ly=e.clientY;el.setPointerCapture(e.pointerId);cameraTween=false});el.addEventListener("pointermove",e=>{if(!down)return;const dx=e.clientX-lx,dy=e.clientY-ly;lx=e.clientX;ly=e.clientY;const off=camera.position.clone().sub(cameraTarget);const sph=new THREE.Spherical().setFromVector3(off);sph.theta-=dx*.006;sph.phi=Math.max(.18,Math.min(1.45,sph.phi-dy*.005));off.setFromSpherical(sph);camera.position.copy(cameraTarget).add(off);camera.lookAt(cameraTarget)});el.addEventListener("pointerup",()=>down=false);el.addEventListener("pointercancel",()=>down=false);el.addEventListener("wheel",e=>{e.preventDefault();zoom(e.deltaY>0?1.08:.92)},{passive:false})}
+function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.04);if(passing){trainRoot.position.x+=passSpeed*dt;trainWheels.forEach(w=>w.rotation.z-=passSpeed*dt*1.5);if(trainRoot.position.x>passEnd){passing=false;clearInterval(bellTimer);$("#pass-btn").disabled=false;$("#pass-btn").textContent="再看一次";setStatus("列车通过了，收进图鉴吧",false);if(noiseGain)noiseGain.gain.setTargetAtTime(0,audioCtx.currentTime,.3)}}
+ const gateTarget=passing?0:-1.18;gates.forEach(g=>g.rotation.z+=(gateTarget-g.rotation.z)*Math.min(1,dt*3));signals.forEach(s=>{if(s.material&&s.material.color)s.material.color.set(passing&&Math.floor(performance.now()/350)%2?"#ff3d32":"#6c302c")});
+ if(cameraTween){camera.position.lerp(cameraGoal,Math.min(1,dt*4));cameraTarget.lerp(targetGoal,Math.min(1,dt*4));camera.lookAt(cameraTarget);if(camera.position.distanceTo(cameraGoal)<.05)cameraTween=false}else camera.lookAt(cameraTarget);
+ renderer.render(scene,camera)}
+function setStatus(text,moving){$("#status-text").textContent=text;$("#status-light").classList.toggle("moving",moving)}
+function renderTrainCards(){const list=$("#train-list");list.innerHTML="";trains.forEach(t=>{const b=document.createElement("button");b.className="train-card"+(t.id===currentTrain.id?" active":"");b.style.setProperty("--train-color",t.color);b.innerHTML=(collected.has(t.id)?'<span class="train-check">已收集</span>':"")+'<div class="train-model">'+t.model+'</div><div class="train-no">车号 '+t.no+'</div><div class="train-nick">'+t.nick+'</div>';b.onclick=()=>setTrain(t.id);list.appendChild(b)})}
+function renderStations(){const r=$("#route-line");r.innerHTML="";stations.forEach((name,i)=>{const b=document.createElement("button");b.className="station"+(!atCrossing&&i===currentStation?" active":"");b.textContent=name;b.title=name+"站";b.onclick=()=>{atCrossing=false;currentStation=i;updateLocation();buildWorld();setTrain(currentTrain.id)};r.appendChild(b)})}
+function updateLocation(){$("#location-name").textContent=atCrossing?"水南庄道口":stations[currentStation]+"站";$("#location-kind").textContent=atCrossing?"京哈铁路 · 平交道口":"西北环线 · 货运铁路";$("#crossing-switch").textContent=atCrossing?"← 回西北环线看内燃机车":"去水南庄道口看动车组 →";$("#scene-note").textContent=atCrossing?"参考水南庄道口实拍：多股铁路、道口栏杆与城市建筑。列车接近时请在栏杆外等待。":"参考三家店站房与西北环线山景制作。点击站名，可以换一座车站看看。";renderStations()}
+function updateCollect(){const yes=collected.has(currentTrain.id);$("#collect-btn").classList.toggle("collected",yes);$("#collect-btn").textContent=yes?"已收集 · 查看实拍":"收进我的图鉴";$("#collection-count").textContent=collected.size+"/6";renderTrainCards()}
+let toastTimer;function toast(text){$("#toast").textContent=text;$("#toast").classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("#toast").classList.remove("show"),2200)}
+function collect(){if(!collected.has(currentTrain.id)){collected.add(currentTrain.id);try{localStorage.setItem("railfan-collection",JSON.stringify([...collected]))}catch(e){}toast("新车型收进图鉴："+currentTrain.model+"-"+currentTrain.no);updateCollect()}showReference(currentTrain.id)}
+function renderAlbum(){const grid=$("#album-grid");grid.innerHTML="";trains.forEach(t=>{const got=collected.has(t.id);const d=document.createElement("article");d.className="album-item";d.innerHTML='<div class="album-photo"><img src="'+t.photo+'" alt="'+t.model+'-'+t.no+' 实拍参考"><div class="lock" '+(got?'style="display:none"':"")+'>还没有收集</div></div><div class="album-info"><div class="album-name">'+t.model+'-'+t.no+'</div><div class="album-desc">'+t.nick+'<br>'+t.feature+'</div><a href="#" class="album-link" data-ref="'+t.id+'">实拍对照 →</a></div>';grid.appendChild(d)});grid.querySelectorAll("[data-ref]").forEach(a=>a.onclick=e=>{e.preventDefault();showReference(a.dataset.ref)})}
+function showReference(id){const t=trains.find(x=>x.id===id);if(!t)return;$("#reference-content").innerHTML='<div class="modal-top"><div><h2 class="modal-title">'+t.model+'-'+t.no+'</h2><div class="modal-sub">'+t.family+' · '+t.nick+'</div></div><button class="close-btn" id="reference-close">×</button></div><div class="reference-strip"><img src="'+t.photo+'" alt="'+t.model+' 实拍参考"><div class="reference-copy"><h3>看车时发现</h3><p>'+t.desc+'</p><div class="fact">主要特征<br><b>'+t.feature+'</b></div><div class="fact">'+t.speed+' · 实拍中的编组可能因车次不同而变化</div><a class="album-link" href="'+t.source+'" target="_blank" rel="noopener">查看照片出处与授权 →</a></div></div>';$("#reference-modal").classList.remove("hidden");$("#reference-close").onclick=()=>$("#reference-modal").classList.add("hidden")}
+function initAudio(){if(audioCtx)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audioCtx=new AC();const len=audioCtx.sampleRate*2,buffer=audioCtx.createBuffer(1,len,audioCtx.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<len;i++)data[i]=(Math.random()*2-1)*.35;noiseSource=audioCtx.createBufferSource();noiseSource.buffer=buffer;noiseSource.loop=true;const filter=audioCtx.createBiquadFilter();filter.type="lowpass";filter.frequency.value=420;noiseGain=audioCtx.createGain();noiseGain.gain.value=0;noiseSource.connect(filter);filter.connect(noiseGain);noiseGain.connect(audioCtx.destination);noiseSource.start()}
+function tone(freq,duration,volume){if(!audioCtx||!soundOn)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type="sine";o.frequency.value=freq;g.gain.setValueAtTime(0,audioCtx.currentTime);g.gain.linearRampToValueAtTime(volume,audioCtx.currentTime+.02);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration)}
+function horn(){if(!soundOn)return;const freqs=currentTrain.kind==="diesel"?[220,277]:[390,490];freqs.forEach(f=>tone(f,1.1,.055))}
+function startPass(){if(passing)return;initAudio();if(audioCtx&&audioCtx.state==="suspended")audioCtx.resume();passing=true;const len=currentTrain.kind==="al"?180:currentTrain.kind==="diesel"?90:110;trainRoot.position.x=-len;passEnd=90+len;passSpeed=currentTrain.kind==="diesel"?10:18;$("#pass-btn").disabled=true;$("#pass-btn").textContent="列车正在通过";setStatus(atCrossing?"栏杆落下，请在安全位置等待":"听，列车从远处过来了",true);horn();if(noiseGain&&soundOn)noiseGain.gain.setTargetAtTime(.16,audioCtx.currentTime,.5);if(atCrossing){clearInterval(bellTimer);bellTimer=setInterval(()=>{tone(850,.13,.055);setTimeout(()=>tone(650,.13,.045),170)},760)}setView("observe")}
+$("#start-btn").onclick=()=>{initAudio();if(audioCtx&&audioCtx.state==="suspended")audioCtx.resume();$("#start-screen").classList.add("hidden")};
+$("#pass-btn").onclick=startPass;$("#collect-btn").onclick=collect;
+$("#album-open").onclick=()=>{renderAlbum();$("#album-modal").classList.remove("hidden")};$("#album-close").onclick=()=>$("#album-modal").classList.add("hidden");
+$("#album-modal").onclick=e=>{if(e.target===$("#album-modal"))$("#album-modal").classList.add("hidden")};$("#reference-modal").onclick=e=>{if(e.target===$("#reference-modal"))$("#reference-modal").classList.add("hidden")};
+$("#crossing-switch").onclick=()=>{atCrossing=!atCrossing;updateLocation();buildWorld();setTrain(currentTrain.id);$("#location-card").classList.remove("open")};
+$("#location-toggle").onclick=()=>$("#location-card").classList.toggle("open");
+$("#sound-toggle").onclick=()=>{soundOn=!soundOn;$("#sound-toggle").textContent="声音 "+(soundOn?"开":"关");if(noiseGain)noiseGain.gain.setTargetAtTime((soundOn&&passing)?0.16:0,audioCtx.currentTime,.05)};
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>setView(b.dataset.view));$("#zoom-in").onclick=()=>zoom(.83);$("#zoom-out").onclick=()=>zoom(1.2);
+window.addEventListener("resize",()=>{if(!renderer)return;camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("#album-modal").classList.add("hidden");$("#reference-modal").classList.add("hidden")}});
+updateLocation();updateCollect();try{init3D()}catch(e){console.error(e);$("#world").innerHTML='<div style="padding:100px 30px;text-align:center">当前浏览器没有成功启动 3D 场景，请使用新版 Safari、Chrome 或 Edge 打开。</div>'}
+})();
+</script>
+</body>
+</html>

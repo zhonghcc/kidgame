@@ -61,6 +61,7 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
 .tile:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 10px 0 rgba(var(--tone),.32)}
 .tile:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(var(--tone),.32)}
 .t-train{--tone:74,163,255;--deep:#1f6fd1}
+.t-railfan{--tone:15,159,164;--deep:#08717b}
 .t-music{--tone:255,111,145;--deep:#e0436b}
 .t-raz{--tone:60,196,124;--deep:#1d9a5a}
 .t-board{--tone:127,119,221;--deep:#5a52b8}
@@ -106,8 +107,12 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
 }
 @media (min-width:960px){
   .hero{padding-top:8px}
-  .grid{grid-template-columns:repeat(4,1fr);gap:22px}
-  .tile{padding:28px 24px 24px}
+  .grid{grid-template-columns:repeat(5,1fr);gap:16px}
+  .tile{padding:20px 14px 18px}
+  .icon{width:82px;height:82px;border-radius:24px;margin:0 auto 12px}
+  .icon svg{width:52px;height:52px}
+  .title{font-size:17px}
+  .desc{font-size:12.5px}
   .notes{max-width:760px;margin:0 auto 10px}
 }
 
@@ -132,7 +137,7 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
     <h1 aria-label="童趣学园"><span class="ch">童</span><span class="ch">趣</span><span class="ch">学</span><span class="ch">园</span></h1>
     <span class="brand-en">Kid Game</span>
     <p class="lead">玩着玩着，就学会了。</p>
-    <p class="sub">给孩子做的英语、乐理和课堂白板小游戏，打开即玩，不用注册，进度只保存在这台设备上。</p>
+    <p class="sub">给孩子做的英语、乐理、铁路和课堂白板小游戏，打开即玩，不用注册，进度只保存在这台设备上。</p>
   </header>
 
   <main id="game-grid" class="grid">
@@ -141,6 +146,12 @@ h1 .ch:nth-child(4){color:#4aa3ff;transform:translateY(-2px) rotate(5deg)}
       <span class="title">小火车英语</span>
       <span class="desc">火车迷最常用的英文单词，带插图和例句，点一点就能听</span>
       <span class="foot-row"><span class="tags"><span class="tag">英语</span><span class="tag">单词</span></span><span class="go">开始玩 ›</span></span>
+    </a>
+    <a class="tile t-railfan" href="railfan/">
+      <span class="icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 30 25 12l16 16-18 14z" fill="#BFE7E2"/><path d="M7 30 25 36l16-8-18-16z" fill="#E8F6F2"/><path d="m23 42 18-14v8L23 48z" fill="#70BDB7"/><path d="M7 30v8l16 10V36z" fill="#0B858E"/><path d="M12 16h19c5 0 8 3 8 8v8H10V18c0-1 1-2 2-2z" fill="#164C5C"/><path d="M15 19h8v6h-8zm11 0h8v6h-8z" fill="#C4EEF0"/><path d="M10 28h29v4H10z" fill="#F4B942"/><circle cx="17" cy="34" r="4" fill="#253B40"/><circle cx="32" cy="34" r="4" fill="#253B40"/></svg></span>
+      <span class="title">小小火车迷</span>
+      <span class="desc">按实拍照片重建六组真实车号，扳道岔、落栏杆、开信号，接一趟车进西北环线</span>
+      <span class="foot-row"><span class="tags"><span class="tag">3D 模拟</span><span class="tag">道口调度</span></span><span class="go">开始玩 ›</span></span>
     </a>
     <a class="tile t-music" href="music/">
       <span class="icon"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#FF6B4A"/><ellipse cx="16" cy="27" rx="6" ry="4.4" fill="#fff" transform="rotate(-20 16 27)"/><path d="M21.4 26V9.5c4 1.5 6.5 4 7 7.5" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/></svg></span>
